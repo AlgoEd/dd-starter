@@ -1132,6 +1132,13 @@ For deeper exploration of specific topics, refer to the context files located in
     - Performance best practices
     - Styling components
 
+14. **`webmcp-agent-tools.md`** - WebMCP tools for AI agent co-editing
+
+    - Available tools and their schemas
+    - Agent connection setup (Chrome DevTools MCP, Playwright)
+    - Architecture and design decisions
+    - Schema auto-generation from Puck config
+
 ## Resources
 
 - Docs: https://payloadcms.com/docs
