@@ -1,0 +1,46 @@
+import deepMerge from '@/utilities/deepMerge'
+import type { PuckStateAccessors } from './get-page-state'
+
+export function createUpdateRootPropsTool(accessors: PuckStateAccessors) {
+  return {
+    name: 'update_root_props',
+    description:
+      'Updates page-level settings (root props) without replacing page content. Merges provided props with existing root props. Common props: title (string), pageLayout ("default" | "full-width" | "landing"), showHeader ("yes" | "no"), showFooter ("yes" | "no"), pageBackground (BackgroundValue | null), pageMaxWidth (string).',
+    inputSchema: {
+      type: 'object' as const,
+      properties: {
+        props: {
+          type: 'object',
+          description:
+            'Partial root props to merge. Only include props you want to change — others are preserved.',
+        },
+      },
+      required: ['props'],
+    },
+    execute: async (params: { props: Record<string, unknown> }) => {
+      const { data } = accessors.getState()
+      const currentRootProps = data.root?.props || {}
+      const mergedProps = deepMerge(currentRootProps, params.props)
+
+      const newData = {
+        ...data,
+        root: {
+          ...data.root,
+          props: mergedProps,
+        },
+      }
+
+      accessors.dispatch({ type: 'setData', data: newData })
+
+      const changedKeys = Object.keys(params.props)
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `Root props updated: ${changedKeys.join(', ')}. New values: ${JSON.stringify(params.props)}. Editor canvas updated — changes visible but NOT saved.`,
+          },
+        ],
+      }
+    },
+  }
+}
