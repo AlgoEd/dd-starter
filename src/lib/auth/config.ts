@@ -14,7 +14,9 @@ export const betterAuthOptions: Partial<BetterAuthOptions> = {
   session: {
     expiresIn: 60 * 60 * 24 * 30, // 30 days
   },
-  emailAndPassword: { enabled: true },
+  // Disable public registration — visitors who know the URL should not be able to create accounts.
+  // Admins can still create users through the Payload Admin Panel (Local API bypasses access control).
+  emailAndPassword: { enabled: true, disableSignUp: true },
   plugins: [
     twoFactor(),
     apiKey({ enableMetadata: true }),
