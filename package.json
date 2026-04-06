@@ -11,7 +11,7 @@
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build --webpack",
     "postbuild": "next-sitemap --config next-sitemap.config.cjs",
     "check": "pnpm exec tsc --noEmit && pnpm lint",
-    "ci": "payload migrate && pnpm build",
+    "ci": "payload migrate && payload generate:importmap && pnpm build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --experimental-https",
     "dev:prod": "cross-env NODE_OPTIONS=--no-deprecation rm -rf .next && pnpm build && pnpm start",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
