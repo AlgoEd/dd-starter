@@ -16,6 +16,8 @@ import { JoinCTAConfig } from './JoinCTA'
 import { FeeWaiverConfig } from './FeeWaiver'
 import { AlgoEdFooterConfig } from './AlgoEdFooter'
 import { CompetitionFooterConfig } from './CompetitionFooter'
+import { SummaryGridConfig } from './SummaryGrid'
+import { CategoryGridConfig } from './CategoryGrid'
 
 export const competitionComponents = {
   CompetitionHero: CompetitionHeroConfig,
@@ -31,6 +33,8 @@ export const competitionComponents = {
   FeeWaiver: FeeWaiverConfig,
   AlgoEdFooter: AlgoEdFooterConfig,
   CompetitionFooter: CompetitionFooterConfig,
+  SummaryGrid: SummaryGridConfig,
+  CategoryGrid: CategoryGridConfig,
 }
 
 export const competitionCategories = {
@@ -50,6 +54,8 @@ export const competitionCategories = {
       'FeeWaiver',
       'AlgoEdFooter',
       'CompetitionFooter',
+      'SummaryGrid',
+      'CategoryGrid',
     ] as string[],
     defaultExpanded: true,
   },

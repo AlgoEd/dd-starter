@@ -54,6 +54,14 @@ import {
   CompetitionFooterRender,
   defaultProps as compFooterDefaults,
 } from './CompetitionFooter.render'
+import {
+  SummaryGridRender,
+  defaultProps as summaryDefaults,
+} from './SummaryGrid.render'
+import {
+  CategoryGridRender,
+  defaultProps as categoryDefaults,
+} from './CategoryGrid.render'
 
 // extendConfig erases component generics to PuckComponent<any>, which is incompatible
 // with our typed render functions due to contravariance. The plugin's own built-in
@@ -124,6 +132,16 @@ export const competitionComponentsServer = {
     label: 'Competition Footer',
     defaultProps: compFooterDefaults,
     render: CompetitionFooterRender,
+  },
+  SummaryGrid: {
+    label: 'Summary Grid',
+    defaultProps: summaryDefaults,
+    render: SummaryGridRender,
+  },
+  CategoryGrid: {
+    label: 'Category Grid',
+    defaultProps: categoryDefaults,
+    render: CategoryGridRender,
   },
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- see comment above
 } as any
