@@ -69,7 +69,7 @@ export function CompetitionHeroRender({
             {statusText && (
               <div className="flex items-center my-6">
                 {statusIcon?.url && <img src={statusIcon.url} alt="" className="mr-2.5 w-[54px] h-[54px]" />}
-                <span className="text-white text-lg font-semibold leading-6">{statusText}</span>
+                <span className="text-white text-lg font-bold leading-6">{statusText}</span>
               </div>
             )}
             <CompetitionCTA text={ctaText} href={ctaLink} bgColor="#ffffff" textColor={color} />

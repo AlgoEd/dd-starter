@@ -72,7 +72,7 @@ export function CompetitionNavRender({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="no-underline whitespace-nowrap rounded-[12px]"
-                style={{ color: '#000', fontSize: '16px', letterSpacing: '-0.01em', padding: '12px 24px' }}
+                style={{ color: '#000', fontSize: '16px', fontWeight: 500, letterSpacing: '-0.01em', padding: '12px 24px' }}
               >
                 {link.label}
               </a>
@@ -86,7 +86,7 @@ export function CompetitionNavRender({
               href={ctaLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="no-underline text-white font-semibold text-center"
+              className="no-underline text-white font-bold text-center"
               style={{
                 backgroundColor: color,
                 borderRadius: '8px',
