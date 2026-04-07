@@ -37,7 +37,7 @@ export function FeeWaiverRender({
             </h3>
             <div className="mt-[7px]" style={{ fontSize: '12px' }}>
               Fee waiver is available for individual low-income students. Please ask your school counselor or principal to send an email titled &apos;Fee Waiver Request&apos; to{' '}
-              <a href="mailto:waivers@algoed.co?subject=Fee%20Waiver%20Request">waivers@algoed.co</a>
+              <a href="mailto:waivers@algoed.co?subject=Fee%20Waiver%20Request" className="text-blue-700 underline">waivers@algoed.co</a>
               {' '}from their official school email with your email address and confirm you need a waiver.
               <br /><br />
               <strong>All fee waivers must be requested before the regular deadline.</strong>
