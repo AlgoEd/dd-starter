@@ -52,8 +52,8 @@ export function CompetitionNavRender({
         {/* Left: logos */}
         <div className="flex items-center" style={{ width: '479px' }}>
           {partnerLogo?.url && (
-            <a href={partnerLink} target="_blank" rel="noopener noreferrer" className="mr-4">
-              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} style={{ width: '130px', height: 'auto' }} />
+            <a href={partnerLink} target="_blank" rel="noopener noreferrer">
+              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} style={{ width: 'auto', height: '45px', marginRight: '15px' }} />
             </a>
           )}
           <a href="/" target="_blank" rel="noopener noreferrer">
