@@ -113,7 +113,7 @@ export function CompetitionStructureRender({
         >
           <h3
             className="font-bold text-white text-center mt-[50px] mb-0"
-            style={{ fontSize: '22px' }}
+            style={{ fontSize: '22px', lineHeight: '30px' }}
           >
             {subheading}
           </h3>

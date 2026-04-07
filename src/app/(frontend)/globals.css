@@ -153,9 +153,11 @@
   body {
     @apply bg-background text-foreground min-h-[100vh] flex flex-col;
   }
-  /* Page-level Poppins default — matches Webflow .body-25 (font-family only) */
+  /* Page-level Poppins default — matches source body computed: Poppins 14px/20px/400 */
   article {
     font-family: var(--font-poppins), sans-serif;
+    font-size: 14px;
+    line-height: 20px;
   }
 }
 

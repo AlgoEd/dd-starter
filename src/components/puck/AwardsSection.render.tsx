@@ -198,7 +198,7 @@ export function AwardsSectionRender({
                   >
                     Note
                   </div>
-                  <div className="mt-[6px]">{noteText}</div>
+                  <div className="mt-[6px]" style={{ fontSize: '14px', lineHeight: '20px' }}>{noteText}</div>
                 </div>
               </div>
             )}
