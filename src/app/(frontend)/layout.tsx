@@ -6,8 +6,11 @@ import { GeistSans } from 'geist/font/sans'
 import { Poppins } from 'next/font/google'
 import React from 'react'
 
-import { Footer } from '@/Footer/Component'
-import { Header } from '@/Header/Component'
+// Global Header/Footer (src/Header, src/Footer) removed from layout.
+// They are Payload globals — editable at /admin/globals/header and /admin/globals/footer.
+// Removed because competition pages use their own CompetitionNav and CompetitionFooter
+// Puck components instead. The Payload global components and their config still exist
+// in the codebase — re-add here if non-competition pages need a site-wide header/footer.
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -32,9 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <Providers>
-          <Header />
           {children}
-          <Footer />
         </Providers>
       </body>
     </html>

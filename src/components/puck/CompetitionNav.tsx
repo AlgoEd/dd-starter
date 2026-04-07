@@ -1,7 +1,6 @@
 /**
  * CompetitionNav — full editor config with field definitions.
- * Dropdown (Mock Case, Solutions) and AlgoEd logo are hardcoded.
- * Partner logo, nav links, and CTA are configurable per competition.
+ * AlgoEd logo is hardcoded. Partner logo, nav links, and CTA are configurable.
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
@@ -16,14 +15,6 @@ export const CompetitionNavConfig: ComponentConfig<CompetitionNavProps> = {
   fields: {
     partnerLogo: createMediaField({ label: 'Partner Logo' }),
     partnerLink: { type: 'text', label: 'Partner Logo Link' },
-    dropdownItems: {
-      type: 'array',
-      label: 'Dropdown Items (Solutions/Mock Case)',
-      arrayFields: {
-        label: { type: 'text', label: 'Link Text' },
-        href: { type: 'text', label: 'Link URL' },
-      },
-    },
     navLinks: {
       type: 'array',
       label: 'Navigation Links',
