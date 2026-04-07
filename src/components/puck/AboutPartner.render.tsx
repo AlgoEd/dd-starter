@@ -33,17 +33,18 @@ export function AboutPartnerRender({
   return (
     <section style={{ backgroundColor: color, paddingTop: '45px', paddingBottom: '45px' }}>
       <div className="max-w-[940px] mx-auto px-4 md:px-0 flex flex-col items-center">
-        <div className="flex flex-col items-start md:items-center mb-[34px]">
+        {/* Source .div-block-206: flex row on desktop (heading | divider | body), column on mobile */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-center mb-[34px]">
           <h2
-            className="font-semibold text-white text-right m-0 text-[22px] leading-[32px] md:text-[26px] md:leading-[35px]"
+            className="font-semibold text-white text-left md:text-right m-0 text-[24px] leading-[24px] md:text-[26px] md:leading-[35px]"
           >
             {heading}
           </h2>
-          {/* Decorative dividers — source image-164 (383x5, white, hidden desktop) + image-148 (5x175, white) */}
+          {/* Decorative dividers — source image-164 (383x5, horizontal, mobile only) + image-148 (5x175, vertical, desktop only) */}
           <div className="block md:hidden w-[383px] max-w-full h-[5px] my-2" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }} />
-          <div className="hidden md:block my-2" style={{ width: '5px', height: '175px', backgroundColor: 'rgba(255,255,255,0.2)', marginLeft: '25px', marginRight: '25px' }} />
+          <div className="hidden md:block" style={{ width: '5px', height: '175px', backgroundColor: 'rgba(255,255,255,0.2)', marginLeft: '25px', marginRight: '25px', flexShrink: 0 }} />
           <p
-            className="text-white mb-0 whitespace-pre-line text-sm leading-[22px] md:text-base md:leading-normal"
+            className="text-white mb-0 whitespace-pre-line text-sm leading-[18px] md:text-base md:leading-normal"
           >
             {body}
           </p>
