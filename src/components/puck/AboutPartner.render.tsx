@@ -42,9 +42,10 @@ export function AboutPartnerRender({
           </h2>
           {/* Decorative dividers — source image-164 (383x5, horizontal, mobile only) + image-148 (5x175, vertical, desktop only) */}
           <div className="block md:hidden w-[383px] max-w-full h-[5px] my-2 rounded" style={{ backgroundColor: '#fff' }} />
-          <div className="hidden md:block rounded" style={{ width: '5px', height: '175px', backgroundColor: '#fff', marginLeft: '25px', marginRight: '25px', flexShrink: 0 }} />
+          {/* Vertical divider — self-stretch to match sibling height dynamically */}
+          <div className="hidden md:block rounded self-stretch" style={{ width: '5px', backgroundColor: '#fff', marginLeft: '25px', marginRight: '25px', flexShrink: 0 }} />
           <p
-            className="text-white mb-0 whitespace-pre-line text-sm leading-[18px] md:text-base md:leading-normal"
+            className="text-white mb-0 whitespace-pre-line text-sm leading-[18px] md:text-base md:leading-[24px]"
           >
             {body}
           </p>
