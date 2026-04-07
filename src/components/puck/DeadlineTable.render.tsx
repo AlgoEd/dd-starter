@@ -135,7 +135,7 @@ export function DeadlineTableRender({
               )
             })}
 
-            <div className="mt-2">
+            <div>
               <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" />
             </div>
           </div>

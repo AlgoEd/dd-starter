@@ -242,7 +242,7 @@ export function CompetitionStructureRender({
           </div>
         ))}
 
-        <div className="mt-10 flex justify-center">
+        <div className="flex justify-center">
           <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" />
         </div>
       </div>
