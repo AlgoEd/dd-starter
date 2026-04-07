@@ -4,8 +4,7 @@
  *
  * Source CSS: .section-68, .text-block-135, .text-block-136, .image-163, .image-162
  * Center dividers: image-168 (383x5px, horizontal, display:none on desktop) and
- * image-147 (5x99px, vertical). Both are semi-transparent burgundy lines —
- * recreated with CSS divs.
+ * image-147 (5x99px, vertical). Both are solid burgundy lines — recreated with CSS divs.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 
@@ -37,10 +36,10 @@ export function EligibilityStripRender({
             <div className="font-bold text-[20px] md:text-[25px] leading-[28px] md:leading-[30px] ml-2">{leftText}</div>
           </div>
           {/* Horizontal divider — 383x5px, hidden on desktop (source image-168 is display:none) */}
-          <div className="block md:hidden w-[383px] max-w-full h-[5px] my-2" style={{ backgroundColor: primaryColor, opacity: 0.2 }} />
+          <div className="block md:hidden w-[383px] max-w-full h-[5px] my-2" style={{ backgroundColor: primaryColor }} />
           {/* Vertical divider — 5x99px (source image-147) */}
-          <div className="hidden md:block mx-[21px]" style={{ width: '5px', height: '99px', backgroundColor: primaryColor, opacity: 0.2 }} />
-          <div className="flex items-center mt-4 md:mt-0 md:ml-6">
+          <div className="hidden md:block mx-[21px]" style={{ width: '5px', height: '99px', backgroundColor: primaryColor }} />
+          <div className="flex items-center mt-4 md:mt-0">
             <div className="font-semibold text-[18px] md:text-[25px] leading-[25px] md:leading-[30px]">{rightText}</div>
             {rightIcon?.url && <img src={rightIcon.url} alt="" className="hidden md:block ml-2" />}
           </div>
