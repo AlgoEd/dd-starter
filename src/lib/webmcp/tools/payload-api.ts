@@ -29,7 +29,7 @@ Pages:
 
 Page SEO (set separately from Puck content — these are Payload collection fields, not Puck root props):
   PATCH  /api/pages/:id { meta: { title: "Page Title", description: "...", image: <mediaId> }, _status: "published" }
-  Note: "| AlgoEd" is appended to meta.title automatically — don't include it. Upload OG image first via upload_image tool, use returned id.
+  Note: "AlgoEd |" is prepended to meta.title automatically — don't include it. Upload OG image first via upload_image tool, use returned id.
   Convention: GET /api/pages/2 for a reference example of SEO field values and structure.
 
 Media:
