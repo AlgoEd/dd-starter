@@ -30,10 +30,10 @@ export function EligibilityStripRender({
   return (
     <section style={{ paddingTop: '15px', paddingBottom: '15px', margin: 0 }}>
       <div className="max-w-[940px] mx-auto px-5 lg:px-0">
-        <div className="flex flex-col lg:flex-row justify-center items-start lg:items-center">
-          <div className="flex items-center">
-            {leftIcon?.url && <img src={leftIcon.url} alt="" className="block lg:hidden" />}
-            <div className="font-bold text-[20px] lg:text-[25px] leading-[28px] lg:leading-[30px] ml-2">{leftText}</div>
+        <div className="flex flex-col lg:flex-row justify-center items-center">
+          <div className="flex flex-col lg:flex-row items-center">
+            {leftIcon?.url && <img src={leftIcon.url} alt="" className="block lg:hidden mb-2" />}
+            <div className="font-bold text-[20px] lg:text-[25px] leading-[28px] lg:leading-[30px] lg:ml-2">{leftText}</div>
           </div>
           {/* Horizontal divider — 383x5px, hidden on desktop (source image-168 is display:none) */}
           <div className="block lg:hidden w-[383px] max-w-full h-[5px] my-2 rounded" style={{ backgroundColor: primaryColor }} />
