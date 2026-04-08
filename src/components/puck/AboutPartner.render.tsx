@@ -41,7 +41,7 @@ export function AboutPartnerRender({
             {heading}
           </h2>
           {/* Decorative dividers — source image-164 (383x5, horizontal, mobile only) + image-148 (5x175, vertical, desktop only) */}
-          <div className="block lg:hidden w-[383px] max-w-full h-[5px] my-2 rounded" style={{ backgroundColor: '#fff' }} />
+          <div className="block lg:hidden w-[383px] max-w-full h-[5px] my-4 rounded" style={{ backgroundColor: '#fff' }} />
           {/* Vertical divider — self-stretch to match sibling height dynamically */}
           <div className="hidden lg:block rounded self-stretch" style={{ width: '5px', backgroundColor: '#fff', marginLeft: '25px', marginRight: '25px', flexShrink: 0 }} />
           <p
