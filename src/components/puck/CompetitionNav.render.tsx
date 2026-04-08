@@ -47,7 +47,7 @@ export function CompetitionNavRender({
       style={{ backgroundColor: '#fff', padding: '24px 5%' }}
     >
       <div
-        className="flex justify-between items-center w-full mx-auto"
+        className="flex items-center w-full mx-auto"
         style={{ maxWidth: '1280px' }}
       >
         {/* Left: logos — fixed height, never compress, source .org-logo + .powered-by-algoed */}
@@ -62,43 +62,36 @@ export function CompetitionNavRender({
           </a>
         </div>
 
-        {/* Desktop nav — hidden below lg (≈991px source breakpoint) */}
-        <div className="hidden lg:flex items-center min-w-0" style={{ gap: '8px' }}>
-          <nav className="flex items-center justify-between flex-1 min-w-0">
+        {/* Desktop nav — hidden below lg, pushed right via ml-auto */}
+        <div className="hidden lg:flex items-center ml-auto gap-4">
+          <nav className="flex items-center justify-evenly flex-1 max-w-[32rem]">
             {navLinks.map((link, i) => (
               <a
                 key={i}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="no-underline whitespace-nowrap rounded-[12px] py-3 px-2"
+                className="no-underline whitespace-nowrap rounded-[12px] py-3"
                 style={{ color: '#000', fontSize: '16px', fontWeight: 500, lineHeight: '24px', letterSpacing: '-0.01em' }}
               >
                 {link.label}
               </a>
             ))}
           </nav>
-
-          <div className="flex items-center [gap:clamp(8px,1.5vw,24px)]">
-            <div style={{ backgroundColor: '#e0e3de', width: '1px', height: '24px' }} />
-            <a
-              href={ctaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="no-underline text-white font-bold text-center whitespace-nowrap rounded-lg [padding:12px_clamp(12px,1.5vw,24px)]"
-              style={{
-                backgroundColor: color,
-                fontSize: '16px',
-                lineHeight: '24px',
-              }}
-            >
-              {ctaText}
-            </a>
-          </div>
+          <div style={{ backgroundColor: '#e0e3de', width: '1px', height: '24px' }} />
+          <a
+            href={ctaLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="no-underline text-white font-bold text-center whitespace-nowrap rounded-lg py-3 px-6"
+            style={{ backgroundColor: color, fontSize: '16px', lineHeight: '24px' }}
+          >
+            {ctaText}
+          </a>
         </div>
 
         {/* Mobile hamburger — shown below lg */}
-        <div className="lg:hidden">
+        <div className="lg:hidden ml-auto">
           <MobileNav
             navLinks={navLinks}
             ctaText={ctaText}
