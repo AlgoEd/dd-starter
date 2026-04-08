@@ -79,17 +79,15 @@ export function CompetitionNavRender({
             ))}
           </nav>
 
-          <div className="flex items-center" style={{ gap: '24px' }}>
+          <div className="flex items-center [gap:clamp(8px,1.5vw,24px)]">
             <div style={{ backgroundColor: '#e0e3de', width: '1px', height: '24px' }} />
             <a
               href={ctaLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="no-underline text-white font-bold text-center"
+              className="no-underline text-white font-bold text-center whitespace-nowrap rounded-lg [padding:12px_clamp(12px,1.5vw,24px)]"
               style={{
                 backgroundColor: color,
-                borderRadius: '8px',
-                padding: '12px 24px',
                 fontSize: '16px',
                 lineHeight: '24px',
               }}
