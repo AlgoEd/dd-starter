@@ -58,14 +58,16 @@ export function CompetitionHeroRender({
       <div className="max-w-[940px] mx-auto px-5 lg:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-5">
           <div className="flex flex-col justify-center items-start">
-            <h1 className="text-white font-bold m-0 text-[45px] leading-[55px]">{titleLine1}</h1>
-            {titleLine2 && (
-              <div className="bg-white inline-block my-5 px-2.5 py-[5px]">
-                <h1 className="font-bold m-0 text-[42px] leading-[45px]" style={{ color: safeHex(highlightTextColor) }}>{titleLine2}</h1>
-              </div>
-            )}
-            <h1 className="text-white font-bold m-0 text-[38px] leading-[40px]">{titleLine3}</h1>
-            <h2 className="text-white font-bold mb-0 mt-5 text-2xl leading-[30px]">{audienceLabel}</h2>
+            <h1 className="m-0">
+              <span className="block text-white font-bold text-[45px] leading-[55px]">{titleLine1}</span>
+              {titleLine2 && (
+                <span className="bg-white inline-block my-5 px-2.5 py-[5px]">
+                  <span className="block font-bold text-[42px] leading-[45px]" style={{ color: safeHex(highlightTextColor) }}>{titleLine2}</span>
+                </span>
+              )}
+              <span className="block text-white font-bold text-[38px] leading-[40px]">{titleLine3}</span>
+            </h1>
+            <p className="text-white font-bold mb-0 mt-5 text-2xl leading-[30px]">{audienceLabel}</p>
             {statusText && (
               <div className="flex items-center my-6">
                 {statusIcon?.url && <img src={statusIcon.url} alt="" className="mr-2.5 w-[54px] h-[54px]" />}

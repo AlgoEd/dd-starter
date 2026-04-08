@@ -32,8 +32,13 @@ export const generateMeta = async (args: {
     ? rawTitle.toLowerCase().includes('algoed') ? rawTitle : `AlgoEd | ${rawTitle}`
     : 'AlgoEd'
 
+  const canonicalUrl = doc?.slug ? `${getServerSideURL()}/${doc.slug}` : getServerSideURL()
+
   return {
     description: doc?.meta?.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: mergeOpenGraph({
       description: doc?.meta?.description || '',
       images: ogImage
