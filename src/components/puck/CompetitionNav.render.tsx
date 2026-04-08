@@ -10,6 +10,7 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { safeHex } from './shared'
+import { MobileNav } from './MobileNav'
 
 export interface NavLinkItem {
   label: string
@@ -49,21 +50,20 @@ export function CompetitionNavRender({
         className="flex justify-between items-center w-full mx-auto"
         style={{ maxWidth: '1280px' }}
       >
-        {/* Left: logos */}
-        <div className="flex items-center" style={{ width: '479px' }}>
+        {/* Left: logos — flex-shrink-0 so they never compress */}
+        <div className="flex items-center flex-shrink-0">
           {partnerLogo?.url && (
             <a href={partnerLink} target="_blank" rel="noopener noreferrer">
-              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} style={{ width: 'auto', height: '45px', marginRight: '15px' }} />
+              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} className="flex-shrink-0" style={{ width: 'auto', height: '45px', marginRight: '15px' }} />
             </a>
           )}
           <a href="/" target="_blank" rel="noopener noreferrer">
-            <img src="/competition-assets/algoed-logo.png" alt="AlgoEd" style={{ width: '124px' }} />
+            <img src="/competition-assets/algoed-logo.png" alt="AlgoEd" className="flex-shrink-0" style={{ width: '124px' }} />
           </a>
         </div>
 
-        {/* Right: .navigation-right-wrapper gap: 8px */}
-        <div className="hidden md:flex items-center" style={{ gap: '8px' }}>
-          {/* Nav links — .navigation-menu-2 gap: 16px */}
+        {/* Desktop nav — hidden below lg (≈991px source breakpoint) */}
+        <div className="hidden lg:flex items-center" style={{ gap: '8px' }}>
           <nav className="flex items-center" style={{ gap: '16px' }}>
             {navLinks.map((link, i) => (
               <a
@@ -79,7 +79,6 @@ export function CompetitionNavRender({
             ))}
           </nav>
 
-          {/* Divider + CTA — .navigation-button-wrapper-2 gap: 24px */}
           <div className="flex items-center" style={{ gap: '24px' }}>
             <div style={{ backgroundColor: '#e0e3de', width: '1px', height: '24px' }} />
             <a
@@ -98,6 +97,16 @@ export function CompetitionNavRender({
               {ctaText}
             </a>
           </div>
+        </div>
+
+        {/* Mobile hamburger — shown below lg */}
+        <div className="lg:hidden">
+          <MobileNav
+            navLinks={navLinks}
+            ctaText={ctaText}
+            ctaLink={ctaLink}
+            primaryColor={color}
+          />
         </div>
       </div>
     </nav>
