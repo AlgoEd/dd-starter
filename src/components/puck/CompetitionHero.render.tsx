@@ -62,7 +62,7 @@ export function CompetitionHeroRender({
               <span className="block text-white font-bold text-[28px] leading-[35px] sm:text-[45px] sm:leading-[55px]">{titleLine1}</span>
               {titleLine2 && (
                 <span className="bg-white inline-block my-5 px-2.5 py-[5px]">
-                  <span className="block font-bold text-[38px] sm:text-[42px] leading-[45px]" style={{ color: safeHex(highlightTextColor) }}>{titleLine2}</span>
+                  <span className="block font-bold text-[28px] leading-[35px] sm:text-[42px] sm:leading-[45px]" style={{ color: safeHex(highlightTextColor) }}>{titleLine2}</span>
                 </span>
               )}
               <span className="block text-white font-bold text-[25px] leading-[33px] sm:text-[38px] sm:leading-[40px]">{titleLine3}</span>
