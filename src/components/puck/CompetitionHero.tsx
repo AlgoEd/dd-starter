@@ -25,6 +25,9 @@ export const CompetitionHeroConfig: ComponentConfig<CompetitionHeroProps> = {
     ctaLink: { type: 'text', label: 'CTA Button Link' },
     heroImage: createMediaField({ label: 'Hero Illustration (right column)' }),
     backgroundImage: createMediaField({ label: 'Background Image (behind overlay)' }),
+    overlayColor: { type: 'text', label: 'Overlay Color (hex — defaults to Brand Color if empty)' },
+    overlayOpacity: { type: 'number', label: 'Overlay Opacity (0-100, default 90)' },
+    overlayCSS: { type: 'text', label: 'Overlay CSS Override (advanced — raw CSS gradient replaces color+opacity, e.g. "linear-gradient(rgba(75,156,211,0.8), rgba(75,156,211,1))")' },
     badgeStripHeading: { type: 'text', label: 'Badge Strip Heading (e.g. "Step into:" — leave empty to hide strip)' },
     badgeStripItems: {
       type: 'array',

@@ -3,7 +3,7 @@
  * Server-safe: no client-only imports (no createMediaField).
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, safeHex } from './shared'
+import { CompetitionCTA, safeHex, hexAlpha } from './shared'
 
 export interface BadgeItem {
   label: string
@@ -23,6 +23,9 @@ export interface CompetitionHeroProps {
   ctaLink: string
   heroImage: MediaReference | null
   backgroundImage: MediaReference | null
+  overlayColor: string
+  overlayOpacity: number
+  overlayCSS: string
   badgeStripHeading: string
   badgeStripItems: BadgeItem[]
 }
@@ -40,6 +43,9 @@ export const defaultProps: CompetitionHeroProps = {
   ctaLink: '/portal',
   heroImage: null,
   backgroundImage: null,
+  overlayColor: '',
+  overlayOpacity: 90,
+  overlayCSS: '',
   badgeStripHeading: '',
   badgeStripItems: [],
 }
@@ -48,11 +54,15 @@ export function CompetitionHeroRender({
   titleLine1, titleLine2, titleLine3, audienceLabel,
   primaryColor, highlightTextColor, statusText, statusIcon,
   ctaText, ctaLink, heroImage, backgroundImage,
+  overlayColor, overlayOpacity, overlayCSS,
   badgeStripHeading, badgeStripItems,
 }: CompetitionHeroProps) {
   const color = safeHex(primaryColor)
   const bgImageUrl = backgroundImage?.url || ''
   const hasBadgeStrip = badgeStripItems && badgeStripItems.length > 0
+
+  const solid = hexAlpha(overlayColor || primaryColor, (overlayOpacity ?? 90) / 100)
+  const overlayLayer = overlayCSS || `linear-gradient(${solid}, ${solid})`
 
   return (
     <section
@@ -60,7 +70,7 @@ export function CompetitionHeroRender({
       style={{
         backgroundColor: color,
         backgroundImage: bgImageUrl
-          ? `linear-gradient(${color}f2, ${color}f2), url(${bgImageUrl})`
+          ? `${overlayLayer}, url(${bgImageUrl})`
           : undefined,
         backgroundPosition: '0 0, 50%',
         backgroundSize: 'auto, cover',

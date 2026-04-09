@@ -8,6 +8,15 @@ export function safeHex(color: string, fallback = '#333'): string {
   return HEX_COLOR_RE.test(color) ? color : fallback
 }
 
+/** Converts 6-digit hex + alpha (0-1) to modern CSS rgb() syntax. */
+export function hexAlpha(hex: string, alpha: number): string {
+  const clean = safeHex(hex).replace('#', '')
+  const r = parseInt(clean.slice(0, 2), 16)
+  const g = parseInt(clean.slice(2, 4), 16)
+  const b = parseInt(clean.slice(4, 6), 16)
+  return `rgb(${r} ${g} ${b} / ${alpha})`
+}
+
 /** Accent bar — 184x7px colored bar matching source Rectangle 34624656 (semi-transparent brand color). */
 export function AccentBar({ primaryColor }: { primaryColor: string }) {
   return (
