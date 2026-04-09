@@ -73,7 +73,7 @@ export function CompetitionHeroRender({
 
   return (
     <section
-      className="bg-cover bg-center"
+      className="bg-cover bg-center overflow-hidden"
       style={{
         backgroundColor: color,
         backgroundImage: bgImageUrl
@@ -88,8 +88,8 @@ export function CompetitionHeroRender({
       <div className="relative max-w-[1280px] mx-auto px-5 lg:px-10">
         {/* Floating illustration — behind text on desktop, stacked on mobile */}
         {heroImage?.url && (
-          <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-[45%] flex justify-center mb-6 lg:mb-0">
-            <img src={heroImage.url} alt={heroImage.alt || ''} className="max-w-full h-auto max-h-[500px] object-contain" />
+          <div className="lg:absolute lg:right-0 lg:bottom-12 lg:w-1/2 flex justify-center mb-6 lg:mb-0">
+            <img src={heroImage.url} alt={heroImage.alt || ''} className="max-w-full h-auto object-contain" />
           </div>
         )}
         {/* Text content — full width, flows naturally */}
