@@ -93,7 +93,7 @@ export function CompetitionHeroRender({
           </div>
         )}
         {/* Text content — full width, flows naturally */}
-        <div className="relative z-10 lg:w-[60%]">
+        <div className="relative z-10">
           <h1 className="m-0">
             <span className="block text-white font-bold uppercase text-[28px] leading-[1.3] sm:text-[45px]">{titleLine1}</span>
             {titleLine2 && (
