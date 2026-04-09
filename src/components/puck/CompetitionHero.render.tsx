@@ -82,7 +82,7 @@ export function CompetitionHeroRender({
         backgroundPosition: '0 0, 50%',
         backgroundSize: 'auto, cover',
         paddingTop: '2.5rem',
-        paddingBottom: hasBadgeStrip ? '7rem' : '2.5rem',
+        paddingBottom: hasBadgeStrip ? '5rem' : '2.5rem',
       }}
     >
       <div className="relative max-w-[940px] mx-auto px-5 lg:px-0">
@@ -120,7 +120,7 @@ export function CompetitionHeroRender({
         </div>
       </div>
       {hasBadgeStrip && (
-        <div className="max-w-[940px] mx-auto px-5 lg:px-0 relative z-10 -mt-24 mb-16">
+        <div className="max-w-[940px] mx-auto px-5 lg:px-0 relative z-10 -translate-y-[60%]" style={{ marginBottom: '-70px' }}>
           <div
             className="rounded-[15px] bg-white px-5 py-5"
             style={{ boxShadow: '0 -5px 50px rgba(62,63,65,0.08), 0 5px 50px rgba(62,63,65,0.08)' }}
