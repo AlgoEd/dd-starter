@@ -50,15 +50,15 @@ export function CompetitionNavRender({
         className="flex items-center w-full mx-auto"
         style={{ maxWidth: '1280px' }}
       >
-        {/* Left: logos — fixed height, never compress, source .org-logo + .powered-by-algoed */}
-        <div className="flex items-center flex-shrink-0">
+        {/* Left: logos — preferred height, shrinkable on small screens */}
+        <div className="flex items-center">
           {partnerLogo?.url && (
             <a href={partnerLink} target="_blank" rel="noopener noreferrer">
-              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} className="flex-shrink-0" style={{ width: 'auto', height: '45px', marginRight: '15px' }} />
+              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} className="h-[45px] max-w-[40vw] object-contain mr-4" />
             </a>
           )}
           <a href="/" target="_blank" rel="noopener noreferrer">
-            <img src="/competition-assets/algoed-logo.png" alt="AlgoEd" className="flex-shrink-0" style={{ width: 'auto', height: '50px' }} />
+            <img src="/competition-assets/algoed-logo.png" alt="AlgoEd" className="h-[50px] max-w-[30vw] object-contain" />
           </a>
         </div>
 
