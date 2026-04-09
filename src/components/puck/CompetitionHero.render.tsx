@@ -89,7 +89,7 @@ export function CompetitionHeroRender({
       <div className="relative overflow-hidden">
         {/* Floating illustration — extends to viewport right edge */}
         {heroImage?.url && (
-          <div className="lg:absolute lg:bottom-2 lg:w-[400px] flex items-end justify-end mb-6 lg:mb-0" style={{ left: 'calc(50% + 120px)' }}>
+          <div className="lg:absolute lg:bottom-2 lg:w-[400px] flex items-end justify-end mb-6 lg:mb-0" style={{ left: 'calc(50% + 115px)' }}>
             <img src={heroImage.url} alt={heroImage.alt || ''} className="max-w-full h-auto" />
           </div>
         )}
