@@ -3,6 +3,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
+import { createColorField } from './fields'
 import { CompetitionStructureRender, defaultProps } from './CompetitionStructure.render'
 import type { CompetitionStructureProps } from './CompetitionStructure.render'
 
@@ -55,7 +56,7 @@ export const CompetitionStructureConfig: ComponentConfig<CompetitionStructurePro
     roundsIcon: createMediaField({ label: 'Rounds Section Icon' }),
     ctaText: { type: 'text', label: 'CTA Button Text (leave empty to hide)' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
-    primaryColor: { type: 'text', label: 'Brand Color (hex)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: CompetitionStructureRender,

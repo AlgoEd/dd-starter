@@ -53,7 +53,7 @@ export const defaultProps: CompetitionHeroProps = {
   heroImage: null,
   heroImageWidth: 400,
   heroImageRightOffset: 45,
-  heroImageBottomGap: 8,
+  heroImageBottomGap: 2,
   backgroundImage: null,
   overlayColor: '',
   overlayOpacity: 90,

@@ -3,6 +3,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
+import { createColorField } from './fields'
 import { CompetitionFormatRender, defaultProps } from './CompetitionFormat.render'
 import type { CompetitionFormatProps } from './CompetitionFormat.render'
 
@@ -35,7 +36,7 @@ export const CompetitionFormatConfig: ComponentConfig<CompetitionFormatProps> = 
     },
     ctaText: { type: 'text', label: 'CTA Button Text (leave empty to hide)' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
-    primaryColor: { type: 'text', label: 'Brand Color (hex)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: CompetitionFormatRender,

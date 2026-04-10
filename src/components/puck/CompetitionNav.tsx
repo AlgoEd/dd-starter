@@ -4,6 +4,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
+import { createColorField } from './fields'
 import { CompetitionNavRender, defaultProps } from './CompetitionNav.render'
 import type { CompetitionNavProps } from './CompetitionNav.render'
 
@@ -25,7 +26,7 @@ export const CompetitionNavConfig: ComponentConfig<CompetitionNavProps> = {
     },
     ctaText: { type: 'text', label: 'CTA Button Text' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
-    primaryColor: { type: 'text', label: 'Brand Color (hex, for CTA button)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: CompetitionNavRender,

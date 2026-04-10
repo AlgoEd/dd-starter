@@ -57,8 +57,8 @@ export function CompetitionCTA({
       rel={target === '_blank' ? 'noopener noreferrer' : undefined}
       className={`rounded text-base font-semibold no-underline text-center ${fullWidth ? 'block w-full' : 'inline-block'}`}
       style={{
-        color: safeHex(textColor),
-        backgroundColor: safeHex(bgColor),
+        color: textColor,
+        backgroundColor: bgColor,
         padding,
         border,
         lineHeight,

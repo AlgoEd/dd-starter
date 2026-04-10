@@ -3,6 +3,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
+import { createColorField } from './fields'
 import { TwoColumnFeatureRender, defaultProps } from './TwoColumnFeature.render'
 import type { TwoColumnFeatureProps } from './TwoColumnFeature.render'
 
@@ -25,7 +26,7 @@ export const TwoColumnFeatureConfig: ComponentConfig<TwoColumnFeatureProps> = {
         { label: 'Image Left', value: 'image-left' },
       ],
     },
-    primaryColor: { type: 'text', label: 'Brand Color (hex)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: TwoColumnFeatureRender,

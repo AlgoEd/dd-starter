@@ -3,6 +3,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
+import { createColorField } from './fields'
 import { BenefitsGridRender, defaultProps } from './BenefitsGrid.render'
 import type { BenefitsGridProps } from './BenefitsGrid.render'
 
@@ -24,7 +25,7 @@ export const BenefitsGridConfig: ComponentConfig<BenefitsGridProps> = {
     },
     ctaText: { type: 'text', label: 'CTA Button Text (leave empty to hide)' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
-    primaryColor: { type: 'text', label: 'Brand Color (hex)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: BenefitsGridRender,

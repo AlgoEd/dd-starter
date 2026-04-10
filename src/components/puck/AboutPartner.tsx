@@ -2,6 +2,7 @@
  * AboutPartner — full editor config with field definitions.
  */
 import type { ComponentConfig } from '@puckeditor/core'
+import { createColorField } from './fields'
 import { AboutPartnerRender, defaultProps } from './AboutPartner.render'
 import type { AboutPartnerProps } from './AboutPartner.render'
 
@@ -15,7 +16,7 @@ export const AboutPartnerConfig: ComponentConfig<AboutPartnerProps> = {
     body: { type: 'textarea', label: 'Body Text' },
     ctaText: { type: 'text', label: 'CTA Button Text (leave empty to hide)' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
-    primaryColor: { type: 'text', label: 'Brand Color (hex)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: AboutPartnerRender,

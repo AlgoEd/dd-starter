@@ -3,6 +3,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
+import { createColorField } from './fields'
 import { SummaryGridRender, defaultProps } from './SummaryGrid.render'
 import type { SummaryGridProps } from './SummaryGrid.render'
 
@@ -22,7 +23,7 @@ export const SummaryGridConfig: ComponentConfig<SummaryGridProps> = {
         description: { type: 'textarea', label: 'Description' },
       },
     },
-    primaryColor: { type: 'text', label: 'Brand Color (hex)' },
+    primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
   render: SummaryGridRender,
