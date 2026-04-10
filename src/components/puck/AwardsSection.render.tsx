@@ -2,9 +2,11 @@
  * AwardsSection — render function and types.
  * Server-safe: no client-only imports.
  *
- * Source: section-102, div-block-304, div-block-305, div-block-307, div-block-308
- * Structure: specialAwards and note render inside the FIRST group card (source behavior).
- * Final Round groups use variant='final' for gold styling (div-block-304.final).
+ * Figma source: node 6373:7393
+ * Layout: heading + intro → special award cards (2-col) → round cards
+ * with bg image + decoratives + medal badges via flex.
+ *
+ * 0.75× scale from Figma. See shared.tsx for typography reference.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 
@@ -38,18 +40,24 @@ export interface AwardsSectionProps {
 
 export const defaultProps: AwardsSectionProps = {
   heading: 'Recognition',
-  introText: 'All participants will be awarded a certificate of participation. Participants will also receive their scores.',
+  introText: 'All participants will receive a Certificate for participation',
   groups: [
     {
       roundTitle: 'Preliminary Round',
-      subtitle: 'Country + Regional Awards',
+      subtitle: '',
       variant: 'default',
       badges: [
-        { icon: null, label: 'Champion', sublabel: '' },
-        { icon: null, label: 'Second Place', sublabel: '' },
-        { icon: null, label: 'Third Place', sublabel: '' },
         { icon: null, label: 'Honor', sublabel: '' },
         { icon: null, label: 'Merit', sublabel: '' },
+        { icon: null, label: 'Semi Finalist', sublabel: '' },
+      ],
+    },
+    {
+      roundTitle: 'Semi- Final Round',
+      subtitle: '',
+      variant: 'default',
+      badges: [
+        { icon: null, label: 'Finalist', sublabel: '' },
       ],
     },
     {
@@ -58,148 +66,172 @@ export const defaultProps: AwardsSectionProps = {
       variant: 'final',
       badges: [
         { icon: null, label: 'Global Champion', sublabel: '' },
-        { icon: null, label: 'Global Second Place', sublabel: '' },
-        { icon: null, label: 'Global Third Place', sublabel: '' },
-        { icon: null, label: 'Global Finalists', sublabel: '(Globally ranked 4-8)' },
+        { icon: null, label: 'Global 1st Runner Up', sublabel: '' },
+        { icon: null, label: 'Global 2nd Runner Up', sublabel: '' },
       ],
     },
   ],
   specialAwards: [
-    { icon: null, title: 'Individual Awards', description: 'Top participants will receive individual honors, even if their teams may not win any awards.' },
-    { icon: null, title: 'Team Awards', description: 'Teams will be awarded based on the sum of their two highest individual scores.' },
+    { icon: null, title: 'Individual Category', description: 'Top participants will receive individual honors, even if their teams may not win any awards.' },
+    { icon: null, title: 'Team category', description: 'Teams will be awarded based on the sum of their two highest individual scores.' },
   ],
   noteText: '',
   noteIcon: null,
 }
 
-function getGroupCardStyle(group: AwardGroup): React.CSSProperties {
-  if (group.variant === 'final') {
-    return {
-      backgroundColor: '#fff5e5',
-      backgroundImage: 'url(/competition-assets/award-final-bg.png)',
-      backgroundPosition: '50% 0',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      border: '2px solid #e5b33a',
-      boxShadow: '4px 4px 6px 3px #0003',
-    }
-  }
-  return {
-    backgroundColor: '#fcfcfc',
-    boxShadow: '4px 4px 6px 3px #0003',
-  }
-}
-
 export function AwardsSectionRender({
   heading, introText, groups, specialAwards, noteText, noteIcon,
 }: AwardsSectionProps) {
+  const defaultGroups = (groups ?? []).filter(g => g.variant !== 'final')
+  const finalGroups = (groups ?? []).filter(g => g.variant === 'final')
+
   return (
-    <section style={{ paddingTop: '39px', paddingBottom: '39px' }}>
+    <section className="py-10">
       <div className="max-w-[940px] mx-auto px-5 lg:px-0">
-        <h2
-          className="font-bold"
-          style={{ fontSize: '30px', lineHeight: '1.3' }}
-        >
+        {/* Heading — Figma 40px Bold → 30px (text-3xl) */}
+        <h2 className="font-bold text-3xl leading-tight text-[#222] mb-3">
           {heading}
         </h2>
-        <div className="text-center">{introText}</div>
 
-        {groups.map((group, gi) => (
-          <div
-            key={gi}
-            className="rounded-[20px] mt-[30px] p-5"
-            style={getGroupCardStyle(group)}
-          >
-            <div
-              className="text-center mb-[6px] font-bold"
-              style={{ fontSize: '20px' }}
-            >
-              {group.roundTitle}
-            </div>
-            <div className="text-center">{group.subtitle}</div>
+        {/* Intro — Figma 20px Medium → 15px */}
+        {introText && (
+          <p className="text-[15px] leading-relaxed text-[#222] mb-8">
+            {introText}
+          </p>
+        )}
 
-            {/* Badge grid */}
-            <div
-              className="grid grid-cols-1 lg:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] mt-5 mb-5"
-              style={{ gap: '20px' }}
-            >
-              {group.badges.map((badge, bi) => (
-                <div key={bi} className="flex flex-col justify-center items-center">
-                  {badge.icon?.url && (
-                    <img src={badge.icon.url} alt={badge.icon.alt || ''} style={{ width: '122px' }} />
-                  )}
-                  <div
-                    className="self-center mt-[10px]"
-                    style={{ fontSize: '16px' }}
-                  >
-                    {badge.label}
-                  </div>
-                  {badge.sublabel && (
-                    <div className="text-center text-sm">{badge.sublabel}</div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Special Awards + Note render inside the FIRST group card (source div-block-305, div-block-308) */}
-            {gi === 0 && specialAwards.length > 0 && (
+        {/* Special Awards — 2-column cards */}
+        {specialAwards.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            {specialAwards.map((award, i) => (
               <div
-                className="grid grid-cols-1 lg:grid-cols-2"
-                style={{ gap: '16px' }}
+                key={i}
+                className="relative overflow-hidden rounded-xl bg-[#fcfcfc] p-6"
+                style={{ boxShadow: '0 2px 4px -2px rgba(10,13,18,0.06), 0 4px 8px -2px rgba(10,13,18,0.1)' }}
               >
-                {specialAwards.map((award, ai) => (
-                  <div
-                    key={ai}
-                    className="rounded-[20px] p-[15px]"
-                    style={{
-                      backgroundColor: '#fff5e5',
-                      backgroundImage: ai === 0 ? 'url(/competition-assets/award-individual-bg.svg)' : ai === 1 ? 'url(/competition-assets/award-team-bg.svg)' : undefined,
-                      backgroundPosition: '100% 100%',
-                      backgroundRepeat: 'no-repeat',
-                      backgroundSize: 'auto',
-                    }}
-                  >
-                    <div
-                      className="rounded-[20px] inline-flex items-center mb-[10px]"
-                      style={{
-                        backgroundColor: '#ffffff',
-                        padding: '5px 10px',
-                        gap: '10px',
-                      }}
-                    >
-                      {award.icon?.url && <img src={award.icon.url} alt="" />}
-                      <div
-                        className="font-semibold"
-                        style={{ color: '#f28a15', fontSize: '15px' }}
-                      >
-                        {award.title}
-                      </div>
+                {/* Pill badge */}
+                <div className="inline-flex items-center gap-2 bg-white rounded-full px-3 py-1 mb-3">
+                  {award.icon?.url && (
+                    <img src={award.icon.url} alt="" className="w-5 h-5" />
+                  )}
+                  <span className="font-bold text-base" style={{ color: '#f28a15' }}>
+                    {award.title}
+                  </span>
+                </div>
+                <p className="text-xs leading-relaxed text-[#222] m-0">
+                  {award.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Default round groups (Preliminary, Semi-Final) — shared bg */}
+        {defaultGroups.length > 0 && (
+          <div className="relative overflow-hidden rounded-3xl mb-10">
+            <img
+              src="/competition-assets/award-card-bg.svg"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+            <img
+              src="/competition-assets/decor-medal.svg"
+              alt=""
+              className="absolute pointer-events-none opacity-20"
+              style={{ left: '93%', top: '48%', width: '8.6%' }}
+            />
+            <div className="relative z-10 py-8 px-6">
+              <div className="flex flex-wrap justify-around gap-8">
+                {defaultGroups.map((group, gi) => (
+                  <div key={gi} className="flex flex-col items-center">
+                    <h3 className="font-bold text-lg leading-tight text-[#222] mb-6 text-center">
+                      {group.roundTitle}
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-12">
+                      {group.badges.map((badge, bi) => (
+                        <div key={bi} className="flex flex-col items-center gap-2.5 w-32">
+                          {badge.icon?.url && (
+                            <img src={badge.icon.url} alt={badge.label} className="w-full object-contain" />
+                          )}
+                          <span className="text-xs text-center text-[#222] font-medium">
+                            {badge.label}
+                          </span>
+                          {badge.sublabel && (
+                            <span className="text-xs text-center text-[#666]">{badge.sublabel}</span>
+                          )}
+                        </div>
+                      ))}
                     </div>
-                    <div>{award.description}</div>
                   </div>
                 ))}
               </div>
-            )}
+            </div>
+          </div>
+        )}
 
-            {gi === 0 && noteText && (
-              <div
-                className="flex items-start mt-[14px] rounded-[20px] p-[15px]"
-                style={{ backgroundColor: '#f6eeee', gap: '7px' }}
-              >
-                {noteIcon?.url && <img src={noteIcon.url} alt="" />}
-                <div>
-                  <div
-                    className="font-medium"
-                    style={{ color: '#850c10', fontSize: '17px', lineHeight: '22px' }}
-                  >
-                    Note
+        {/* Final round groups */}
+        {finalGroups.map((group, gi) => (
+          <div key={gi} className="relative overflow-hidden rounded-3xl mb-10">
+            <img
+              src="/competition-assets/award-card-bg.svg"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            />
+            {/* Decoratives at Figma percentages */}
+            <img
+              src="/competition-assets/decor-star.svg"
+              alt=""
+              className="absolute pointer-events-none opacity-20"
+              style={{ left: '0.3%', top: '41%', width: '7.7%' }}
+            />
+            <img
+              src="/competition-assets/decor-trophy.svg"
+              alt=""
+              className="absolute pointer-events-none opacity-20"
+              style={{ left: '91.3%', top: '52%', width: '10.7%' }}
+            />
+            <img
+              src="/competition-assets/decor-medal.svg"
+              alt=""
+              className="absolute pointer-events-none opacity-20"
+              style={{ left: '84.4%', top: '39.8%', width: '8.6%' }}
+            />
+            <div className="relative z-10 py-8 px-6">
+              <h3 className="font-bold text-lg leading-tight text-[#222] mb-1 text-center">
+                {group.roundTitle}
+              </h3>
+              {group.subtitle && (
+                <p className="text-xs text-center text-[#666] mb-6">{group.subtitle}</p>
+              )}
+              <div className="flex flex-wrap justify-center gap-12">
+                {group.badges.map((badge, bi) => (
+                  <div key={bi} className="flex flex-col items-center gap-2.5 w-32">
+                    {badge.icon?.url && (
+                      <img src={badge.icon.url} alt={badge.label} className="w-full object-contain" />
+                    )}
+                    <span className="text-xs text-center text-[#222] font-medium">
+                      {badge.label}
+                    </span>
+                    {badge.sublabel && (
+                      <span className="text-xs text-center text-[#666]">{badge.sublabel}</span>
+                    )}
                   </div>
-                  <div className="mt-[6px]" style={{ fontSize: '14px' }}>{noteText}</div>
-                </div>
+                ))}
               </div>
-            )}
+            </div>
           </div>
         ))}
+
+        {/* Note */}
+        {noteText && (
+          <div className="flex items-start gap-2 rounded-xl bg-[#f6eeee] p-4">
+            {noteIcon?.url && <img src={noteIcon.url} alt="" className="w-6 h-6" />}
+            <div>
+              <div className="font-medium text-sm" style={{ color: '#850c10' }}>Note</div>
+              <div className="text-xs leading-relaxed mt-1">{noteText}</div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )
