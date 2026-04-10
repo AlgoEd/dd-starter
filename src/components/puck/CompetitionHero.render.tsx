@@ -25,6 +25,9 @@ export interface CompetitionHeroProps {
   secondaryCtaText: string
   secondaryCtaLink: string
   heroImage: MediaReference | null
+  heroImageWidth: number
+  heroImageRightOffset: number
+  heroImageBottomGap: number
   backgroundImage: MediaReference | null
   overlayColor: string
   overlayOpacity: number
@@ -48,6 +51,9 @@ export const defaultProps: CompetitionHeroProps = {
   secondaryCtaText: '',
   secondaryCtaLink: '',
   heroImage: null,
+  heroImageWidth: 400,
+  heroImageRightOffset: 45,
+  heroImageBottomGap: 8,
   backgroundImage: null,
   overlayColor: '',
   overlayOpacity: 90,
@@ -60,7 +66,8 @@ export function CompetitionHeroRender({
   titleLine1, titleLine2, titleLine3, audienceLabel,
   primaryColor, highlightTextColor, statusText, statusSubtext, statusIcon,
   ctaText, ctaLink, secondaryCtaText, secondaryCtaLink,
-  heroImage, backgroundImage,
+  heroImage, heroImageWidth, heroImageRightOffset, heroImageBottomGap,
+  backgroundImage,
   overlayColor, overlayOpacity, overlayCSS,
   badgeStripHeading, badgeStripItems,
 }: CompetitionHeroProps) {
@@ -89,7 +96,11 @@ export function CompetitionHeroRender({
       <div className="relative overflow-hidden">
         {/* Floating illustration — extends to viewport right edge */}
         {heroImage?.url && (
-          <div className="lg:absolute lg:bottom-2 lg:w-[400px] flex items-end justify-end mb-6 lg:mb-0" style={{ left: 'calc(50% + 115px)' }}>
+          <div className="lg:absolute flex items-end justify-end mb-6 lg:mb-0" style={{
+            left: `calc(50% + ${470 - (heroImageWidth ?? 400) + (heroImageRightOffset ?? 45)}px)`,
+            bottom: `${heroImageBottomGap ?? 8}px`,
+            width: `${heroImageWidth ?? 400}px`,
+          }}>
             <img src={heroImage.url} alt={heroImage.alt || ''} className="max-w-full h-auto" />
           </div>
         )}
