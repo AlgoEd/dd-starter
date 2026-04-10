@@ -35,13 +35,19 @@ export function AlgoEdFooterRender({
           className="relative flex flex-col justify-center items-center pt-9 pb-14 px-6 overflow-hidden"
           style={{ backgroundColor: color }}
         >
-          {/* Alpha pattern — large + small layers, same SVG at different sizes, offset rows */}
+          {/*
+            Alpha pattern tile (127.825 × 93), derived from path 79 × 62:
+            - Tile width = 79 × φ ≈ 128 (large alpha = 1/φ of tile)
+            - Tile height = 62 + 31 = 93 (row gap = half alpha height)
+            - Small scale = 0.382 (1 − 1/φ)
+            - Small position: x=88.4 (centered in gap), y=23.7 (62 × 0.382)
+            backgroundSize controls density (tile count across panel).
+          */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              backgroundImage: 'url(/competition-assets/alpha-pattern.svg), url(/competition-assets/alpha-pattern.svg)',
-              backgroundSize: '20% auto, 8% auto',
-              backgroundPosition: '0 0, 10% 50%',
+              backgroundImage: 'url(/competition-assets/alpha-pattern.svg)',
+              backgroundSize: 'calc(100% / 3) auto',
             }}
           />
           <div className="relative z-10 flex flex-col items-center">
