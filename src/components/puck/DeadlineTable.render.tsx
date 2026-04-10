@@ -65,7 +65,7 @@ export function DeadlineTableRender({
               <img
                 src={TIER_WATERMARKS[tier.variant] || TIER_WATERMARKS.priority}
                 alt=""
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-28 h-28 opacity-10 object-contain pointer-events-none"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-28 h-28 object-contain pointer-events-none"
               />
               <div className="relative z-10">
                 <div className="font-bold text-lg leading-[1.3]" style={{ color }}>{tier.title}</div>
