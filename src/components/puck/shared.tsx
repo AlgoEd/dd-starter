@@ -19,16 +19,23 @@
  *   Floor: 12px (text-xs) for readability. Pure 0.75× of Figma values below
  *   16px would produce sub-12px — we floor at 12px instead.
  */
-const HEX_COLOR_RE = /^#[0-9a-fA-F]{3,8}$/
+const HEX_COLOR_RE = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
 
 /** Validates a hex color string. Returns the color if valid, fallback otherwise. */
 export function safeHex(color: string, fallback = '#333'): string {
   return HEX_COLOR_RE.test(color) ? color : fallback
 }
 
-/** Converts 6-digit hex + alpha (0-1) to modern CSS rgb() syntax. */
+/** Normalises hex to 6-digit body (no #). */
+function normalizeHex(hex: string): string {
+  let clean = safeHex(hex).replace('#', '')
+  if (clean.length === 3) clean = clean.split('').map(c => c + c).join('')
+  return clean.slice(0, 6)
+}
+
+/** Converts hex + alpha (0-1) to modern CSS rgb() syntax. Handles 3/6/8-digit hex. */
 export function hexAlpha(hex: string, alpha: number): string {
-  const clean = safeHex(hex).replace('#', '')
+  const clean = normalizeHex(hex)
   const r = parseInt(clean.slice(0, 2), 16)
   const g = parseInt(clean.slice(2, 4), 16)
   const b = parseInt(clean.slice(4, 6), 16)
