@@ -47,7 +47,7 @@ export function AlgoEdFooterRender({
             className="absolute inset-0 pointer-events-none"
             style={{
               backgroundImage: 'url(/competition-assets/alpha-pattern.svg)',
-              backgroundSize: 'calc(100% / 3) auto',
+              backgroundSize: 'auto calc(100% / 3)',
             }}
           />
           <div className="relative z-10 flex flex-col items-center">
