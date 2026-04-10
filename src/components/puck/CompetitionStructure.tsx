@@ -7,55 +7,60 @@ import { createColorField } from './fields'
 import { CompetitionStructureRender, defaultProps } from './CompetitionStructure.render'
 import type { CompetitionStructureProps } from './CompetitionStructure.render'
 
-export type { CompetitionStructureProps, CategoryItem, RoundItem, BulletItem } from './CompetitionStructure.render'
+export type { CompetitionStructureProps, InfoCard, InfoCardItem, RoundItem, RoundDetail } from './CompetitionStructure.render'
 export { CompetitionStructureRender, defaultProps } from './CompetitionStructure.render'
 
 export const CompetitionStructureConfig: ComponentConfig<CompetitionStructureProps> = {
   label: 'Competition Structure',
   fields: {
     heading: { type: 'text', label: 'Heading' },
-    subheading: { type: 'text', label: 'Subheading' },
-    structureBgImage: createMediaField({ label: 'Structure Card Background Image' }),
-    teamSize: { type: 'textarea', label: 'Team Size Description' },
-    teamIcon: createMediaField({ label: 'Team Size Icon' }),
-    categoriesIcon: createMediaField({ label: 'Categories Icon' }),
-    categories: {
-      type: 'array',
-      label: 'Categories',
-      arrayFields: {
-        name: { type: 'text', label: 'Category Name' },
-        grades: { type: 'text', label: 'Grades' },
-      },
+    heroImage: createMediaField({ label: 'Hero Image' }),
+    heroOverlayColor: createColorField({ label: 'Hero Overlay Color' }),
+    heroOverlayOpacity: {
+      type: 'number',
+      label: 'Hero Overlay Opacity (0–1)',
+      min: 0,
+      max: 1,
+      step: 0.05,
     },
-    categoryDivider: createMediaField({ label: 'Category Divider Image' }),
-    rounds: {
+    infoCards: {
       type: 'array',
-      label: 'Rounds (What teams need to do)',
+      label: 'Info Cards',
       arrayFields: {
-        title: { type: 'text', label: 'Round Title' },
-        titleIcon: createMediaField({ label: 'Title Icon' }),
-        bulletIcon: createMediaField({ label: 'Bullet Icon (repeated per bullet)' }),
-        bullets: {
+        icon: createMediaField({ label: 'Icon' }),
+        heading: { type: 'text', label: 'Card Heading' },
+        body: { type: 'textarea', label: 'Plain Text (leave empty if using items)' },
+        items: {
           type: 'array',
-          label: 'Bullet Points',
+          label: 'Structured Items (optional)',
           arrayFields: {
-            value: { type: 'textarea', label: 'Bullet Text' },
-            isLink: {
-              type: 'radio',
-              label: 'Is Link?',
-              options: [
-                { label: 'No', value: false },
-                { label: 'Yes', value: true },
-              ],
-            },
-            href: { type: 'text', label: 'Link URL (if link)' },
+            name: { type: 'text', label: 'Name' },
+            grades: { type: 'text', label: 'Subtitle' },
           },
         },
       },
     },
     roundsIcon: createMediaField({ label: 'Rounds Section Icon' }),
-    ctaText: { type: 'text', label: 'CTA Button Text (leave empty to hide)' },
-    ctaLink: { type: 'text', label: 'CTA Button Link' },
+    roundsHeading: { type: 'text', label: 'Rounds Heading' },
+    rounds: {
+      type: 'array',
+      label: 'Rounds',
+      arrayFields: {
+        title: { type: 'text', label: 'Round Title' },
+        items: {
+          type: 'array',
+          label: 'Detail Items',
+          arrayFields: {
+            label: { type: 'text', label: 'Bold Prefix (optional)' },
+            text: { type: 'textarea', label: 'Description' },
+          },
+        },
+      },
+    },
+    ctaText: { type: 'text', label: 'Primary CTA Text (empty to hide)' },
+    ctaLink: { type: 'text', label: 'Primary CTA Link' },
+    secondaryCtaText: { type: 'text', label: 'Secondary CTA Text (empty to hide)' },
+    secondaryCtaLink: { type: 'text', label: 'Secondary CTA Link' },
     primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
