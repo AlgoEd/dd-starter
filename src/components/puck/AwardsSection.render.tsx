@@ -128,7 +128,10 @@ export function AwardsSectionRender({
 
         {/* Default round groups (Preliminary, Semi-Final) — shared bg */}
         {defaultGroups.length > 0 && (
-          <div className="relative overflow-hidden rounded-3xl mb-10">
+          <div
+            className="relative overflow-hidden rounded-3xl mb-10 bg-[#fff5e5]"
+          >
+            {/* Watermark pattern overlay */}
             <img
               src="/competition-assets/award-card-bg.svg"
               alt=""
@@ -171,7 +174,7 @@ export function AwardsSectionRender({
 
         {/* Final round groups */}
         {finalGroups.map((group, gi) => (
-          <div key={gi} className="relative overflow-hidden rounded-3xl mb-10">
+          <div key={gi} className="relative overflow-hidden rounded-3xl mb-10 bg-[#fff5e5]">
             <img
               src="/competition-assets/award-card-bg.svg"
               alt=""
