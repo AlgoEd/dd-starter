@@ -50,7 +50,7 @@ export function RichText({ html, className }: { html: string; className?: string
 export function AccentBar({ primaryColor }: { primaryColor: string }) {
   return (
     <div
-      className="w-[184px] h-[7px] rounded mt-1.5 mb-[30px]"
+      className="w-[184px] h-[7px] rounded mt-1.5 mb-5"
       style={{ backgroundColor: safeHex(primaryColor) }}
     />
   )

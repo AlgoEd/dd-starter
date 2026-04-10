@@ -43,13 +43,13 @@ export function BenefitsGridRender({
           <h2 className="text-3xl font-bold leading-tight mb-0 text-[#333]">{sectionHeading}</h2>
           <AccentBar primaryColor={color} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-10 mb-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-10 mt-10 mb-10 w-full">
           {benefits.map((benefit, i) => (
             <div key={i} className="flex flex-col items-start">
               {benefit.icon?.url && (
                 <img src={benefit.icon.url} alt={benefit.icon.alt || ''} className="w-[123px] h-[123px]" />
               )}
-              <div className="text-lg font-semibold leading-[25px] mb-5" style={{ color }}>{benefit.heading}</div>
+              <div className="text-lg font-semibold leading-[25px] mt-5 mb-1.5" style={{ color }}>{benefit.heading}</div>
               <p className="text-[15px] leading-[20px] m-0 text-[#808080]">{benefit.description}</p>
             </div>
           ))}

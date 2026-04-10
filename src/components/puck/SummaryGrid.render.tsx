@@ -39,13 +39,13 @@ export function SummaryGridRender({
   return (
     <section className="py-10">
       <div className="max-w-[940px] mx-auto px-5 lg:px-0">
-        <h2 className="text-3xl font-bold leading-tight text-[#333] mb-6">
+        <h2 className="text-3xl font-bold leading-tight text-[#333] mb-5">
           {heading}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {cards.map((card, i) => (
             <div key={i}>
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-1.5 mb-2">
                 <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-[#f2f3f0]">
                   {card.icon?.url && (
                     <img src={card.icon.url} alt={card.icon.alt || ''} className="w-6 h-6 object-contain" />

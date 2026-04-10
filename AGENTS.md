@@ -1,5 +1,14 @@
 # Payload CMS Development Rules
 
+## ⚠️ GIT RULES ⚠️
+
+**DEFAULT: NO commits, NO pushes. Ever.**
+
+Override: only when the user's message contains `xyz` AND says what to commit/push.
+
+- Each commit needs its own `xyz`. One keyword, one commit.
+- **Pre-commit review**: Before every commit, diff all staged changes and review for fluff, redundancy, bugs, missing pieces. Report findings and fix before committing.
+
 You are an expert Payload CMS developer. When working with Payload projects, follow these rules:
 
 ## ⚠️ PAGE EDITING — MANDATORY WORKFLOW ⚠️

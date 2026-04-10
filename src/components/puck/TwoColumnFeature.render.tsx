@@ -46,7 +46,7 @@ export function TwoColumnFeatureRender({
     <div className="flex flex-col justify-center items-start">
       <h2 className="text-3xl font-bold leading-tight mb-0 text-[#333]">{heading}</h2>
       <AccentBar primaryColor={color} />
-      <RichText html={body} className="text-[15px] leading-6 mb-10 text-[#333]" />
+      <RichText html={body} className="text-[15px] leading-6 mb-6 text-[#333]" />
       <div className="flex flex-wrap gap-4">
         {ctaVariant === 'outline'
           ? <CompetitionCTA text={ctaText} href={ctaLink} bgColor="transparent" textColor={color} border={`1px solid ${color}`} />
