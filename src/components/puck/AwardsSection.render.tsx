@@ -161,7 +161,7 @@ export function AwardsSectionRender({
                     <h3 className="font-bold text-lg leading-tight text-[#222] mb-6 text-center">
                       {group.roundTitle}
                     </h3>
-                    <div className="flex flex-wrap justify-evenly max-w-xl mx-auto">
+                    <div className="flex flex-wrap justify-evenly gap-4 w-full max-w-xl mx-auto">
                       {group.badges.map((badge, bi) => (
                         <div key={bi} className="flex flex-col items-center gap-2.5 w-32">
                           {badgeIconUrl(badge.badgeIcon) && (
@@ -243,7 +243,7 @@ export function AwardsSectionRender({
               {group.subtitle && (
                 <p className="text-xs text-center text-[#666] mb-6">{group.subtitle}</p>
               )}
-              <div className="flex flex-wrap justify-evenly max-w-xl mx-auto">
+              <div className="flex flex-wrap justify-evenly gap-4 w-full max-w-xl mx-auto">
                 {group.badges.map((badge, bi) => (
                   <div key={bi} className="flex flex-col items-center gap-2.5 w-32">
                     {badgeIconUrl(badge.badgeIcon) && (
