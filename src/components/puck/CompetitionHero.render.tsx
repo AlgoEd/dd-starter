@@ -126,7 +126,7 @@ export function CompetitionHeroRender({
           )}
           <div className="flex flex-wrap gap-4">
             <CompetitionCTA text={ctaText} href={ctaLink} bgColor="#ffffff" textColor={color} />
-            <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor="#ffffff" border="2px solid #ffffff" />
+            <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor="#ffffff" border="1px solid #ffffff" />
           </div>
         </div>
       </div>
