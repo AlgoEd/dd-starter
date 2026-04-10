@@ -89,44 +89,18 @@ export function AwardsSectionRender({
     <section className="py-10">
       <div className="max-w-[940px] mx-auto px-5 lg:px-0">
         {/* Heading — Figma 40px Bold → 30px (text-3xl) */}
-        <h2 className="font-bold text-3xl leading-tight text-[#222] mb-3">
+        <h2 className="font-bold text-3xl leading-tight text-[#222] mb-3 text-center">
           {heading}
         </h2>
 
         {/* Intro — Figma 20px Medium → 15px */}
         {introText && (
-          <p className="text-[15px] leading-relaxed text-[#222] mb-8">
+          <p className="text-[15px] leading-relaxed text-[#222] mb-8 text-center">
             {introText}
           </p>
         )}
 
-        {/* Special Awards — 2-column cards */}
-        {specialAwards.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-            {specialAwards.map((award, i) => (
-              <div
-                key={i}
-                className="relative overflow-hidden rounded-xl bg-[#fcfcfc] p-6"
-                style={{ boxShadow: '0 2px 4px -2px rgba(10,13,18,0.06), 0 4px 8px -2px rgba(10,13,18,0.1)' }}
-              >
-                {/* Pill badge */}
-                <div className="inline-flex items-center gap-2 bg-white rounded-full px-3 py-1 mb-3">
-                  {award.icon?.url && (
-                    <img src={award.icon.url} alt="" className="w-5 h-5" />
-                  )}
-                  <span className="font-bold text-base" style={{ color: '#f28a15' }}>
-                    {award.title}
-                  </span>
-                </div>
-                <p className="text-xs leading-relaxed text-[#222] m-0">
-                  {award.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Default round groups (Preliminary, Semi-Final) — shared bg */}
+        {/* Default round groups (Preliminary, Semi-Final) — before special awards per Figma */}
         {defaultGroups.length > 0 && (
           <div
             className="relative overflow-hidden rounded-3xl mb-10 bg-[#fff5e5]"
@@ -169,6 +143,31 @@ export function AwardsSectionRender({
                 ))}
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Special Awards — 2-column cards (between default and final per Figma) */}
+        {specialAwards.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            {specialAwards.map((award, i) => (
+              <div
+                key={i}
+                className="relative overflow-hidden rounded-xl bg-[#fcfcfc] p-6"
+                style={{ boxShadow: '0 2px 4px -2px rgba(10,13,18,0.06), 0 4px 8px -2px rgba(10,13,18,0.1)' }}
+              >
+                <div className="inline-flex items-center gap-2 bg-white rounded-full px-3 py-1 mb-3">
+                  {award.icon?.url && (
+                    <img src={award.icon.url} alt="" className="w-5 h-5" />
+                  )}
+                  <span className="font-bold text-base" style={{ color: '#f28a15' }}>
+                    {award.title}
+                  </span>
+                </div>
+                <p className="text-xs leading-relaxed text-[#222] m-0">
+                  {award.description}
+                </p>
+              </div>
+            ))}
           </div>
         )}
 
