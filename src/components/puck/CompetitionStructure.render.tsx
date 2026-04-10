@@ -267,13 +267,13 @@ export function CompetitionStructureRender({
                 />
               )}
               {/* Round title with concentric circle bullet */}
-              {/* Figma: 20×20 outer (primary @ 40% opacity) + 10×10 inner (primary solid) */}
+              {/* Figma: 20×20 outer #4E88C7 (primary lightened) + 10×10 inner (primary solid) */}
               {/* 0.75×: 15×15 outer, 8×8 inner. Gap to text: 32→24px ≈ gap-3 (12px) */}
               {/* Title: 22px Bold primaryColor → 0.75× 16px = text-base */}
               <div className="flex items-start gap-3">
                 <span
                   className="shrink-0 mt-1 rounded-full flex items-center justify-center"
-                  style={{ width: '15px', height: '15px', backgroundColor: hexAlpha(primaryColor, 0.4) }}
+                  style={{ width: '15px', height: '15px', backgroundColor: hexAlpha(primaryColor, 0.6) }}
                 >
                   <span
                     className="rounded-full"
