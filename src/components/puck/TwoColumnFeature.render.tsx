@@ -3,13 +3,15 @@
  * Server-safe: no client-only imports.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { AccentBar, CompetitionCTA, safeHex } from './shared'
+import { AccentBar, CompetitionCTA, RichText, safeHex } from './shared'
 
 export interface TwoColumnFeatureProps {
   heading: string
   body: string
   ctaText: string
   ctaLink: string
+  secondaryCtaText: string
+  secondaryCtaLink: string
   featureImage: MediaReference | null
   layout: 'image-right' | 'image-left'
   primaryColor: string
@@ -20,13 +22,15 @@ export const defaultProps: TwoColumnFeatureProps = {
   body: 'Section body text goes here.',
   ctaText: 'Competition Portal',
   ctaLink: '/portal',
+  secondaryCtaText: '',
+  secondaryCtaLink: '',
   featureImage: null,
   layout: 'image-right',
   primaryColor: '#a31f35',
 }
 
 export function TwoColumnFeatureRender({
-  heading, body, ctaText, ctaLink, featureImage, layout, primaryColor,
+  heading, body, ctaText, ctaLink, secondaryCtaText, secondaryCtaLink, featureImage, layout, primaryColor,
 }: TwoColumnFeatureProps) {
   const color = safeHex(primaryColor)
   const isImageRight = layout === 'image-right'
@@ -35,8 +39,11 @@ export function TwoColumnFeatureRender({
     <div className="flex flex-col justify-center items-start">
       <h2 className="text-3xl font-bold leading-tight mb-0 text-[#333]">{heading}</h2>
       <AccentBar primaryColor={color} />
-      <p className="text-[15px] leading-6 mb-10 text-[#333] whitespace-pre-line">{body}</p>
-      <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" />
+      <RichText html={body} className="text-[15px] leading-6 mb-10 text-[#333]" />
+      <div className="flex flex-wrap gap-4">
+        <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" />
+        <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor={color} border={`1px solid ${color}`} />
+      </div>
     </div>
   )
 

@@ -14,9 +14,11 @@ export const TwoColumnFeatureConfig: ComponentConfig<TwoColumnFeatureProps> = {
   label: 'Two Column Feature',
   fields: {
     heading: { type: 'text', label: 'Heading' },
-    body: { type: 'textarea', label: 'Body Text' },
+    body: { type: 'richtext', label: 'Body Text' },
     ctaText: { type: 'text', label: 'CTA Button Text (leave empty to hide)' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
+    secondaryCtaText: { type: 'text', label: 'Secondary CTA Text (leave empty to hide)' },
+    secondaryCtaLink: { type: 'text', label: 'Secondary CTA Link' },
     featureImage: createMediaField({ label: 'Feature Image' }),
     layout: {
       type: 'radio',

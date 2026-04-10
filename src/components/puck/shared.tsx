@@ -35,6 +35,17 @@ export function hexAlpha(hex: string, alpha: number): string {
   return `rgb(${r} ${g} ${b} / ${alpha})`
 }
 
+/** Renders CMS rich text HTML with prose styling. Content from Puck admin (trusted). */
+export function RichText({ html, className }: { html: string; className?: string }) {
+  if (!html) return null
+  return (
+    <div
+      className={`prose prose-sm max-w-none ${className ?? ''}`}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  )
+}
+
 /** Accent bar — 184x7px colored bar matching source Rectangle 34624656 (semi-transparent brand color). */
 export function AccentBar({ primaryColor }: { primaryColor: string }) {
   return (
