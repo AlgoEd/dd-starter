@@ -130,7 +130,7 @@ function SpecialAwardCard({ iconKey, award }: { iconKey: 'individual' | 'team'; 
     : { left: '84.9%', top: '34.7%', width: '20.0%' }
   return (
     <div
-      className="relative overflow-hidden rounded-lg bg-[#fcfcfc] p-3.5"
+      className={`relative overflow-hidden rounded-lg bg-[#fcfcfc] py-3.5 pl-3.5 ${iconKey === 'individual' ? 'pr-12' : 'pr-20'}`}
       style={{ boxShadow: '0 2px 4px -2px rgba(10,13,18,0.06), 0 4px 8px -2px rgba(10,13,18,0.1)' }}
     >
       <img
