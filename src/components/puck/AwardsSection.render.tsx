@@ -172,7 +172,7 @@ export function AwardsSectionRender({
           <img
             src="/competition-assets/award-card-bg.svg"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
           />
           {/*
             Decoration positions: SVGs are Figma-cropped to visible star pixels
@@ -225,7 +225,7 @@ export function AwardsSectionRender({
           <img
             src="/competition-assets/award-card-bg.svg"
             alt=""
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
           />
           {/* Decoration positions: see note on default card above. */}
           <img
