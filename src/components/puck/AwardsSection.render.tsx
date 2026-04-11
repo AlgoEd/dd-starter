@@ -119,18 +119,31 @@ function BadgeTile({ badge }: { badge: BadgeItem }) {
   )
 }
 
-// Special award card — icon hardcoded by type (individual/team)
+// Special award card — icon hardcoded by type (individual/team).
+// Decoration is positioned absolutely in the bottom-right corner; percentages
+// are Figma-derived (decor position / card size, same in 1× and 0.75×).
 function SpecialAwardCard({ iconKey, award }: { iconKey: 'individual' | 'team'; award: SpecialAward }) {
+  // Individual decor: left=87.8% top=54.7% w=14.5% of card
+  // Team decor:       left=84.9% top=34.7% w=20.0% of card
+  const decor = iconKey === 'individual'
+    ? { left: '87.8%', top: '54.7%', width: '14.5%' }
+    : { left: '84.9%', top: '34.7%', width: '20.0%' }
   return (
     <div
-      className="relative overflow-hidden rounded-xl bg-[#fcfcfc] p-6"
+      className="relative overflow-hidden rounded-lg bg-[#fcfcfc] p-3.5"
       style={{ boxShadow: '0 2px 4px -2px rgba(10,13,18,0.06), 0 4px 8px -2px rgba(10,13,18,0.1)' }}
     >
-      <div className="inline-flex items-center gap-2 bg-white rounded-full px-3 py-1 mb-3">
+      <img
+        src={`/competition-assets/decor-special-${iconKey}.svg`}
+        alt=""
+        className="absolute pointer-events-none"
+        style={decor}
+      />
+      <div className="relative inline-flex items-center gap-2 bg-white rounded-full px-3 py-1 mb-2.5">
         <img src={`/competition-assets/icon-${iconKey}.svg`} alt="" className="w-5 h-5" />
-        <span className="font-bold text-base" style={{ color: '#f28a15' }}>{award.title}</span>
+        <span className="font-bold text-xs" style={{ color: '#f28a15' }}>{award.title}</span>
       </div>
-      <p className="text-xs leading-relaxed text-[#222] m-0">{award.description}</p>
+      <p className="relative text-xs leading-relaxed text-[#222] m-0">{award.description}</p>
     </div>
   )
 }
