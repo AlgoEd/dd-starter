@@ -91,14 +91,17 @@ export function CompetitionHeroRender({
         paddingBottom: hasBadgeStrip ? '6rem' : '2.5rem',
       }}
     >
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden px-5 lg:px-0">
         {/* Content-first ordering: text + CTA in DOM before the illustration.
            Mobile: title, CTA, etc. render first, illustration below.
            Desktop: illustration gets lg:absolute and overlaps the right side
            of the text; DOM order is irrelevant for absolute-positioned
            elements. Fixes the mobile issue where a 400px decorative image
-           pushed the title and CTA below the fold. */}
-        <div className="max-w-[940px] mx-auto px-5 lg:px-0 relative z-10">
+           pushed the title and CTA below the fold.
+           Horizontal padding (px-5 on mobile) is on the parent so both the
+           text column and the stacked illustration share the same 20px
+           breathing room from the viewport edges. */}
+        <div className="max-w-[940px] mx-auto relative z-10">
           <h1 className="m-0">
             <span className="block text-white font-bold uppercase text-3xl leading-[1.3] sm:text-5xl">{titleLine1}</span>
             {titleLine2 && (
@@ -123,19 +126,23 @@ export function CompetitionHeroRender({
             <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor="#ffffff" border="1px solid #ffffff" />
           </div>
         </div>
-        {/* Floating illustration — on desktop absolutely positioned to overlap
-           the right side of the text; on mobile appears below the text in
-           normal flow, centered. Margin-top provides breathing room from the
-           CTAs above on mobile. */}
+        {/* Floating illustration — on desktop absolutely positioned to
+           overlap the right side of the text; on mobile in normal flow
+           below the text, centered via `block mx-auto`. Horizontal
+           padding is inherited from the parent (see above), so the img
+           just needs `max-w-full` to not exceed the parent's content
+           area (which is already viewport − 40px on mobile). */}
         {heroImage?.url && (
-          <div className="lg:absolute flex items-end justify-center lg:justify-end mt-6 lg:mt-0" style={{
-            left: `calc(50% + ${470 - (heroImageWidth ?? 400) + (heroImageRightOffset ?? 45)}px)`,
-            bottom: `${heroImageBottomGap ?? 8}px`,
-            width: `${heroImageWidth ?? 400}px`,
-            maxWidth: '100%',
-          }}>
-            <img src={heroImage.url} alt={heroImage.alt || ''} className="max-w-full h-auto" />
-          </div>
+          <img
+            src={heroImage.url}
+            alt={heroImage.alt || ''}
+            className="lg:absolute block mx-auto lg:mx-0 mt-6 lg:mt-0 max-w-full h-auto"
+            style={{
+              left: `calc(50% + ${470 - (heroImageWidth ?? 400) + (heroImageRightOffset ?? 45)}px)`,
+              bottom: `${heroImageBottomGap ?? 8}px`,
+              width: `${heroImageWidth ?? 400}px`,
+            }}
+          />
         )}
       </div>
     </div>
