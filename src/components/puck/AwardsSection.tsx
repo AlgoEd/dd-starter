@@ -27,7 +27,7 @@ export const AwardsSectionConfig: ComponentConfig<AwardsSectionProps> = {
   label: 'Awards Section',
   fields: {
     heading: { type: 'text', label: 'Heading' },
-    introText: { type: 'textarea', label: 'Intro Text' },
+    introText: { type: 'richtext', label: 'Intro Text' },
     preliminary: {
       type: 'object',
       label: 'Preliminary Round',

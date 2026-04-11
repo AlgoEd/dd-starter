@@ -13,6 +13,7 @@
  * 0.75× scale from Figma. See shared.tsx for typography reference.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
+import { RichText } from './shared'
 
 export const badgeIconOptions = [
   { label: 'Honor', value: 'honor' },
@@ -64,7 +65,7 @@ export interface AwardsSectionProps {
 
 export const defaultProps: AwardsSectionProps = {
   heading: 'Recognition',
-  introText: 'All participants will receive a Certificate for participation',
+  introText: '<p>All participants will receive a <strong>Certificate</strong> for participation</p>',
   preliminary: {
     title: 'Preliminary Round',
     badges: [
@@ -120,17 +121,18 @@ function BadgeTile({ badge }: { badge: BadgeItem }) {
 }
 
 // Special award card — icon hardcoded by type (individual/team).
-// Decoration is positioned absolutely in the bottom-right corner; percentages
-// are Figma-derived (decor position / card size, same in 1× and 0.75×).
+// Decoration (cup watermark) is positioned content-centered within Figma's
+// boolean-op bounds. SVGs are cropped to visible pixels; percentages reflect
+// the SVG's content size, not the bounding box.
 function SpecialAwardCard({ iconKey, award }: { iconKey: 'individual' | 'team'; award: SpecialAward }) {
-  // Individual decor: left=87.8% top=54.7% w=14.5% of card
-  // Team decor:       left=84.9% top=34.7% w=20.0% of card
+  // Individual decor (80×88 SVG in 92.34×93.22 bounds on 637×144 card)
+  // Team decor       (112×105 SVG in 127.52×114.63 bounds on 638×144 card)
   const decor = iconKey === 'individual'
-    ? { left: '87.8%', top: '54.7%', width: '14.5%' }
-    : { left: '84.9%', top: '34.7%', width: '20.0%' }
+    ? { left: '88.72%', top: '56.50%', width: '12.56%' }
+    : { left: '86.13%', top: '38.07%', width: '17.55%' }
   return (
     <div
-      className={`relative overflow-hidden rounded-lg bg-[#fcfcfc] py-3.5 pl-3.5 ${iconKey === 'individual' ? 'pr-12' : 'pr-20'}`}
+      className={`relative overflow-hidden rounded-lg bg-[#fcfcfc] py-3.5 pl-3.5 ${iconKey === 'individual' ? 'pr-16' : 'pr-20'}`}
       style={{ boxShadow: '0 2px 4px -2px rgba(10,13,18,0.06), 0 4px 8px -2px rgba(10,13,18,0.1)' }}
     >
       <img
@@ -160,11 +162,9 @@ export function AwardsSectionRender({
           {heading}
         </h2>
 
-        {/* Intro — Figma 20px Medium → 15px */}
+        {/* Intro — Figma 20px Medium → 15px, supports rich text (e.g. <strong>) */}
         {introText && (
-          <p className="text-[15px] leading-relaxed text-[#222] mb-5 text-center">
-            {introText}
-          </p>
+          <RichText html={introText} className="text-[15px] leading-relaxed text-[#222] mb-5 text-center" />
         )}
 
         {/* Default round card — Preliminary + Semi-Final side by side */}
