@@ -157,21 +157,22 @@ export function CompetitionStructureRender({
           {heading}
         </h2>
 
-        {/* Hero image — Figma 1447×456, 14px corners, photo + 70% overlay */}
-        {/* 0.75×: aspect preserved, corners 10.5→rounded-xl (12px) */}
+        {/* Hero image — Figma 1447×456 frame (aspect 3.173), 14px corners,
+           overlay applied in CSS on top. Source image is expected to be
+           pre-cropped to this frame's aspect with Figma's ~72% vertical
+           pan baked in (see unc-challenge-hero-1920x640.webp: 1920×640 at
+           3:1 with ~17px symmetric wiggle around the exact visible slice,
+           so object-cover center-center renders the same faces Figma
+           showed). No object-position needed. */}
         {heroImage?.url && (
           <div
             className="relative rounded-xl overflow-hidden"
             style={{ aspectRatio: '1447 / 456' }}
           >
-            {/* Figma crop: h 210.65%, top -79.67% → object-position y ≈ 72%
-               (vs default 50%). Reveals lower portion of the source — faces
-               framed at body level instead of cropping at heads. */}
             <img
               src={heroImage.url}
               alt={heroImage.alt || ''}
               className="absolute inset-0 w-full h-full object-cover"
-              style={{ objectPosition: 'center 72%' }}
             />
             <div
               className="absolute inset-0"
