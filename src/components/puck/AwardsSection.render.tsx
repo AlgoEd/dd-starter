@@ -177,7 +177,7 @@ export function AwardsSectionRender({
           <img
             src="/competition-assets/decor-medal.svg"
             alt=""
-            className="absolute pointer-events-none opacity-20"
+            className="absolute pointer-events-none"
             style={{ left: '93%', top: '48%', width: '8.6%' }}
           />
           <div className="relative z-10 py-8 px-6">
@@ -224,19 +224,19 @@ export function AwardsSectionRender({
           <img
             src="/competition-assets/decor-star.svg"
             alt=""
-            className="absolute pointer-events-none opacity-20"
+            className="absolute pointer-events-none"
             style={{ left: '0.3%', top: '41%', width: '7.7%' }}
           />
           <img
             src="/competition-assets/decor-trophy.svg"
             alt=""
-            className="absolute pointer-events-none opacity-20"
+            className="absolute pointer-events-none"
             style={{ left: '91.3%', top: '52%', width: '10.7%' }}
           />
           <img
             src="/competition-assets/decor-medal.svg"
             alt=""
-            className="absolute pointer-events-none opacity-20"
+            className="absolute pointer-events-none"
             style={{ left: '84.4%', top: '39.8%', width: '8.6%' }}
           />
           <div className="relative z-10 py-8 px-6">
