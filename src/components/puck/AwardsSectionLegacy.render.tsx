@@ -95,7 +95,7 @@ export function AwardsSectionLegacyRender({
 }: AwardsSectionLegacyProps) {
   return (
     <section style={{ paddingTop: '39px', paddingBottom: '39px' }}>
-      <div className="max-w-[940px] mx-auto px-5 lg:px-0">
+      <div className="max-w-6xl mx-auto px-5 lg:px-0">
         <h2
           className="font-bold"
           style={{ fontSize: '30px', lineHeight: '1.3' }}

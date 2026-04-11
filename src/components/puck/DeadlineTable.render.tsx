@@ -49,7 +49,7 @@ export function DeadlineTableRender({
 
   return (
     <section className="py-10">
-      <div className="max-w-[940px] mx-auto px-5 lg:px-0">
+      <div className="max-w-6xl mx-auto px-5 lg:px-0">
         <h2
           className="font-bold mb-8 text-3xl leading-[1.3] text-[#222]"
         >

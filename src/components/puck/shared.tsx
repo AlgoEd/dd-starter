@@ -1,7 +1,12 @@
 /**
  * Shared primitives for competition Puck components.
  *
- * Typography scale — Figma designs at 1728px, scaled 0.75× for 940px container.
+ * Container: max-w-6xl (1152px). Matches Figma's canonical 1447×0.75 ≈ 1085,
+ * the "How does the challenge work?" section base (node 6373:7055). 6xl is
+ * also the 2026 marketing-page default. Reserve max-w-5xl (1024) if line
+ * lengths start feeling too long.
+ *
+ * Typography scale — Figma designs at 1728px, scaled 0.75×.
  * All sizes use Tailwind stock classes. Floor: 12px (text-xs) for readability.
  *
  *   Role              Figma   Ours    Tailwind       Scale
