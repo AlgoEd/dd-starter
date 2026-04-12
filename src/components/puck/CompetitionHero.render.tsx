@@ -4,11 +4,11 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { CompetitionCTA, safeHex, hexAlpha } from './shared'
-import { CalendarToday } from './icons'
+import { CalendarToday, iconMap } from './icons'
 
 export interface BadgeItem {
   label: string
-  icon: MediaReference | null
+  iconName: string
 }
 
 export interface CompetitionHeroProps {
@@ -167,10 +167,10 @@ export function CompetitionHeroRender({
                     className="flex-shrink-0 flex items-center justify-center w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] rounded-full"
                     style={{ border: `2px solid ${color}` }}
                   >
-                    {badge.icon?.url && (
-                      <img src={badge.icon.url} alt={badge.icon.alt || badge.label}
-                        className="w-4 h-4 sm:w-5 sm:h-5 object-contain" />
-                    )}
+                    {iconMap[badge.iconName] && (() => {
+                      const Icon = iconMap[badge.iconName]!
+                      return <Icon className="w-4 h-4 sm:w-5 sm:h-5" style={{ color }} />
+                    })()}
                   </div>
                   <span className="text-[14px] sm:text-[18px] font-semibold uppercase leading-[1.3]"
                     style={{ color }}>

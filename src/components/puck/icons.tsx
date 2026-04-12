@@ -11,7 +11,18 @@
 //   - No font-loading flash or network request
 //   - To add an icon: copy path from Google Fonts Icons at the same settings
 
-type IconProps = React.SVGProps<SVGSVGElement>
+export type IconProps = React.SVGProps<SVGSVGElement>
+
+// Shared icon map for Puck select fields. Components look up by name.
+export const iconMap: Record<string, (props: IconProps) => React.JSX.Element> = {}
+
+// Puck select options — { label, value } for icon picker fields.
+export const iconOptions: { label: string; value: string }[] = []
+
+function register(name: string, label: string, component: (props: IconProps) => React.JSX.Element) {
+  iconMap[name] = component
+  iconOptions.push({ label, value: name })
+}
 
 export function CalendarToday(props: IconProps) {
   return (
@@ -100,3 +111,16 @@ export function WbIncandescent(props: IconProps) {
     </svg>
   )
 }
+
+// Register all icons for picker use
+register('CalendarToday', 'Calendar Today', CalendarToday)
+register('CheckCircle', 'Check Circle', CheckCircle)
+register('EventList', 'Event List', EventList)
+register('SportsScore', 'Sports Score', SportsScore)
+register('Groups', 'Groups', Groups)
+register('License', 'License', License)
+register('RewardedAds', 'Rewarded Ads', RewardedAds)
+register('Public', 'Public', Public)
+register('Science', 'Science', Science)
+register('Syringe', 'Syringe', Syringe)
+register('WbIncandescent', 'Wb Incandescent', WbIncandescent)

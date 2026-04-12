@@ -2,8 +2,8 @@
  * SummaryGrid — full editor config with field definitions.
  */
 import type { ComponentConfig } from '@puckeditor/core'
-import { createMediaField } from '@delmaredigital/payload-puck/fields'
 import { createColorField } from './fields'
+import { iconOptions } from './icons'
 import { SummaryGridRender, defaultProps } from './SummaryGrid.render'
 import type { SummaryGridProps } from './SummaryGrid.render'
 
@@ -18,7 +18,7 @@ export const SummaryGridConfig: ComponentConfig<SummaryGridProps> = {
       type: 'array',
       label: 'Summary Cards',
       arrayFields: {
-        icon: createMediaField({ label: 'Icon' }),
+        iconName: { type: 'select', label: 'Icon', options: iconOptions },
         title: { type: 'text', label: 'Title' },
         description: { type: 'textarea', label: 'Description' },
       },

@@ -5,11 +5,11 @@
  * 3×2 feature grid. Each card: icon box + title inline, description below.
  * Figma source: node 6373:7310
  */
-import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { safeHex } from './shared'
+import { iconMap } from './icons'
 
 export interface SummaryCard {
-  icon: MediaReference | null
+  iconName: string
   title: string
   description: string
 }
@@ -23,12 +23,12 @@ export interface SummaryGridProps {
 export const defaultProps: SummaryGridProps = {
   heading: 'Summary',
   cards: [
-    { icon: null, title: 'Preliminary Round', description: 'Online test with multiple choice and short answer questions' },
-    { icon: null, title: 'Semi-Final Round', description: 'Live rapid-fire questions via Zoom' },
-    { icon: null, title: 'Final Round', description: 'Live rapid-fire questions via Zoom' },
-    { icon: null, title: 'Team Size', description: '2-5 students from the same school' },
-    { icon: null, title: 'Age Categories', description: 'K-G2, G3-G5, G6-G8, G9-G12' },
-    { icon: null, title: 'Six Quiz Categories', description: 'Choose to participate in one or more categories' },
+    { iconName: 'EventList', title: 'Preliminary Round', description: 'Online test with multiple choice and short answer questions' },
+    { iconName: 'SportsScore', title: 'Semi-Final Round', description: 'Live rapid-fire questions via Zoom' },
+    { iconName: 'Groups', title: 'Final Round', description: 'Live rapid-fire questions via Zoom' },
+    { iconName: 'License', title: 'Team Size', description: '2-5 students from the same school' },
+    { iconName: 'RewardedAds', title: 'Age Categories', description: 'K-G2, G3-G5, G6-G8, G9-G12' },
+    { iconName: 'Public', title: 'Six Quiz Categories', description: 'Choose to participate in one or more categories' },
   ],
   primaryColor: '#850c10',
 }
@@ -47,9 +47,10 @@ export function SummaryGridRender({
             <div key={i}>
               <div className="flex items-center gap-1.5 mb-2">
                 <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg bg-[#f2f3f0]">
-                  {card.icon?.url && (
-                    <img src={card.icon.url} alt={card.icon.alt || ''} className="w-6 h-6 object-contain" />
-                  )}
+                  {iconMap[card.iconName] && (() => {
+                    const Icon = iconMap[card.iconName]!
+                    return <Icon className="w-6 h-6" style={{ color: safeHex(primaryColor) }} />
+                  })()}
                 </div>
                 <span
                   className="font-bold text-lg leading-7 capitalize tracking-[0.02em]"

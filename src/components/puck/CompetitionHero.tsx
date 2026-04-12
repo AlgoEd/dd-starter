@@ -5,6 +5,7 @@
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
 import { createColorField, createOptionalColorField } from './fields'
+import { iconOptions } from './icons'
 import { CompetitionHeroRender, defaultProps } from './CompetitionHero.render'
 import type { CompetitionHeroProps } from './CompetitionHero.render'
 
@@ -40,9 +41,9 @@ export const CompetitionHeroConfig: ComponentConfig<CompetitionHeroProps> = {
       label: 'Badge Strip Items',
       arrayFields: {
         label: { type: 'text', label: 'Badge Label' },
-        icon: createMediaField({ label: 'Badge Icon' }),
+        iconName: { type: 'select', label: 'Icon', options: iconOptions },
       },
-      defaultItemProps: { label: 'Topic', icon: null },
+      defaultItemProps: { label: 'Topic', iconName: '' },
     },
   },
   defaultProps,
