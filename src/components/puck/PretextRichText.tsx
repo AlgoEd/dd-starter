@@ -36,11 +36,6 @@ function splitIntoBlocks(html: string): Block[] {
   return blocks
 }
 
-function computedFont(cs: CSSStyleDeclaration): string {
-  return [cs.fontStyle, cs.fontVariant, cs.fontWeight,
-    `${cs.fontSize}/${cs.lineHeight}`, cs.fontFamily].filter(Boolean).join(' ')
-}
-
 function contentBoxWidth(el: HTMLElement, cs: CSSStyleDeclaration): number {
   return el.getBoundingClientRect().width
     - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)
@@ -52,8 +47,7 @@ function createMeasurer(el: HTMLElement) {
   span.style.visibility = 'hidden'
   span.style.position = 'absolute'
   span.style.whiteSpace = 'pre'
-  span.style.font = computedFont(getComputedStyle(el))
-  document.body.appendChild(span)
+  el.appendChild(span)
   return {
     measure(word: string) {
       span.textContent = word
