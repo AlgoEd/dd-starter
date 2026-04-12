@@ -183,8 +183,15 @@ export function CompetitionStructureRender({
           </div>
         )}
 
-        {/* Info cards — overlap hero bottom */}
-        {/* Figma: overlap 209→157px, gap 22→16px ≈ gap-4 */}
+        {/* Info cards — overlap hero bottom.
+            Figma: cards start at 54% of bg height, covering bottom 46%.
+            Overlap 209 Figma → 157px CSS. When cropping hero images,
+            account for bottom 46% being occluded by cards.
+            TODO: replace fixed -157px with 50% overlap (e.g., absolute
+            bottom-0 translate-y-1/2) so it scales responsively.
+            Note: Figma is 54/46 not 50/50 — switching to 50% means
+            4% more of the image top is visible. Crop hero images
+            accordingly (important content in top 50%, not top 54%). */}
         {/* Card: #F2F3F0, corners 14→10.5 ≈ rounded-xl, Shadow Large */}
         {/* Padding: L 44→33 ≈ px-8 (32px), T 29→22 ≈ pt-6 (24px) */}
         {cards.length > 0 && (

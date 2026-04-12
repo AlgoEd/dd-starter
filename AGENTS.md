@@ -35,6 +35,26 @@ Full docs: `.cursor/rules/webmcp-agent-tools.md`
 5. **Access Control**: Understand Local API bypasses access control by default
 6. **Access Control**: Ensure roles exist when modifiyng collection or globals with access controls
 
+### Figma Source
+
+File: `gsQOnwzRxVZA3Q6MMY1bnv` — "AlgoEd New (Copy)"
+Master page: "Top 50 Schools League" (`6214:15184`) — start here.
+Each competition section contains multiple child frames (HS, Junior, Mobile).
+Fetch the specific HS desktop frame, not the section root — the root includes
+all variants and produces duplicates. Ask the user for the exact Figma URL
+if the right frame isn't obvious.
+
+| Section node | Competition | HS desktop frame | Status |
+|---|---|---|---|
+| `6392:24638` | UNC | `6272:33298` | ✅ K-5 done, HS TBD |
+| `6392:29351` | THURJ | `6386:14219` | HS text done (no img), Junior TBD |
+| `6391:11413` | Boston | TBD | |
+| `6413:24208` | Stanford | TBD | |
+| `6272:26901` | UIUC | TBD | |
+| `6392:24639` | UCI | TBD | |
+| `6392:24640` | Rice University | TBD | |
+| `6391:14297` | Rutgers | TBD | |
+
 ### Figma-to-CSS Convention
 
 Figma designs at 1728px frame width. All sizing scales **× 0.75** to CSS. Prefer Tailwind design tokens over exact values, inferring designer intent. See `src/components/puck/shared.tsx` for scale table and section width tiers.
