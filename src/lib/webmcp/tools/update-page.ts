@@ -15,6 +15,7 @@ export function createUpdatePageTool(accessors: PuckStateAccessors) {
       'Updates page content in the Puck editor. Pass mode + components.\n' +
       '- **patch**: each component is matched by props.id. Props are SHALLOW-merged — top-level props merge, but arrays/objects (e.g. rounds) are fully replaced. Always pass complete values for array/object props. Components without a matching id cause an error.\n' +
       '- **overwrite**: replaces the entire content array with the provided components. Use for full page rebuilds.\n' +
+      'Call get_page_state first — ids are not guessable.\n' +
       'Canvas updates live. Not saved until save_page is called.',
     inputSchema: {
       type: 'object' as const,
