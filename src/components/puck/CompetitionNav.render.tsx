@@ -17,12 +17,19 @@ export interface NavLinkItem {
   href: string
 }
 
+// Universal nav button colors — consistent across all competition pages,
+// independent of per-competition primaryColor.
+const NAV_CTA_BG = '#3247C6'
+const NAV_CTA_TINT = '#EBEDFC'
+
 export interface CompetitionNavProps {
   partnerLogo: MediaReference | null
   partnerLink: string
   navLinks: NavLinkItem[]
   ctaText: string
   ctaLink: string
+  secondaryCtaText: string
+  secondaryCtaLink: string
   primaryColor: string
 }
 
@@ -32,13 +39,16 @@ export const defaultProps: CompetitionNavProps = {
   navLinks: [
     { label: 'FAQs', href: 'https://docs.algoed.co/article/11-competitions-general-faq' },
   ],
-  ctaText: 'Competition Portal',
+  ctaText: 'Register Now!',
   ctaLink: '#',
+  secondaryCtaText: 'More Competitions',
+  secondaryCtaLink: 'https://app.algoed.co/explore-competitions',
   primaryColor: '#a31f35',
 }
 
 export function CompetitionNavRender({
-  partnerLogo, partnerLink, navLinks, ctaText, ctaLink, primaryColor,
+  partnerLogo, partnerLink, navLinks, ctaText, ctaLink,
+  secondaryCtaText, secondaryCtaLink, primaryColor,
 }: CompetitionNavProps) {
   const color = safeHex(primaryColor)
   return (
@@ -79,12 +89,23 @@ export function CompetitionNavRender({
             ))}
           </nav>
           <div style={{ backgroundColor: '#e0e3de', width: '1px', height: '24px' }} />
+          {secondaryCtaText && (
+            <a
+              href={secondaryCtaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="no-underline font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
+              style={{ backgroundColor: NAV_CTA_TINT, color: NAV_CTA_BG }}
+            >
+              {secondaryCtaText}
+            </a>
+          )}
           <a
             href={ctaLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="no-underline text-white font-bold text-center rounded-lg py-3 px-6"
-            style={{ backgroundColor: color, fontSize: '16px', lineHeight: '24px' }}
+            className="no-underline text-white font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
+            style={{ backgroundColor: NAV_CTA_BG }}
           >
             {ctaText}
           </a>

@@ -26,6 +26,8 @@ export const CompetitionNavConfig: ComponentConfig<CompetitionNavProps> = {
     },
     ctaText: { type: 'text', label: 'CTA Button Text' },
     ctaLink: { type: 'text', label: 'CTA Button Link' },
+    secondaryCtaText: { type: 'text', label: 'Secondary CTA Text' },
+    secondaryCtaLink: { type: 'text', label: 'Secondary CTA Link' },
     primaryColor: createColorField({ label: 'Brand Color' }),
   },
   defaultProps,
