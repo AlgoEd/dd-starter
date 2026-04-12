@@ -35,6 +35,10 @@ Full docs: `.cursor/rules/webmcp-agent-tools.md`
 5. **Access Control**: Understand Local API bypasses access control by default
 6. **Access Control**: Ensure roles exist when modifiyng collection or globals with access controls
 
+### Figma-to-CSS Convention
+
+Figma designs at 1728px frame width. All sizing scales **× 0.75** to CSS. Prefer Tailwind design tokens over exact values, inferring designer intent. See `src/components/puck/shared.tsx` for scale table and section width tiers.
+
 ### Code Validation
 
 - To validate typescript correctness after modifying code run `tsc --noEmit`

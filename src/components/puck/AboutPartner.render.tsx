@@ -55,9 +55,7 @@ export function AboutPartnerRender({
           href={ctaLink}
           bgColor="#ffffff"
           textColor={color}
-          padding="10px 25px"
           target="_blank"
-          lineHeight="22px"
         />
       </div>
     </section>

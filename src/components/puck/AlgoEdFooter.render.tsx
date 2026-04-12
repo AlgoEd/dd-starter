@@ -90,7 +90,6 @@ export function AlgoEdFooterRender({
               href="https://app.algoed.co/explore-competitions"
               bgColor="#ffffff"
               textColor={color}
-              padding="12px 28px"
               target="_blank"
               border={`1px solid ${color}`}
             />

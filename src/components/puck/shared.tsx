@@ -98,10 +98,9 @@ export function CompetitionCTA({
   href,
   bgColor,
   textColor,
-  padding = '10px 70px',
+  padding,
   target,
   border,
-  lineHeight,
   fullWidth,
 }: {
   text: string
@@ -111,7 +110,6 @@ export function CompetitionCTA({
   padding?: string
   target?: '_blank'
   border?: string
-  lineHeight?: string
   fullWidth?: boolean
 }) {
   if (!text) return null
@@ -120,13 +118,12 @@ export function CompetitionCTA({
       href={href}
       target={target}
       rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-      className={`rounded text-base font-semibold no-underline text-center ${fullWidth ? 'block w-full' : 'inline-block'}`}
+      className={`rounded-md text-sm font-bold leading-normal no-underline text-center shadow-sm py-3 px-5 ${fullWidth ? 'block w-full' : 'inline-block'}`}
       style={{
         color: textColor,
         backgroundColor: bgColor,
         padding,
         border,
-        lineHeight,
       }}
     >
       {text}

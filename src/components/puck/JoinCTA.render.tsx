@@ -173,7 +173,6 @@ export function JoinCTARender({
                     href={ctaLink}
                     bgColor={color}
                     textColor="#ffffff"
-                    padding="14px 40px"
                   />
                 )}
                 {secondaryCtaText && (
@@ -182,7 +181,6 @@ export function JoinCTARender({
                     href={secondaryCtaLink}
                     bgColor="transparent"
                     textColor={color}
-                    padding="14px 40px"
                     border={`1px solid ${color}`}
                   />
                 )}
