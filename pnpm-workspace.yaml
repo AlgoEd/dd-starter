@@ -1,0 +1,9 @@
+blockExoticSubdeps: true
+
+# Block packages published less than 7 days ago (supply chain protection)
+minimumReleaseAge: 10080
+resolutionMode: time-based
+
+# trustPolicy: no-downgrade — disabled for now; too many transitive deps
+# (semver, eslint-import-resolver-typescript, @mcp-b/*) lost provenance
+# on recent releases. Re-enable once the ecosystem stabilizes.
