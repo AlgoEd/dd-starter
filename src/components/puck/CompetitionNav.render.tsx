@@ -94,8 +94,8 @@ export function CompetitionNavRender({
               href={ctaLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="no-underline text-white font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
-              style={{ backgroundColor: NAV_CTA_BG }}
+              className="no-underline text-white font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal hover:opacity-90 active:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              style={{ backgroundColor: NAV_CTA_BG, '--tw-ring-color': NAV_CTA_BG } as React.CSSProperties}
             >
               {ctaText}
             </a>
@@ -104,8 +104,8 @@ export function CompetitionNavRender({
                 href={secondaryCtaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="no-underline font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
-                style={{ backgroundColor: NAV_CTA_TINT, color: NAV_CTA_BG }}
+                className="no-underline font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal hover:opacity-90 active:opacity-80 transition-opacity focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                style={{ backgroundColor: NAV_CTA_TINT, color: NAV_CTA_BG, '--tw-ring-color': NAV_CTA_BG } as React.CSSProperties}
               >
                 {secondaryCtaText}
               </a>
