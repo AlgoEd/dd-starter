@@ -1,19 +1,14 @@
 'use client'
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { prepareWithSegments } from '@chenglou/pretext'
-import { breakLines, positionItems, forcedBreak, type InputItem } from 'tex-linebreak'
+import { layoutItemsFromString, breakLines, positionItems } from 'tex-linebreak'
 
-// Pretext (measurement) + tex-linebreak (Knuth-Plass optimal breaking)
-// + CSS text-align: justify (word spacing).
+// Knuth-Plass justified text via tex-linebreak.
+// DOM-based measurement (hidden span + getBoundingClientRect) for
+// pixel-accurate width matching with browser rendering. Runs once
+// per paragraph, re-runs on resize.
 //
-// prepareWithSegments gives .segments[] and .widths[] — per-word pixel
-// widths measured via canvas without DOM reflow. Those widths feed into
-// tex-linebreak as box/glue/penalty items for optimal line breaking.
-// Each resulting line renders as a block <span> with CSS justify.
-
-// tex-linebreak defaults: stretch 1.5×, shrink 0.6× of space width
-const SPACE_STRETCH = 1.5
-const SPACE_SHRINK = 0.6
+// Pretext (installed separately) is reserved for future use cases
+// like variable-width layouts around images.
 
 type Block =
   | { type: 'p'; text: string }
@@ -41,53 +36,45 @@ function splitIntoBlocks(html: string): Block[] {
   return blocks
 }
 
-function segmentsToItems(
-  segments: readonly string[],
-  widths: readonly number[],
-): InputItem[] {
-  const items: InputItem[] = []
-  for (let i = 0; i < segments.length; i++) {
-    const seg = segments[i]!
-    const w = widths[i]!
-    if (seg.trim().length === 0) {
-      items.push({
-        type: 'glue',
-        width: w,
-        stretch: w * SPACE_STRETCH,
-        shrink: w * SPACE_SHRINK,
-      })
-    } else {
-      items.push({ type: 'box', width: w })
-    }
+function createMeasurer(el: HTMLElement) {
+  const span = document.createElement('span')
+  span.style.visibility = 'hidden'
+  span.style.position = 'absolute'
+  span.style.whiteSpace = 'pre'
+  span.style.font = getComputedStyle(el).font
+  document.body.appendChild(span)
+  return {
+    measure(word: string) {
+      span.textContent = word
+      return span.getBoundingClientRect().width
+    },
+    cleanup() { span.remove() },
   }
-  items.push(forcedBreak())
-  return items
 }
 
 function JustifiedParagraph({ text }: { text: string }) {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLParagraphElement>(null)
   const [lines, setLines] = useState<string[] | null>(null)
 
   const reflow = useCallback(async () => {
     if (!ref.current) return
     await document.fonts.ready
-    const width = ref.current.offsetWidth
+    const width = ref.current.clientWidth
     if (width <= 0) return
 
+    const { measure, cleanup } = createMeasurer(ref.current)
     try {
-      const styles = getComputedStyle(ref.current)
-      const font = styles.font || `${styles.fontWeight} ${styles.fontSize} ${styles.fontFamily}`
-      const prepared = prepareWithSegments(text, font)
-      const items = segmentsToItems(prepared.segments, prepared.widths)
+      const items = layoutItemsFromString(text, measure)
       const breakpoints = breakLines(items, width, { maxAdjustmentRatio: null })
       const positions = positionItems(items, width, breakpoints, { includeGlue: true })
 
       const lineMap = new Map<number, string[]>()
       for (const pos of positions) {
-        const seg = prepared.segments[pos.item]
-        if (seg == null) continue
-        if (!lineMap.has(pos.line)) lineMap.set(pos.line, [])
-        lineMap.get(pos.line)!.push(seg)
+        const item = items[pos.item]
+        if (item && 'text' in item && item.text) {
+          if (!lineMap.has(pos.line)) lineMap.set(pos.line, [])
+          lineMap.get(pos.line)!.push(item.text)
+        }
       }
 
       const result: string[] = []
@@ -97,6 +84,8 @@ function JustifiedParagraph({ text }: { text: string }) {
       setLines(result)
     } catch {
       setLines(null)
+    } finally {
+      cleanup()
     }
   }, [text])
 
@@ -110,14 +99,14 @@ function JustifiedParagraph({ text }: { text: string }) {
 
   if (!lines) {
     return (
-      <p ref={ref} className="text-justify mb-4">
+      <p ref={ref} className="text-justify">
         {text}
       </p>
     )
   }
 
   return (
-    <div ref={ref} className="mb-4">
+    <p ref={ref}>
       {lines.map((line, i) => (
         <span
           key={i}
@@ -127,7 +116,7 @@ function JustifiedParagraph({ text }: { text: string }) {
           {line}
         </span>
       ))}
-    </div>
+    </p>
   )
 }
 
