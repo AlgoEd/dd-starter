@@ -105,7 +105,7 @@ export const defaultProps: CompetitionFormatV2Props = {
       infoCards: [],
       formatDetails: '',
       formatCards: [],
-      body: 'Finalist teams will have one week to refine and improve their solutions from the semi-final round based on judges\u2019 feedback, and present their final solution to a judging panel composed of UNC Medical Brigades students.',
+      body: 'Finalist teams will have one week to refine and improve their solutions from the semi-final round based on judges\u2019 feedback, and present their final solution to a <strong>judging panel</strong> composed of <strong>UNC Medical Brigades students.</strong>',
     },
   ],
   ctaText: 'Register Now!',
