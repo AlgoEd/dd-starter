@@ -89,26 +89,28 @@ export function CompetitionNavRender({
             ))}
           </nav>
           <div className="w-px h-6 bg-gray-300" />
-          {secondaryCtaText && (
+          <div className="flex items-center gap-4">
             <a
-              href={secondaryCtaLink}
+              href={ctaLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="no-underline font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
-              style={{ backgroundColor: NAV_CTA_TINT, color: NAV_CTA_BG }}
+              className="no-underline text-white font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
+              style={{ backgroundColor: NAV_CTA_BG }}
             >
-              {secondaryCtaText}
+              {ctaText}
             </a>
-          )}
-          <a
-            href={ctaLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="no-underline text-white font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
-            style={{ backgroundColor: NAV_CTA_BG }}
-          >
-            {ctaText}
-          </a>
+            {secondaryCtaText && (
+              <a
+                href={secondaryCtaLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline font-semibold text-center rounded-md py-3 px-5 text-sm leading-normal"
+                style={{ backgroundColor: NAV_CTA_TINT, color: NAV_CTA_BG }}
+              >
+                {secondaryCtaText}
+              </a>
+            )}
+          </div>
         </div>
 
         {/* Mobile hamburger — shown below lg */}

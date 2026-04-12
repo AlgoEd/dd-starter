@@ -23,11 +23,11 @@ export interface SummaryGridProps {
 export const defaultProps: SummaryGridProps = {
   heading: 'Summary',
   cards: [
-    { iconName: 'EventList', title: 'Preliminary Round', description: 'Online test with multiple choice and short answer questions' },
-    { iconName: 'SportsScore', title: 'Semi-Final Round', description: 'Live rapid-fire questions via Zoom' },
-    { iconName: 'Groups', title: 'Final Round', description: 'Live rapid-fire questions via Zoom' },
-    { iconName: 'License', title: 'Team Size', description: '2-5 students from the same school' },
-    { iconName: 'RewardedAds', title: 'Age Categories', description: 'K-G2, G3-G5, G6-G8, G9-G12' },
+    { iconName: 'License', title: 'Preliminary Round', description: 'Online test with multiple choice and short answer questions' },
+    { iconName: 'RewardedAds', title: 'Semi-Final Round', description: 'Live rapid-fire questions via Zoom' },
+    { iconName: 'SportsScore', title: 'Final Round', description: 'Live rapid-fire questions via Zoom' },
+    { iconName: 'Groups', title: 'Team Size', description: '2-5 students from the same school' },
+    { iconName: 'EventList', title: 'Age Categories', description: 'K-G2, G3-G5, G6-G8, G9-G12' },
     { iconName: 'Public', title: 'Six Quiz Categories', description: 'Choose to participate in one or more categories' },
   ],
   primaryColor: '#850c10',
