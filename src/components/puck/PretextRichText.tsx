@@ -8,6 +8,13 @@ import { breakLines, positionItems, forcedBreak, type InputItem } from 'tex-line
 //            → fast candidate line breaks
 //   Stage 2: DOM validation per line → shave last word if line overflows
 //   Rendering: CSS text-align: justify + text-align-last handles spacing
+//
+// STATUS: temporarily not wired in. TwoColumnFeature uses RichText (CSS
+// greedy justify) for now. Known issue: Pretext canvas measurement drifts
+// in both directions vs DOM rendering. Stage 2 shaving fixes overflow
+// (under-measurement) but over-measurement still causes loose lines.
+// Next step: add a "try stuffing" pass to also pull words from the next
+// line when there's room, handling both drift directions.
 
 const SPACE_STRETCH = 1.5
 const SPACE_SHRINK = 0.6
