@@ -1,6 +1,6 @@
 'use client'
 
-import { ensureWebMCP } from './polyfill'
+import '@mcp-b/global'
 import type { InputSchema } from '@mcp-b/webmcp-types'
 
 export interface AgentTool {
@@ -22,15 +22,13 @@ declare global {
 
 let registeredToolNames: string[] = []
 
-export async function registerTools(tools: AgentTool[]) {
+export function registerTools(tools: AgentTool[]) {
   unregisterTools()
 
   // 1. Expose on window (fallback for direct page.evaluate())
   window.__puckAgentTools = tools
 
   // 2. Mirror to navigator.modelContext (WebMCP standard path)
-  await ensureWebMCP()
-
   const mc = navigator.modelContext
   if (mc) {
     for (const tool of tools) {
