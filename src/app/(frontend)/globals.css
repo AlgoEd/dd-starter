@@ -17,6 +17,11 @@
     font-weight: unset;
     font-size: unset;
   }
+
+  /* Prose bullet markers default to faded grey; override to match text color */
+  .prose {
+    --tw-prose-bullets: currentColor;
+  }
 }
 
 @plugin "@tailwindcss/typography";
