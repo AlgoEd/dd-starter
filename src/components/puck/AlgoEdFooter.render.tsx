@@ -9,7 +9,6 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { CompetitionCTA, safeHex } from './shared'
-import { usePrimaryColor } from './CompetitionColors'
 
 export interface AlgoEdFooterProps {
   primaryColor: string
@@ -24,9 +23,8 @@ export const defaultProps: AlgoEdFooterProps = {
 }
 
 export function AlgoEdFooterRender({
-  primaryColor: propColor,
+  primaryColor,
 }: AlgoEdFooterProps) {
-  const primaryColor = usePrimaryColor(propColor)
   const color = safeHex(primaryColor)
 
   return (

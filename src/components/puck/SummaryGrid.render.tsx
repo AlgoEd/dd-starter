@@ -6,7 +6,6 @@
  * Figma source: node 6373:7310
  */
 import { safeHex } from './shared'
-import { usePrimaryColor } from './CompetitionColors'
 import { iconMap } from './icons'
 
 export interface SummaryCard {
@@ -35,9 +34,8 @@ export const defaultProps: SummaryGridProps = {
 }
 
 export function SummaryGridRender({
-  heading, cards, primaryColor: propColor,
+  heading, cards, primaryColor,
 }: SummaryGridProps) {
-  const primaryColor = usePrimaryColor(propColor)
   return (
     <section className="py-10">
       <div className="max-w-5xl mx-auto px-5 lg:px-0">

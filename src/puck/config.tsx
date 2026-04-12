@@ -3,7 +3,6 @@
 import { extendConfig } from '@delmaredigital/payload-puck/config/editor'
 import { fullConfig } from '@delmaredigital/payload-puck/config/editor'
 import { competitionComponents, competitionCategories } from '@/components/puck'
-import { CompetitionColorsProvider } from '@/components/puck/CompetitionColors'
 import { createColorField } from '@/components/puck/fields'
 import type { ReactNode } from 'react'
 
@@ -21,12 +20,12 @@ export const puckConfig = extendConfig({
       secondaryColor: '',
     },
     render: ({ primaryColor, secondaryColor, children }: { primaryColor?: string; secondaryColor?: string; children: ReactNode }) => (
-      <CompetitionColorsProvider
-        primaryColor={primaryColor || ''}
-        secondaryColor={secondaryColor || ''}
-      >
+      <div style={{
+        '--brand-color': primaryColor || undefined,
+        '--tint-color': secondaryColor || primaryColor || undefined,
+      } as React.CSSProperties}>
         {children}
-      </CompetitionColorsProvider>
+      </div>
     ),
   },
 })

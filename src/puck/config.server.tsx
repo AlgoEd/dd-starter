@@ -8,7 +8,6 @@
 import { baseConfig } from '@delmaredigital/payload-puck/config'
 import { extendConfig } from '@delmaredigital/payload-puck/config'
 import { competitionComponentsServer } from '@/components/puck/index.server'
-import { CompetitionColorsProvider } from '@/components/puck/CompetitionColors'
 import type { ReactNode } from 'react'
 
 export const puckServerConfig = extendConfig({
@@ -16,12 +15,12 @@ export const puckServerConfig = extendConfig({
   components: competitionComponentsServer,
   root: {
     render: ({ primaryColor, secondaryColor, children }: { primaryColor?: string; secondaryColor?: string; children: ReactNode }) => (
-      <CompetitionColorsProvider
-        primaryColor={primaryColor || ''}
-        secondaryColor={secondaryColor || ''}
-      >
+      <div style={{
+        '--brand-color': primaryColor || undefined,
+        '--tint-color': secondaryColor || primaryColor || undefined,
+      } as React.CSSProperties}>
         {children}
-      </CompetitionColorsProvider>
+      </div>
     ),
   },
 })

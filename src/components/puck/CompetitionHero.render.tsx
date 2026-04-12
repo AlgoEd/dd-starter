@@ -4,7 +4,6 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { CompetitionCTA, safeHex, hexAlpha } from './shared'
-import { usePrimaryColor } from './CompetitionColors'
 import { CalendarToday, iconMap } from './icons'
 
 export interface BadgeItem {
@@ -64,14 +63,13 @@ export const defaultProps: CompetitionHeroProps = {
 
 export function CompetitionHeroRender({
   titleLine1, titleLine2, titleLine3, audienceLabel,
-  primaryColor: propColor, highlightTextColor, statusText, statusSubtext,
+  primaryColor, highlightTextColor, statusText, statusSubtext,
   ctaText, ctaLink, secondaryCtaText, secondaryCtaLink,
   heroImage, heroImageWidth, heroImageRightOffset, heroImageBottomGap,
   backgroundImage,
   overlayColor, overlayOpacity, overlayCSS,
   badgeStripHeading, badgeStripItems,
 }: CompetitionHeroProps) {
-  const primaryColor = usePrimaryColor(propColor)
   const color = safeHex(primaryColor)
   const bgImageUrl = backgroundImage?.url || ''
   const hasBadgeStrip = badgeStripItems && badgeStripItems.length > 0

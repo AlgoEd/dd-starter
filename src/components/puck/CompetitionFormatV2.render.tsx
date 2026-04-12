@@ -15,9 +15,8 @@
  * Round card bg: rgb(234,242,255), corners 16→12px = rounded-xl
  * Inner detail cards: white bg, corners 14→10.5px = rounded-xl
  */
-import { CompetitionCTA, RichText, safeHex, tintOnWhite, TINT_FALLBACK_CLASS } from './shared'
+import { CompetitionCTA, RichText, safeHex, TINT_FALLBACK_CLASS } from './shared'
 import { CalendarToday } from './icons'
-import { usePrimaryColor, useTintColor } from './CompetitionColors'
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -125,10 +124,8 @@ export function CompetitionFormatV2Render({
   ctaLink,
   secondaryCtaText,
   secondaryCtaLink,
-  primaryColor: propColor,
+  primaryColor,
 }: CompetitionFormatV2Props) {
-  const primaryColor = usePrimaryColor(propColor)
-  const tintColor = useTintColor(propColor)
   const color = safeHex(primaryColor)
   const rounds = rawRounds ?? []
 
@@ -148,7 +145,7 @@ export function CompetitionFormatV2Render({
           <div
             key={`format-round-${round.title}-${i}`}
             className={`rounded-xl px-12 py-7 ${TINT_FALLBACK_CLASS} ${i > 0 ? 'mt-12' : ''}`}
-            style={{ backgroundColor: tintOnWhite(tintColor, 0.10) }}
+            style={{ backgroundColor: `color-mix(in srgb, var(--tint-color, ${color}) 10%, white)` }}
           >
             {/* Round title — Figma 26px Bold primaryColor, leading-normal → 0.75× 20px = text-xl */}
             <h3

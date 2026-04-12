@@ -16,7 +16,6 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { CompetitionCTA, safeHex, hexAlpha } from './shared'
-import { usePrimaryColor } from './CompetitionColors'
 
 const CARD_SHADOW = '0 4px 6px -2px rgba(10,13,18,0.03), 0 12px 16px -4px rgba(10,13,18,0.08)'
 
@@ -141,9 +140,8 @@ export function CompetitionStructureRender({
   ctaLink,
   secondaryCtaText,
   secondaryCtaLink,
-  primaryColor: propColor,
+  primaryColor,
 }: CompetitionStructureProps) {
-  const primaryColor = usePrimaryColor(propColor)
   const cards = infoCards ?? []
   const roundsList = rounds ?? []
   const color = safeHex(primaryColor)

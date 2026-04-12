@@ -4,7 +4,6 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { CompetitionCTA, safeHex } from './shared'
-import { usePrimaryColor } from './CompetitionColors'
 
 export interface BenefitItem {
   icon: MediaReference | null
@@ -33,9 +32,8 @@ export const defaultProps: BenefitsGridProps = {
 }
 
 export function BenefitsGridRender({
-  sectionHeading, benefits, ctaText, ctaLink, primaryColor: propColor,
+  sectionHeading, benefits, ctaText, ctaLink, primaryColor,
 }: BenefitsGridProps) {
-  const primaryColor = usePrimaryColor(propColor)
   const color = safeHex(primaryColor)
 
   return (

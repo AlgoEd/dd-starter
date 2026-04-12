@@ -7,7 +7,6 @@
  * image-147 (5x99px, vertical). Both are solid burgundy lines — recreated with CSS divs.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { usePrimaryColor } from './CompetitionColors'
 
 export interface EligibilityStripProps {
   leftText: string
@@ -26,9 +25,8 @@ export const defaultProps: EligibilityStripProps = {
 }
 
 export function EligibilityStripRender({
-  leftText, rightText, leftIcon, rightIcon, primaryColor: propColor,
+  leftText, rightText, leftIcon, rightIcon, primaryColor,
 }: EligibilityStripProps) {
-  const primaryColor = usePrimaryColor(propColor)
   return (
     <section style={{ paddingTop: '15px', paddingBottom: '15px', margin: 0 }}>
       <div className="max-w-6xl mx-auto px-5 lg:px-0">
