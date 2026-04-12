@@ -81,7 +81,7 @@ export function AlgoEdFooterRender({
               className="font-semibold text-xl leading-8 mb-2.5"
               style={{ color }}
             >
-              AlgoEd is a platform that hosts curated competitions for ambitious K-12 students.
+              AlgoEd is a platform that hosts curated competitions for K-12 students.
             </p>
             <CompetitionCTA
               text="Explore Competitions"

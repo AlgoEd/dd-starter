@@ -76,7 +76,7 @@ export function RichText({ html, className }: { html: string; className?: string
   if (!html) return null
   return (
     <div
-      className={`prose prose-sm max-w-none text-justify ${className ?? ''}`}
+      className={`prose prose-sm max-w-none ${className ?? ''}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )
