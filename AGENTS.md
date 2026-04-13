@@ -47,6 +47,11 @@ if the right frame isn't obvious.
 
 **Figma text extraction:** Use `get_metadata` — text lives in `<text name="actual content">` nodes. Parse with Python stdlib: `json.load` → wrap in `<root>` → `xml.etree.ElementTree` → iterate `text` elements → `html.unescape(el.get('name'))`. If any names look like renamed layers (generic "heading", "label", etc.), fetch `get_design_context` for those nodes only.
 
+**Figma image extraction:** Two methods depending on image type:
+- **Raw photos** (single image on a rectangle): Get node via `GET /v1/files/:key/nodes?ids=:id`, read `imageRef` from fills. A node with IMAGE + SOLID fills = photo + primary color overlay — take only the IMAGE ref. Look up raw source URL via `GET /v1/files/:key/images` → `meta.images[imageRef]`. This gives the original upload at max quality, no overlay baked in.
+- **Composites** (group of photos + SVG decorations): Export the parent group via `GET /v1/images/:key?ids=:nodeId&format=png&scale=2`. Key: find the group that has images + decorations but NOT text — one level too high includes section headings.
+- Do NOT use `get_design_context` for images — it decomposes groups into individual vector parts.
+
 | Section node | Competition | HS desktop frame | Status |
 |---|---|---|---|
 | `6392:24638` | UNC | `6272:33298` | ✅ K-5 done, HS TBD |
