@@ -60,7 +60,7 @@ if the right frame isn't obvious.
 - **TwoColumnFeature images** (fostering, deadline): composites of multiple photos + decorative frames. Export parent group at 2x, NOT individual photos.
 - **JoinCTA**: circular photo already framed in the component — just need the round photo source, not the globe/circles decoration.
 - **Partner logo**: single small image, extract via `imageRef`.
-- **Timeline SVGs**: per-competition, unique dates. Always SVG, SVGO default optimization (no precision reduction — preserves text/dates). Two versions: horizontal (desktop, near "Key dates" heading) + vertical (mobile, ask user for node). Upload both to R2.
+- **Timeline SVGs**: per-competition, unique dates. Always SVG, SVGO-optimized. Two versions: horizontal (desktop) + vertical (mobile). ALWAYS show user the export for visual confirmation before uploading — the timeline group is easily confused with the nearby deadline table section.
 - Do NOT use `get_design_context` for images — it decomposes groups into individual vector parts.
 - **Finding composites**: ask user for any element inside it (e.g. a photo URL). Walk up ancestors via REST API `find_ancestors(frame, nodeId)` to find the parent group at the right scope. Export at 2x, show user to confirm which section it belongs to — don't guess.
 - **PNG transparency**: Figma PNG export preserves alpha. Black in viewers = transparent, not broken.
