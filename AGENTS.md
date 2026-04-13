@@ -19,7 +19,7 @@ You are an expert Payload CMS developer. When working with Payload projects, fol
 
 **NEVER** use raw `fetch()` for Payload REST API calls. Use the `payload_api` WebMCP tool — its description documents all collection endpoints (`/api/pages`, `/api/payload-folders`, `/api/media`) and gotchas. Read the tool description before calling any API.
 
-For **local file uploads**: STOP and ask user for a curl from Chrome DevTools Network tab, then shell-upload to `POST /api/media` with `-F file=@/path -F alt=...`.
+For **local file uploads**: STOP and ask user for a curl from Chrome DevTools Network tab, then shell-upload to `POST /api/media` with `-F file=@/path -F '_payload={"alt":"desc","folder":ID}'`. The `_payload` JSON field is required for folder assignment — plain `-F folder=2` is silently ignored on multipart uploads.
 
 **Media filenames must be globally unique** — prefix with competition slug (e.g. `unc-hero-bg.png`). Folders map to R2 paths via `beforeChange` hook in `Media.ts`; unique names are defense in depth.
 
@@ -52,7 +52,19 @@ if the right frame isn't obvious.
 **Figma image extraction:** Two methods depending on image type:
 - **Raw photos** (single image on a rectangle): Get node via `GET /v1/files/:key/nodes?ids=:id`, read `imageRef` from fills. A node with IMAGE + SOLID fills = photo + primary color overlay — take only the IMAGE ref. Look up raw source URL via `GET /v1/files/:key/images` → `meta.images[imageRef]`. This gives the original upload at max quality, no overlay baked in.
 - **Composites** (group of photos + SVG decorations): Export the parent group via `GET /v1/images/:key?ids=:nodeId&format=png&scale=2`. Key: find the group that has images + decorations but NOT text — one level too high includes section headings.
+
+**Competition page image types** (each is a separate upload):
+- **Hero background**: raw photo fill on full-width rectangle (+ color overlay in code). Extract via `imageRef`.
+- **Hero illustration**: large composite (SVG icons + photo) positioned absolute on right side of hero. ~400px rendered, source is larger. Export parent group at 2x. It's a top-level frame sibling, NOT nested inside the hero text group — hard to find programmatically. Ask user for the Figma node URL.
+- **About [school] photo**: single photo in card frame. Some schools share a generic building; others have school-specific photos.
+- **TwoColumnFeature images** (fostering, deadline): composites of multiple photos + decorative frames. Export parent group at 2x, NOT individual photos.
+- **JoinCTA**: circular photo already framed in the component — just need the round photo source, not the globe/circles decoration.
+- **Partner logo**: single small image, extract via `imageRef`.
+- **Timeline SVGs**: per-competition, unique dates. Always SVG, SVGO default optimization (no precision reduction — preserves text/dates). Two versions: horizontal (desktop, near "Key dates" heading) + vertical (mobile, ask user for node). Upload both to R2.
 - Do NOT use `get_design_context` for images — it decomposes groups into individual vector parts.
+- **Finding composites**: ask user for any element inside it (e.g. a photo URL). Walk up ancestors via REST API `find_ancestors(frame, nodeId)` to find the parent group at the right scope. Export at 2x, show user to confirm which section it belongs to — don't guess.
+- **PNG transparency**: Figma PNG export preserves alpha. Black in viewers = transparent, not broken.
+- **SVG optimization**: `npx svgo input.svg -o output.svg`. Always default settings.
 - **Shared vs unique caveat**: decorative elements (frame textures, corner SVGs, background patterns) share `imageRef` across competitions. Actual photos have unique refs per school. Don't assume "same ref = shared image" — verify it's a photo, not decoration. Compare refs at the photo fill level, not the composite group level.
 - **About [school] photo**: some competitions have school-specific campus photos (Boston, THURJ, Stanford), others use a shared generic red brick building (UNC, Rutgers, UCI, Rice). Shared photo goes to root; school-specific goes to competition folder.
 
