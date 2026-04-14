@@ -28,6 +28,8 @@ export interface JoinCTAProps {
   secondaryCtaText: string
   secondaryCtaLink: string
   circleSource: string
+  mapSource: string
+  mapIntensity: number
 }
 
 /* ── Defaults ───────────────────────────────────────────── */
@@ -41,6 +43,8 @@ export const defaultProps: JoinCTAProps = {
   secondaryCtaText: 'Join the league',
   secondaryCtaLink: '/league',
   circleSource: 'bright' as const,
+  mapSource: 'dark' as const,
+  mapIntensity: 30,
 }
 
 /* ── Render ──────────────────────────────────────────────── */
@@ -54,11 +58,15 @@ export function JoinCTARender({
   secondaryCtaText,
   secondaryCtaLink,
   circleSource,
+  mapSource,
+  mapIntensity,
 }: JoinCTAProps) {
   const heading = headingRaw || defaultProps.heading
   const body = bodyRaw || defaultProps.body
   const color = BRAND_DARK
   const circleColor = (circleSource ?? 'bright') === 'dark' ? BRAND_DARK : BRAND_BRIGHT
+  const mapColor = (mapSource ?? 'dark') === 'bright' ? BRAND_BRIGHT : BRAND_DARK
+  const mapPct = mapIntensity ?? 30
 
   return (
     <section className="py-5 md:py-10">
@@ -108,7 +116,7 @@ export function JoinCTARender({
               className="block w-full pointer-events-none"
               style={{
                 aspectRatio: '725 / 433',
-                backgroundColor: `color-mix(in srgb, ${color} 30%, white)`,
+                backgroundColor: `color-mix(in srgb, ${mapColor} ${mapPct}%, white)`,
                 WebkitMaskImage: 'url(/competition-assets/join-globe-frame-map.svg)',
                 WebkitMaskSize: '100% 100%',
                 maskImage: 'url(/competition-assets/join-globe-frame-map.svg)',
