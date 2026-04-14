@@ -72,7 +72,7 @@ export function CompetitionNavRender({
 
         {/* Desktop nav — hidden below lg, pushed right via ml-auto */}
         <div className="hidden lg:flex items-center flex-1 gap-6">
-          <nav className="flex items-center justify-between flex-1 min-w-0 max-w-[32rem] ml-auto">
+          <nav className="flex items-center gap-6 ml-auto">
             {navLinks.map((link, i) => (
               <a
                 key={i}
