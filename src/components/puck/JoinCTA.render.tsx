@@ -60,7 +60,7 @@ export function JoinCTARender({
   const color = safeHex(primaryColor)
 
   return (
-    <section className="py-10">
+    <section className="py-5 md:py-10">
       <div className="max-w-5xl mx-auto px-2.5 md:px-5 lg:px-0">
         {/* Two-column: globe frame (left) + text (right) */}
         {/* Figma gap frame→text: 52→39px ≈ gap-10 (40px) */}

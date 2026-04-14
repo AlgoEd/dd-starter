@@ -36,7 +36,7 @@ export function HighlightBadgesRender({
   const color = safeHex(primaryColor, '#13294C')
 
   return (
-    <section className="py-6 px-5 lg:px-0">
+    <section className="py-3 md:py-6 px-5 lg:px-0">
       <div
         className="mx-auto max-w-[1270px] rounded-xl bg-white px-8 py-8"
         style={{

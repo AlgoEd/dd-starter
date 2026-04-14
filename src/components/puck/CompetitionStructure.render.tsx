@@ -105,7 +105,7 @@ export function CompetitionStructureRender({
   const HERO_H = 456
 
   return (
-    <section className="py-10">
+    <section className="py-5 md:py-10">
       <div className="max-w-5xl mx-auto px-2.5 md:px-5 lg:px-0">
         {/* Heading — Figma 40px Bold #222 → 0.75× 30px. Gap to hero: 52→39px ≈ mb-10 (40px) */}
         <h2

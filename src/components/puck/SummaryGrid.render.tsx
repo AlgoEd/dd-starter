@@ -38,7 +38,7 @@ export function SummaryGridRender({
 }: SummaryGridProps) {
   const heading = headingRaw || defaultProps.heading
   return (
-    <section className="py-10">
+    <section className="py-5 md:py-10">
       <div className="max-w-5xl mx-auto px-5 lg:px-0">
         <h2 className="text-3xl font-bold leading-[1.3] text-[#222] mb-5">
           {heading}

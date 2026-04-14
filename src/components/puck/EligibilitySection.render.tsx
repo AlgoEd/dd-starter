@@ -33,7 +33,7 @@ export function EligibilitySectionRender({
   const color = safeHex(primaryColor)
 
   return (
-    <section className="bg-[#f2f3f0] py-8">
+    <section className="bg-[#f2f3f0] py-4 md:py-8">
       <div className="max-w-5xl mx-auto px-5 lg:px-0">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
           <p className="text-lg leading-[1.6] text-[#222] font-medium m-0 md:w-5/12">
