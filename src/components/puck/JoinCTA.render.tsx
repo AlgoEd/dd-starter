@@ -107,7 +107,7 @@ export function JoinCTARender({
               className="block w-full pointer-events-none"
               style={{
                 aspectRatio: '725 / 433',
-                backgroundColor: `color-mix(in srgb, var(--tint-color, ${color}) 10%, white)`,
+                backgroundColor: `color-mix(in srgb, ${color} 20%, white)`,
                 WebkitMaskImage: 'url(/competition-assets/join-globe-frame-map.svg)',
                 WebkitMaskSize: '100% 100%',
                 maskImage: 'url(/competition-assets/join-globe-frame-map.svg)',

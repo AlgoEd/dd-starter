@@ -13,7 +13,7 @@ export const puckConfig = extendConfig({
   root: {
     fields: {
       primaryColor: createColorField({ label: 'Primary Brand Color' }),
-      secondaryColor: createColorField({ label: 'Secondary Color (for tints; optional)' }),
+      secondaryColor: createColorField({ label: 'Tint Color (empty = 10% primary + 90% white)' }),
     },
     defaultProps: {
       primaryColor: '',
