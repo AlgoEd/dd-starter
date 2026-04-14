@@ -26,6 +26,7 @@ export const puckConfig = extendConfig({
         '--primary-dark': primaryDark || '#222',
         '--primary-bright': primaryBright || primaryDark || '#222',
         '--cta-bg': (ctaBgSource ?? 'dark') === 'bright' ? 'var(--primary-bright)' : 'var(--primary-dark)',
+        '--cta-text': (ctaBgSource ?? 'dark') === 'bright' ? 'var(--primary-dark)' : '#ffffff',
       } as React.CSSProperties}>
         {children}
       </div>

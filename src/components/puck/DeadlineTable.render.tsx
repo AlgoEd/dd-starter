@@ -5,7 +5,7 @@
  * Figma: stacked tier cards with watermark icon, full-width CTA.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK, CTA_BG, TINT_FALLBACK_CLASS } from './shared'
+import { CompetitionCTA, BRAND_DARK, CTA_BG, CTA_TEXT, TINT_FALLBACK_CLASS } from './shared'
 
 export interface TierItem {
   title: string
@@ -90,7 +90,7 @@ export function DeadlineTableRender({
               </div>
             ))}
 
-            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor="#ffffff" fullWidth />
+            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} fullWidth />
           </div>
 
           {featureImage?.url && (

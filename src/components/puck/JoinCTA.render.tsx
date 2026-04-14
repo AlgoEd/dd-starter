@@ -15,7 +15,7 @@
  * 0.75× scale from Figma 1728px → 940px container, snapped to Tailwind stock.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK, BRAND_BRIGHT, CTA_BG } from './shared'
+import { CompetitionCTA, BRAND_DARK, BRAND_BRIGHT, CTA_BG, CTA_TEXT } from './shared'
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -185,7 +185,7 @@ export function JoinCTARender({
                     text={ctaText}
                     href={ctaLink}
                     bgColor={CTA_BG}
-                    textColor="#ffffff"
+                    textColor={CTA_TEXT}
                   />
                 )}
                 {secondaryCtaText && (

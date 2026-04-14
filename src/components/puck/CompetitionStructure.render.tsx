@@ -15,7 +15,7 @@
  *   0 4px 6px -2px rgba(10,13,18,0.03), 0 12px 16px -4px rgba(10,13,18,0.08)
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK, BRAND_BRIGHT, CTA_BG } from './shared'
+import { CompetitionCTA, BRAND_DARK, BRAND_BRIGHT, CTA_BG, CTA_TEXT } from './shared'
 import { Groups, Category } from './icons'
 
 const CARD_SHADOW = '0 4px 6px -2px rgba(10,13,18,0.03), 0 12px 16px -4px rgba(10,13,18,0.08)'
@@ -223,7 +223,7 @@ export function CompetitionStructureRender({
                 text={ctaText}
                 href={ctaLink}
                 bgColor={CTA_BG}
-                textColor="#ffffff"
+                textColor={CTA_TEXT}
               />
             )}
             {secondaryCtaText && (
