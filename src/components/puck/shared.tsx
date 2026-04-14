@@ -55,6 +55,10 @@
  * Default fallback: `val || defaultProps.X` in render, `placeholder: defaultProps.X`
  * in field def. One source of truth. Only for fields that must have a value (headings,
  * body text). NOT for optional fields where empty = hide (CTAs, subtitles).
+ *
+ * Responsive spacing — two layouts split at `md` (768px). Mobile spacing = desktop ÷ 2,
+ * rounded to nearest Tailwind step. Example: `py-5 md:py-10`, `gap-2 md:gap-4`.
+ * `lg` is reserved for nav visibility and container padding only (`lg:px-0`).
  */
 const HEX_COLOR_RE = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
 

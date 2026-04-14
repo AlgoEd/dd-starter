@@ -131,11 +131,11 @@ export function CompetitionFormatV2Render({
   const rounds = rawRounds ?? []
 
   return (
-    <section className="py-10">
+    <section className="py-5 md:py-10">
       <div className="max-w-5xl mx-auto px-2.5 md:px-5 lg:px-0">
         {/* Heading — Figma 40px Bold #222 → 0.75× 30px. Gap to first card: 48→36px ≈ mb-9 */}
         <h2
-          className="font-bold text-center mb-9"
+          className="font-bold text-center mb-5 md:mb-9"
           style={{ fontSize: '30px', lineHeight: '1.3', color: '#222' }}
         >
           {heading}
@@ -145,7 +145,7 @@ export function CompetitionFormatV2Render({
         {rounds.map((round, i) => (
           <div
             key={`format-round-${round.title}-${i}`}
-            className={`rounded-xl px-12 py-7 ${TINT_FALLBACK_CLASS} ${i > 0 ? 'mt-12' : ''}`}
+            className={`rounded-xl px-5 py-4 md:px-12 md:py-7 ${TINT_FALLBACK_CLASS} ${i > 0 ? 'mt-6 md:mt-12' : ''}`}
             style={{ backgroundColor: `color-mix(in srgb, var(--tint-color, ${color}) 10%, white)` }}
           >
             {/* Round title — Figma 26px Bold primaryColor, leading-normal → 0.75× 20px = text-xl */}
@@ -182,7 +182,7 @@ export function CompetitionFormatV2Render({
             {/* Info cards (Time/Duration) — white bg, rounded-xl, side by side */}
             {/* Gap: Figma 20→15px ≈ gap-4. Margin below: 42→32px ≈ mb-8 */}
             {(round.infoCards ?? []).length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 items-start">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mb-4 md:mb-8 items-start">
                 {(round.infoCards ?? []).map((card, j) => (
                   <div
                     key={`info-${card.heading}-${j}`}
@@ -206,7 +206,7 @@ export function CompetitionFormatV2Render({
                   <RichText html={round.formatDetails} className="m-0 text-base text-[#222]" />
                 )}
                 {(round.formatCards ?? []).length > 0 && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 mt-2 md:mt-4 items-start">
                     {(round.formatCards ?? []).map((card, j) => (
                       <div
                         key={`cat-${card.heading}-${j}`}
