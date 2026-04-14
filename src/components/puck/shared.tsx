@@ -86,6 +86,10 @@ export function hexAlpha(hex: string, alpha: number): string {
 /** CSS var references for the two-color brand system set on the Puck root. */
 export const BRAND_DARK = 'var(--primary-dark, #222)'
 export const BRAND_BRIGHT = 'var(--primary-bright, #222)'
+export const HERO_OVERLAY = 'var(--hero-overlay, var(--primary-dark, #222))'
+export const HERO_TEXT = 'var(--hero-text, #ffffff)'
+export const HIGHLIGHT_BG = 'var(--highlight-bg, #ffffff)'
+export const HIGHLIGHT_TEXT = 'var(--highlight-text, var(--primary-dark, #222))'
 export const CTA_BG = 'var(--cta-bg, var(--primary-dark, #222))'
 export const CTA_TEXT = 'var(--cta-text, #ffffff)'
 

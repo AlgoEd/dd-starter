@@ -4,7 +4,7 @@
  */
 import type { ComponentConfig } from '@puckeditor/core'
 import { createMediaField } from '@delmaredigital/payload-puck/fields'
-import { createColorField, createSliderField, createBrandPickerField } from './fields'
+import { createSliderField } from './fields'
 import { iconOptions } from './icons'
 import { CompetitionHeroRender, defaultProps } from './CompetitionHero.render'
 import type { CompetitionHeroProps } from './CompetitionHero.render'
@@ -19,7 +19,6 @@ export const CompetitionHeroConfig: ComponentConfig<CompetitionHeroProps> = {
     titleLine2: { type: 'text', label: 'Title Line 2 — highlighted (e.g. "SCIENCE & ENGINEERING")' },
     titleLine3: { type: 'text', label: 'Title Line 3 (e.g. "COMPETITION 2026")' },
     audienceLabel: { type: 'text', label: 'Audience (e.g. "For Middle and High School Students")' },
-    highlightTextColor: createColorField({ label: 'Highlight Text Color' }),
     statusText: { type: 'text', label: 'Status Text (e.g. "Registration Open" or "Priority Registration Deadline")' },
     statusSubtext: { type: 'text', label: 'Status Subtext (e.g. "November 18, 2026" — leave empty for single line)' },
     ctaText: { type: 'text', label: 'CTA Button Text' },
@@ -31,7 +30,6 @@ export const CompetitionHeroConfig: ComponentConfig<CompetitionHeroProps> = {
     heroImageRightOffset: { type: 'number', label: 'Hero Image Right Offset (px past content edge, default 45)' },
     heroImageBottomGap: { type: 'number', label: 'Hero Image Bottom Gap (px from hero bottom, default 8)' },
     backgroundImage: createMediaField({ label: 'Background Image (behind overlay)' }),
-    overlaySource: createBrandPickerField({ label: 'Overlay Color' }),
     overlayTopOpacity: createSliderField({ label: 'Overlay Top Opacity (default 80%)', min: 0, max: 100, step: 5 }),
     overlayBottomOpacity: createSliderField({ label: 'Overlay Bottom Opacity (default 100%)', min: 0, max: 100, step: 5 }),
     badgeStripHeading: { type: 'text', label: 'Badge Strip Heading (e.g. "Step into:" — leave empty to hide strip)' },
