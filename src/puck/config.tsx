@@ -3,7 +3,7 @@
 import { extendConfig } from '@delmaredigital/payload-puck/config/editor'
 import { fullConfig } from '@delmaredigital/payload-puck/config/editor'
 import { competitionComponents, competitionCategories } from '@/components/puck'
-import { createColorField, createOptionalColorField } from '@/components/puck/fields'
+import { createColorField, createOptionalColorField, createBrandPickerField } from '@/components/puck/fields'
 import type { ReactNode } from 'react'
 
 export const puckConfig = extendConfig({
@@ -14,15 +14,18 @@ export const puckConfig = extendConfig({
     fields: {
       primaryDark: createColorField({ label: 'Primary Dark (text, borders, UI — required)' }),
       primaryBright: createOptionalColorField({ label: 'Primary Bright (hero overlay, accents — optional)' }),
+      ctaBgSource: createBrandPickerField({ label: 'CTA Button Background' }),
     },
     defaultProps: {
       primaryDark: '',
       primaryBright: '',
+      ctaBgSource: 'dark',
     },
-    render: ({ primaryDark, primaryBright, children }: { primaryDark?: string; primaryBright?: string; children: ReactNode }) => (
+    render: ({ primaryDark, primaryBright, ctaBgSource, children }: { primaryDark?: string; primaryBright?: string; ctaBgSource?: string; children: ReactNode }) => (
       <div style={{
         '--primary-dark': primaryDark || '#222',
         '--primary-bright': primaryBright || primaryDark || '#222',
+        '--cta-bg': (ctaBgSource ?? 'dark') === 'bright' ? 'var(--primary-bright)' : 'var(--primary-dark)',
       } as React.CSSProperties}>
         {children}
       </div>

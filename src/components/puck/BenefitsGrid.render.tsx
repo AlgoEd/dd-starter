@@ -2,7 +2,7 @@
  * BenefitsGrid — render function and types.
  * Server-safe: no client-only imports.
  */
-import { CompetitionCTA, BRAND_DARK } from './shared'
+import { CompetitionCTA, BRAND_DARK, CTA_BG } from './shared'
 
 export const benefitIconMap: Record<string, { src: string; label: string }> = {
   'hs-profile': { src: '/competition-assets/benefit-hs-profile.svg', label: 'Build your profile' },
@@ -61,7 +61,7 @@ export function BenefitsGridRender({
             </div>
           ))}
         </div>
-        <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" />
+        <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor="#ffffff" />
       </div>
     </section>
   )

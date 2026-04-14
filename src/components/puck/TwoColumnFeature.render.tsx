@@ -4,7 +4,7 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { FramedImage } from './FramedImage'
-import { CompetitionCTA, RichText, BRAND_DARK } from './shared'
+import { CompetitionCTA, RichText, BRAND_DARK, CTA_BG } from './shared'
 
 // Plain <img> instead of next/image — deliberate, do not switch back.
 //
@@ -63,7 +63,7 @@ export function TwoColumnFeatureRender({
       <div className="flex flex-wrap gap-4">
         {ctaVariant === 'outline'
           ? <CompetitionCTA text={ctaText} href={ctaLink} bgColor="transparent" textColor={color} border={`1px solid ${color}`} />
-          : <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" />
+          : <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor="#ffffff" />
         }
         <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor={color} border={`1px solid ${color}`} />
       </div>

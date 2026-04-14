@@ -3,7 +3,7 @@
  * Server-safe: no client-only imports.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK } from './shared'
+import { CompetitionCTA, BRAND_DARK, CTA_BG } from './shared'
 
 export interface FormatBullet {
   text: string
@@ -158,7 +158,7 @@ export function CompetitionFormatRender({
               </div>
             ))}
 
-            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={color} textColor="#ffffff" fullWidth />
+            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor="#ffffff" fullWidth />
           </div>
         </div>
       </div>

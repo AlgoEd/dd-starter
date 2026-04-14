@@ -15,7 +15,7 @@
  * Round card bg: rgb(234,242,255), corners 16→12px = rounded-xl
  * Inner detail cards: white bg, corners 14→10.5px = rounded-xl
  */
-import { CompetitionCTA, RichText, BRAND_DARK, TINT_FALLBACK_CLASS } from './shared'
+import { CompetitionCTA, RichText, BRAND_DARK, CTA_BG, TINT_FALLBACK_CLASS } from './shared'
 import { CalendarToday } from './icons'
 
 /* ── Types ──────────────────────────────────────────────── */
@@ -237,7 +237,7 @@ export function CompetitionFormatV2Render({
               <CompetitionCTA
                 text={ctaText}
                 href={ctaLink}
-                bgColor={color}
+                bgColor={CTA_BG}
                 textColor="#ffffff"
               />
             )}

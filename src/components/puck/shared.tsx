@@ -86,6 +86,7 @@ export function hexAlpha(hex: string, alpha: number): string {
 /** CSS var references for the two-color brand system set on the Puck root. */
 export const BRAND_DARK = 'var(--primary-dark, #222)'
 export const BRAND_BRIGHT = 'var(--primary-bright, #222)'
+export const CTA_BG = 'var(--cta-bg, var(--primary-dark, #222))'
 
 /** Fallback bg for browsers without color-mix() — 10% of #222 on white. */
 export const TINT_FALLBACK_CLASS = 'bg-[#e9e9e9]'
