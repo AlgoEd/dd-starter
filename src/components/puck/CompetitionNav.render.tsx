@@ -36,9 +36,7 @@ export interface CompetitionNavProps {
 export const defaultProps: CompetitionNavProps = {
   partnerLogo: null,
   partnerLink: '#',
-  navLinks: [
-    { label: 'FAQs', href: 'https://docs.algoed.co/article/11-competitions-general-faq' },
-  ],
+  navLinks: [],
   ctaText: 'Register Now!',
   ctaLink: '#',
   secondaryCtaText: 'More Competitions',
