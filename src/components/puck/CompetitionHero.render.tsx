@@ -3,7 +3,7 @@
  * Server-safe: no client-only imports (no createMediaField).
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK, BRAND_BRIGHT, safeHex } from './shared'
+import { CompetitionCTA, BRAND_DARK, HERO_OVERLAY, HERO_TEXT, HIGHLIGHT_BG, HIGHLIGHT_TEXT } from './shared'
 import { CalendarToday, iconMap } from './icons'
 
 export interface BadgeItem {
@@ -16,7 +16,6 @@ export interface CompetitionHeroProps {
   titleLine2: string
   titleLine3: string
   audienceLabel: string
-  highlightTextColor: string
   statusText: string
   statusSubtext: string
   ctaText: string
@@ -28,7 +27,6 @@ export interface CompetitionHeroProps {
   heroImageRightOffset: number
   heroImageBottomGap: number
   backgroundImage: MediaReference | null
-  overlaySource: string
   overlayTopOpacity: number
   overlayBottomOpacity: number
   badgeStripHeading: string
@@ -40,7 +38,6 @@ export const defaultProps: CompetitionHeroProps = {
   titleLine2: 'NAME HERE',
   titleLine3: 'COMPETITION 2026',
   audienceLabel: 'For Middle and High School Students',
-  highlightTextColor: '#a31f35',
   statusText: 'Registration Open',
   statusSubtext: '',
   ctaText: 'Competition Portal',
@@ -52,7 +49,6 @@ export const defaultProps: CompetitionHeroProps = {
   heroImageRightOffset: 45,
   heroImageBottomGap: 2,
   backgroundImage: null,
-  overlaySource: 'bright' as const,
   overlayTopOpacity: 80,
   overlayBottomOpacity: 100,
   badgeStripHeading: '',
@@ -61,11 +57,11 @@ export const defaultProps: CompetitionHeroProps = {
 
 export function CompetitionHeroRender({
   titleLine1, titleLine2, titleLine3, audienceLabel,
-  highlightTextColor, statusText, statusSubtext,
+  statusText, statusSubtext,
   ctaText, ctaLink, secondaryCtaText, secondaryCtaLink,
   heroImage, heroImageWidth, heroImageRightOffset, heroImageBottomGap,
   backgroundImage,
-  overlaySource, overlayTopOpacity, overlayBottomOpacity,
+  overlayTopOpacity, overlayBottomOpacity,
   badgeStripHeading, badgeStripItems,
 }: CompetitionHeroProps) {
   const color = BRAND_DARK
@@ -74,15 +70,14 @@ export function CompetitionHeroRender({
 
   const topPct = overlayTopOpacity ?? 80
   const bottomPct = overlayBottomOpacity ?? 100
-  const overlayVar = (overlaySource ?? 'bright') === 'dark' ? BRAND_DARK : BRAND_BRIGHT
-  const overlayLayer = `linear-gradient(color-mix(in srgb, ${overlayVar} ${topPct}%, transparent), color-mix(in srgb, ${overlayVar} ${bottomPct}%, transparent))`
+  const overlayLayer = `linear-gradient(color-mix(in srgb, ${HERO_OVERLAY} ${topPct}%, transparent), color-mix(in srgb, ${HERO_OVERLAY} ${bottomPct}%, transparent))`
 
   return (
     <section>
     <div
       className="bg-cover bg-center"
       style={{
-        backgroundColor: color,
+        backgroundColor: HERO_OVERLAY,
         backgroundImage: bgImageUrl
           ? `${overlayLayer}, url(${bgImageUrl})`
           : undefined,
@@ -104,29 +99,29 @@ export function CompetitionHeroRender({
            breathing room from the viewport edges. */}
         <div className="max-w-5xl mx-auto relative z-10">
           <h1 className="m-0">
-            <span className="block text-white font-bold uppercase text-3xl leading-[1.3] sm:text-5xl">{titleLine1}</span>
+            <span className="block font-bold uppercase text-3xl leading-[1.3] sm:text-5xl" style={{ color: HERO_TEXT }}>{titleLine1}</span>
             {titleLine2 && (
-              <span className="bg-white inline-block my-5 px-2.5 py-[5px]">
-                <span className="block font-bold uppercase text-3xl leading-[1.7] sm:text-5xl" style={{ color: safeHex(highlightTextColor) }}>{titleLine2}</span>
+              <span className="inline-block my-5 px-2.5 py-[5px]" style={{ backgroundColor: HIGHLIGHT_BG }}>
+                <span className="block font-bold uppercase text-3xl leading-[1.7] sm:text-5xl" style={{ color: HIGHLIGHT_TEXT }}>{titleLine2}</span>
               </span>
             )}
-            <span className="block text-white font-bold uppercase text-3xl leading-[1.3] sm:text-5xl">{titleLine3}</span>
+            <span className="block font-bold uppercase text-3xl leading-[1.3] sm:text-5xl" style={{ color: HERO_TEXT }}>{titleLine3}</span>
           </h1>
-          <p className="font-baskervville italic underline text-white mb-0 mt-4 sm:mt-5 text-xl leading-[30px] sm:text-2xl sm:leading-[36px]">{audienceLabel}</p>
+          <p className="font-baskervville italic underline mb-0 mt-4 sm:mt-5 text-xl leading-[30px] sm:text-2xl sm:leading-[36px]" style={{ color: HERO_TEXT }}>{audienceLabel}</p>
           {statusText && (
             <div className="flex items-center my-6">
-              <div className="mr-2.5 w-12 h-12 rounded-full border-2 border-white/45 flex items-center justify-center shrink-0">
-                <CalendarToday className="w-5 h-5 text-white" />
+              <div className="mr-2.5 w-12 h-12 rounded-full border-2 flex items-center justify-center shrink-0" style={{ borderColor: `color-mix(in srgb, ${HERO_TEXT} 45%, transparent)` }}>
+                <CalendarToday className="w-5 h-5" style={{ color: HERO_TEXT }} />
               </div>
               <div>
-                <span className="block text-white font-semibold text-lg leading-7">{statusText}</span>
-                {statusSubtext && <span className="block text-white font-medium text-[15px] leading-6">{statusSubtext}</span>}
+                <span className="block font-semibold text-lg leading-7" style={{ color: HERO_TEXT }}>{statusText}</span>
+                {statusSubtext && <span className="block font-medium text-[15px] leading-6" style={{ color: HERO_TEXT }}>{statusSubtext}</span>}
               </div>
             </div>
           )}
           <div className="flex flex-wrap gap-4">
-            <CompetitionCTA text={ctaText} href={ctaLink} bgColor="#ffffff" textColor={color} />
-            <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor="#ffffff" border="1px solid #ffffff" />
+            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={HIGHLIGHT_BG} textColor={HIGHLIGHT_TEXT} />
+            <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor={HERO_TEXT} border={`1px solid ${HERO_TEXT}`} />
           </div>
         </div>
         {/* Floating illustration — on desktop absolutely positioned to
