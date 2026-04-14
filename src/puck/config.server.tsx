@@ -16,7 +16,7 @@ export const puckServerConfig = extendConfig({
   components: competitionComponentsServer,
   root: {
     render: ({ primaryDark, primaryBright, heroTheme, ctaStyle, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; ctaStyle?: string; children: ReactNode }) => {
-      const t = resolveTheme(heroTheme ?? 'dark-white-dark')
+      const t = resolveTheme(heroTheme ?? 'bright-white-dark')
       const cta = ctaStyle ?? 'dark'
       const ctaIsBright = cta === 'bright' || cta === 'bright-dark'
       return (
