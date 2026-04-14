@@ -209,13 +209,14 @@ export function AwardsSectionRender({
               <h3 className="font-bold text-lg leading-tight text-[#222] md:mb-6 text-center md:col-start-1 md:row-start-1">
                 {preliminary.title}
               </h3>
-              <div className="flex flex-wrap justify-evenly gap-4 max-w-xl mx-auto w-full md:col-start-1 md:row-start-2 md:self-center">
+              {/* Mobile: even badge count → 2-per-row grid, odd → single column. sm+ reverts to flex row. */}
+              <div className={`${preliminary.badges.length % 2 === 0 ? 'grid grid-cols-2 justify-items-center' : 'flex flex-col items-center'} gap-4 max-w-xl mx-auto w-full sm:flex sm:flex-row sm:flex-wrap sm:justify-evenly md:col-start-1 md:row-start-2 md:self-center`}>
                 {preliminary.badges.map((b, i) => <BadgeTile key={i} badge={b} />)}
               </div>
               <h3 className="font-bold text-lg leading-tight text-[#222] md:mb-6 text-center md:col-start-3 md:row-start-1">
                 {semiFinal.title}
               </h3>
-              <div className="flex flex-wrap justify-evenly gap-4 max-w-xl mx-auto w-full md:col-start-3 md:row-start-2 md:self-center">
+              <div className={`${semiFinal.badges.length % 2 === 0 ? 'grid grid-cols-2 justify-items-center' : 'flex flex-col items-center'} gap-4 max-w-xl mx-auto w-full sm:flex sm:flex-row sm:flex-wrap sm:justify-evenly md:col-start-3 md:row-start-2 md:self-center`}>
                 {semiFinal.badges.map((b, i) => <BadgeTile key={i} badge={b} />)}
               </div>
               <div className="hidden md:block md:col-start-2 md:row-span-2 my-4 bg-gray-300" />
@@ -257,13 +258,15 @@ export function AwardsSectionRender({
             style={{ left: '86.13%', top: '46.62%', width: '5.06%' }}
           />
           <div className="relative z-10 py-8 px-6">
-            <h3 className="font-bold text-lg leading-tight text-[#222] mb-1 text-center">
-              {final.title}
-            </h3>
-            {final.subtitle && (
-              <p className="text-xs text-center text-[#666] mb-6">{final.subtitle}</p>
-            )}
-            <div className="flex flex-wrap justify-evenly gap-4 w-full max-w-xl mx-auto">
+            <div className="flex flex-col items-center gap-1 mb-6">
+              <h3 className="font-bold text-lg leading-tight text-[#222] text-center">
+                {final.title}
+              </h3>
+              {final.subtitle && (
+                <p className="text-xs text-center text-[#666]">{final.subtitle}</p>
+              )}
+            </div>
+            <div className={`${final.badges.length % 2 === 0 ? 'grid grid-cols-2 justify-items-center' : 'flex flex-col items-center'} gap-4 w-full max-w-xl mx-auto sm:flex sm:flex-row sm:flex-wrap sm:justify-evenly`}>
               {final.badges.map((b, i) => <BadgeTile key={i} badge={b} />)}
             </div>
           </div>
