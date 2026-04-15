@@ -62,6 +62,12 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   return doc
 }
 
+/** TEMP: debug hook to log beforeChange during cascade */
+export const debugBeforeChange = (({ data, operation, originalDoc, context, req }) => {
+  req.payload.logger.info(`[debugBeforeChange] op=${operation} slug=${originalDoc?.slug ?? 'new'} context=${JSON.stringify({ cascading: context?.cascading, updateSlugs: context?.updateSlugs, slugChangeReason: context?.slugChangeReason })}`)
+  return data
+}) satisfies import('payload').CollectionBeforeChangeHook
+
 export const revalidateDeletePage: CollectionAfterDeleteHook<Page> = ({
   doc,
   req: { context },

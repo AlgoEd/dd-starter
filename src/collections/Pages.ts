@@ -10,7 +10,7 @@
 import type { CollectionConfig } from 'payload'
 import { getPuckCollectionConfig } from '@delmaredigital/payload-puck/plugin'
 import { puckLayoutOptions } from '@/lib/puck/layout-options'
-import { revalidatePage, revalidateDeletePage } from '@/hooks/revalidatePage'
+import { revalidatePage, revalidateDeletePage, debugBeforeChange } from '@/hooks/revalidatePage'
 
 const puckConfig = getPuckCollectionConfig({
   includeSEO: true,
@@ -32,8 +32,7 @@ export const Pages: CollectionConfig = {
     read: () => true, // Pages are public content — needed for generateStaticParams during build
   },
   hooks: {
-    // beforeChange is intentionally omitted — createPuckPlugin adds isHomepageUniqueHook
-    // during its merge step. Including it here would duplicate the hook.
+    beforeChange: [debugBeforeChange],
     afterChange: [revalidatePage],
     afterDelete: [revalidateDeletePage],
   },
