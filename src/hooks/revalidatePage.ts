@@ -55,18 +55,24 @@ function enqueueRevalidation(path: string, logger?: { info: (msg: string) => voi
 
 export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   doc,
-  req: { payload },
+  previousDoc,
+  req: { payload, context },
 }) => {
-  // TEMP: disabled to isolate folder rename crash
-  payload.logger.info(`[revalidatePage] skipped for ${doc.slug} (disabled for debugging)`)
+  if (!context.disableRevalidate) {
+    if (doc._status === 'published') {
+      enqueueRevalidation(`/${doc.slug}`, payload.logger)
+    }
+
+    if (previousDoc?.slug && previousDoc.slug !== doc.slug) {
+      enqueueRevalidation(`/${previousDoc.slug}`, payload.logger)
+    }
+
+    if (previousDoc?._status === 'published' && doc._status !== 'published') {
+      enqueueRevalidation(`/${doc.slug}`, payload.logger)
+    }
+  }
   return doc
 }
-
-/** TEMP: debug hook to log beforeChange during cascade */
-export const debugBeforeChange = (({ data, operation, originalDoc, context, req }) => {
-  req.payload.logger.info(`[debugBeforeChange] op=${operation} slug=${originalDoc?.slug ?? 'new'} context=${JSON.stringify({ cascading: context?.cascading, updateSlugs: context?.updateSlugs, slugChangeReason: context?.slugChangeReason })}`)
-  return data
-}) satisfies import('payload').CollectionBeforeChangeHook
 
 export const revalidateDeletePage: CollectionAfterDeleteHook<Page> = ({
   doc,
