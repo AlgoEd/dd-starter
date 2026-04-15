@@ -102,7 +102,7 @@ export function createBuildSlugHook(options: BuildSlugOptions): CollectionBefore
     }
 
     // Get the folder path
-    const folderPath = await getFolderPath(folderId, req.payload, folderSlug, segmentFieldName)
+    const folderPath = await getFolderPath(folderId, req.payload, folderSlug, segmentFieldName, req)
 
     // Build the full slug
     const defaultSlug = folderPath ? `${folderPath}/${pageSegment}` : pageSegment

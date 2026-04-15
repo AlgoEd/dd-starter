@@ -1,4 +1,4 @@
-import type { CollectionSlug, Payload } from 'payload'
+import type { CollectionSlug, Payload, PayloadRequest } from 'payload'
 import type { FolderDocument } from '../types.js'
 
 /**
@@ -7,6 +7,7 @@ import type { FolderDocument } from '../types.js'
  * @param payload - Payload instance for database queries
  * @param folderSlug - The slug of the folders collection
  * @param segmentFieldName - The field name for the path segment
+ * @param req - Optional request for transaction context
  * @returns The full path string (e.g., "appeals/2024/spring")
  */
 export async function getFolderPath(
@@ -14,6 +15,7 @@ export async function getFolderPath(
   payload: Payload,
   folderSlug: string = 'payload-folders',
   segmentFieldName: string = 'pathSegment',
+  req?: PayloadRequest,
 ): Promise<string> {
   if (!folderId) return ''
 
@@ -22,6 +24,7 @@ export async function getFolderPath(
       collection: folderSlug as CollectionSlug,
       id: folderId,
       depth: 0,
+      ...(req ? { req } : {}),
     })) as FolderDocument
 
     if (!folder) return ''
@@ -36,7 +39,7 @@ export async function getFolderPath(
         : folder.folder
 
     // Recursively get parent path
-    const parentPath = await getFolderPath(parentFolderId, payload, folderSlug, segmentFieldName)
+    const parentPath = await getFolderPath(parentFolderId, payload, folderSlug, segmentFieldName, req)
 
     // Combine parent path with current segment
     return parentPath ? `${parentPath}/${segment}` : segment
