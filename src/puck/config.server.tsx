@@ -15,8 +15,9 @@ export const puckServerConfig = extendConfig({
   base: baseConfig,
   components: competitionComponentsServer,
   root: {
-    render: ({ primaryDark, primaryBright, heroTheme, ctaStyle, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; ctaStyle?: string; children: ReactNode }) => {
-      const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME)
+    render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, ctaStyle, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; ctaStyle?: string; children: ReactNode }) => {
+      const override = heroTextStyle === 'default' ? undefined : heroTextStyle
+      const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME, override)
       const cta = ctaStyle ?? 'dark'
       const ctaIsBright = cta === 'bright' || cta === 'bright-dark'
       return (

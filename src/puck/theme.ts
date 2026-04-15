@@ -13,13 +13,17 @@ export const HERO_THEMES = [
   { label: 'Dark / Bright + Dark', value: 'dark-bright-dark' },
 ]
 
-export function resolveTheme(theme: string) {
+export function resolveTheme(theme: string, heroTextOverride?: string) {
   const [overlay, highlightBg, highlightText] = (theme || DEFAULT_HERO_THEME).split('-') as [string, string, string]
   const v = (token: string) =>
     token === 'dark' ? 'var(--primary-dark)' : token === 'bright' ? 'var(--primary-bright)' : '#ffffff'
+  const oppositeOverlay = overlay === 'dark' ? 'bright' : 'dark'
+  const heroText = heroTextOverride === 'white' ? '#ffffff'
+    : heroTextOverride === 'primary' ? v(oppositeOverlay)
+    : v(highlightBg)
   return {
     overlay: v(overlay),
-    heroText: v(highlightBg),
+    heroText,
     highlightBg: v(highlightBg),
     highlightText: v(highlightText),
   }

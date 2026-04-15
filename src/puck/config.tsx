@@ -20,6 +20,15 @@ export const puckConfig = extendConfig({
         label: 'Hero Theme',
         options: HERO_THEMES,
       },
+      heroTextStyle: createPillField({
+        label: 'Hero Text Color',
+        options: [
+          { label: 'Default (follows highlight)', value: 'default' },
+          { label: 'White', value: 'white' },
+          { label: 'Primary', value: 'primary' },
+        ],
+        defaultValue: 'default',
+      }),
       ctaStyle: createPillField({
         label: 'CTA Button Style',
         options: [
@@ -34,10 +43,12 @@ export const puckConfig = extendConfig({
       primaryDark: '',
       primaryBright: '',
       heroTheme: DEFAULT_HERO_THEME,
+      heroTextStyle: 'default',
       ctaStyle: 'dark',
     },
-    render: ({ primaryDark, primaryBright, heroTheme, ctaStyle, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; ctaStyle?: string; children: ReactNode }) => {
-      const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME)
+    render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, ctaStyle, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; ctaStyle?: string; children: ReactNode }) => {
+      const override = heroTextStyle === 'default' ? undefined : heroTextStyle
+      const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME, override)
       const cta = ctaStyle ?? 'dark'
       const ctaIsBright = cta === 'bright' || cta === 'bright-dark'
       return (
