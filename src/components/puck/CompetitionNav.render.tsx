@@ -82,7 +82,7 @@ export function CompetitionNavRender({
               </a>
             ))}
           </nav>
-          {navLinks.length > 0 && <div className="w-px h-6 bg-gray-300" />}
+          {(navLinks ?? []).length > 0 && <div className="w-px h-6 bg-gray-300" />}
           <div className="flex items-center gap-4">
             <a
               href={ctaLink}
@@ -110,7 +110,7 @@ export function CompetitionNavRender({
         {/* Mobile hamburger — shown below lg */}
         <div className="lg:hidden ml-auto">
           <MobileNav
-            navLinks={navLinks}
+            navLinks={navLinks ?? []}
             ctaText={ctaText}
             ctaLink={ctaLink}
           />
