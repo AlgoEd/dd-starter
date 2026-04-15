@@ -119,25 +119,21 @@ export function CompetitionHeroRender({
             <CompetitionCTA text={ctaText} href={ctaLink} bgColor={HIGHLIGHT_BG} textColor={HIGHLIGHT_TEXT} />
             <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor={HERO_TEXT} border={`1px solid ${HERO_TEXT}`} />
           </div>
+          {/* Illustration — inside max-w-5xl so right:0 anchors to container edge.
+             Desktop: absolutely positioned right-flush. Mobile: normal flow, centered. */}
+          {heroImage?.url && (
+            <img
+              src={heroImage.url}
+              alt={heroImage.alt || ''}
+              className="lg:absolute block mx-auto lg:mx-0 mt-6 lg:mt-0 max-w-full h-auto"
+              style={{
+                right: 0,
+                bottom: '2px',
+                width: `${heroImageWidth ?? 450}px`,
+              }}
+            />
+          )}
         </div>
-        {/* Floating illustration — on desktop absolutely positioned to
-           overlap the right side of the text; on mobile in normal flow
-           below the text, centered via `block mx-auto`. Horizontal
-           padding is inherited from the parent (see above), so the img
-           just needs `max-w-full` to not exceed the parent's content
-           area (which is already viewport − 40px on mobile). */}
-        {heroImage?.url && (
-          <img
-            src={heroImage.url}
-            alt={heroImage.alt || ''}
-            className="lg:absolute block mx-auto lg:mx-0 mt-6 lg:mt-0 max-w-full h-auto"
-            style={{
-              right: 0,
-              bottom: '2px',
-              width: `${heroImageWidth ?? 450}px`,
-            }}
-          />
-        )}
       </div>
     </div>
       {hasBadgeStrip && (
