@@ -71,6 +71,7 @@ export function createCascadeSlugUpdatesHook(
             id: page.id,
             data: {},
             context: { cascading: true, updateSlugs: true },
+            req,
           })
           req.payload.logger.info(`[cascade] page ${page.id} updated in ${Date.now() - t2}ms`)
         }
