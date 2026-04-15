@@ -116,14 +116,14 @@ export function CompetitionStructureRender({
            3:1 with ~17px symmetric wiggle around the exact visible slice,
            so object-cover center-center renders the same faces Figma
            showed). No object-position needed. */}
-        {/* Hero image — aspect 1447/456. Cards below overlap 40% of hero
+        {/* Hero image — aspect 1447/456. Cards below overlap 45% of hero
             via negative margin. margin-top % is relative to parent width,
-            same base as aspect-ratio — so calc(-40% * 456/1447) = 40% of
+            same base as aspect-ratio — so calc(-45% * 456/1447) = 45% of
             the hero height at any viewport. Cards stay in flow.
 
-            CRITICAL: bottom 40% of this image is covered by cards.
+            CRITICAL: bottom 45% of this image is covered by cards.
             When cropping hero images, ALL important content (faces, text,
-            key details) MUST be in the top 60%. */}
+            key details) MUST be in the top 55%. */}
         {heroImage?.url && (
           <div
             className="relative rounded-xl overflow-hidden"
@@ -149,7 +149,7 @@ export function CompetitionStructureRender({
         {cards.length > 0 && (
           <div
             className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10"
-            style={{ marginTop: heroImage?.url ? `calc(-40% * ${HERO_H} / ${HERO_W})` : '0' }}
+            style={{ marginTop: heroImage?.url ? `calc(-45% * ${HERO_H} / ${HERO_W})` : '0' }}
           >
             {cards.map((card, i) => (
               <div
