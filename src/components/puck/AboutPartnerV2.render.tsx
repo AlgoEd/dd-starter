@@ -12,6 +12,7 @@ export interface AboutPartnerV2Props {
   featureImage: MediaReference | null
   ctaText: string
   ctaLink: string
+  imageStyle: 'card' | 'plain'
 }
 
 export const defaultProps: AboutPartnerV2Props = {
@@ -20,6 +21,7 @@ export const defaultProps: AboutPartnerV2Props = {
   featureImage: null,
   ctaText: 'LEARN MORE',
   ctaLink: '#',
+  imageStyle: 'card',
 }
 
 export function AboutPartnerV2Render(props: AboutPartnerV2Props) {
@@ -29,7 +31,6 @@ export function AboutPartnerV2Render(props: AboutPartnerV2Props) {
       ctaVariant="outline"
       secondaryCtaText=""
       secondaryCtaLink=""
-      imageStyle="card"
       layout="image-left"
       bgColor={SURFACE_GREY}
       headingColor="primary"

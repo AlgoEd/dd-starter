@@ -14,7 +14,15 @@ export const AboutPartnerV2Config: ComponentConfig<AboutPartnerV2Props> = {
   fields: {
     heading: { type: 'text', label: 'Heading' },
     body: { type: 'richtext', label: 'Body Text' },
-    featureImage: createMediaField({ label: 'School Photo (card frame)' }),
+    featureImage: createMediaField({ label: 'School Photo' }),
+    imageStyle: {
+      type: 'radio',
+      label: 'Image Style',
+      options: [
+        { label: 'Card Frame (default)', value: 'card' },
+        { label: 'Plain', value: 'plain' },
+      ],
+    },
     ctaText: { type: 'text', label: 'CTA Text (empty to hide)' },
     ctaLink: { type: 'text', label: 'CTA Link' },
   },
