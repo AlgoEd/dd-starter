@@ -177,14 +177,14 @@ export async function GET(req: Request) {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               flex: 1,
             }}
           >
             {/* Title — Poppins Bold, matches hero (CompetitionHero.render.tsx).
                May individually tweak later for OG-specific sizing. */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 /* tw-2.5 */ }}>
-              <span style={{ fontFamily: 'Poppins', fontSize: 44, fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 /* tw-3, ratio-matched to 60px title */ }}>
+              <span style={{ fontFamily: 'Poppins', fontSize: 60, /* tw text-6xl */ fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
                 {titleLine1}
               </span>
               {titleLine2 && (
@@ -193,27 +193,27 @@ export async function GET(req: Request) {
                     display: 'flex',
                     alignSelf: 'flex-start',
                     fontFamily: 'Poppins',
-                    fontSize: 44,
+                    fontSize: 60, /* tw text-6xl */
                     fontWeight: 700,
                     textTransform: 'uppercase',
                     lineHeight: 1.3, /* matches hero leading-[1.3] */
                     color: highlightText,
                     backgroundColor: highlightBg,
-                    padding: '5px 10px', /* matches hero py-[5px] px-2.5 */
-                    borderRadius: 8, /* tw rounded-lg */
+                    padding: '6px 12px', /* scaled from hero py-[5px] px-2.5 at 60px */
+                    borderRadius: 12, /* tw rounded-xl */
                   }}
                 >
                   {titleLine2}
                 </span>
               )}
-              <span style={{ fontFamily: 'Poppins', fontSize: 44, fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span style={{ fontFamily: 'Poppins', fontSize: 60, /* tw text-6xl */ fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
                 {titleLine3}
               </span>
             </div>
 
             {/* Audience label — matches hero: Baskervville italic underline, heroText color. */}
             {audienceLabel && (
-              <span style={{ fontFamily: 'Baskervville', fontSize: 24 /* tw text-2xl, matches hero */, color: heroText, fontStyle: 'italic', textDecoration: 'underline', marginTop: 56 /* tw-14 */ }}>
+              <span style={{ fontFamily: 'Baskervville', fontSize: 30 /* tw text-3xl, 0.5× title */, color: heroText, fontStyle: 'italic', textDecoration: 'underline', marginTop: 64 /* tw-16, 1.167× title */ }}>
                 {audienceLabel}
               </span>
             )}
@@ -234,15 +234,15 @@ export async function GET(req: Request) {
           ) : null}
         </div>
 
-        {/* Bottom: laurel badge (rasterized PNG — SVG was too complex for Satori) */}
+        {/* Bottom: laurel badge — right edge flush to 50% midline */}
         <div
           style={{
             position: 'absolute',
             bottom: 20, /* tw-5 */
-            left: 0,
-            width: '100%',
+            left: 56, /* tw-14, matches content padding */
+            width: 544, /* 600 - 56 padding */
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'flex-end',
           }}
         >
           <img src={badgeBase64} height={32} style={{ objectFit: 'contain' }} />
