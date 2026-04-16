@@ -104,7 +104,9 @@ export async function GET(req: Request) {
   const fetchAsDataUri = async (url: string | undefined) => {
     if (!url) return ''
     const resolved = await resolveOgUrl(url)
-    const res = await fetch(resolved, { headers: { Accept: 'image/webp,image/*' } })
+    // Accept PNG/JPEG only — Satori can't decode webp. Triggers Cloudflare Polish
+    // lossless compression (~33% smaller than raw R2 file).
+    const res = await fetch(resolved, { headers: { Accept: 'image/png,image/jpeg,image/*' } })
     if (!res.ok) return ''
     const contentType = res.headers.get('content-type') || 'image/png'
     const buf = await res.arrayBuffer()
