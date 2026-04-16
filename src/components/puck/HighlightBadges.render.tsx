@@ -33,7 +33,7 @@ export function HighlightBadgesRender({
   const color = BRAND_DARK
 
   return (
-    <section className="py-3 md:py-6 px-5 lg:px-0">
+    <section className="py-3 md:py-6 px-3 md:px-5 lg:px-0">
       <div
         className="mx-auto max-w-[1270px] rounded-xl bg-white px-8 py-8"
         style={{
@@ -41,7 +41,7 @@ export function HighlightBadgesRender({
         }}
       >
         <p
-          className="text-center text-[20px] font-medium leading-[26px] mb-6 text-[#222]"
+          className="text-center text-xl font-medium leading-tight mb-6 text-[#222]"
         >
           {heading}
         </p>
@@ -62,7 +62,7 @@ export function HighlightBadgesRender({
                 )}
               </div>
               <span
-                className="text-[18px] sm:text-[24px] font-semibold uppercase leading-[24px] sm:leading-[31px]"
+                className="text-lg sm:text-2xl font-semibold uppercase leading-tight"
                 style={{ color }}
               >
                 {badge.label}
