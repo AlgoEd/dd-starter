@@ -23,20 +23,20 @@ export function CompetitionFooterRender({
   const color = (bgSource ?? 'dark') === 'bright' ? BRAND_BRIGHT : BRAND_DARK
 
   return (
-    <section style={{ backgroundColor: color, paddingTop: '31px', paddingBottom: '31px' }}>
-      <div className="max-w-5xl mx-auto px-5 lg:px-0">
+    <section className="py-4 md:py-8" style={{ backgroundColor: color }}>
+      <div className="max-w-5xl mx-auto px-3 md:px-5 lg:px-0">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 lg:gap-0">
           <Link href="/legal/privacy-policy" className="no-underline">
-            <h6 className="text-white font-medium m-0" style={{ fontSize: '16px', lineHeight: '18px' }}>
+            <h6 className="text-white font-medium text-base leading-tight m-0">
               PRIVACY POLICY
             </h6>
           </Link>
           <Link href="/legal/terms-conditions" className="no-underline">
-            <h6 className="text-white font-medium m-0" style={{ fontSize: '16px', lineHeight: '18px' }}>
+            <h6 className="text-white font-medium text-base leading-tight m-0">
               TERMS &amp; CONDITIONS
             </h6>
           </Link>
-          <h6 className="text-white font-semibold m-0" style={{ fontSize: '16px', lineHeight: '18px' }}>
+          <h6 className="text-white font-semibold text-base leading-tight m-0">
             &copy;AlgoEd 2026
           </h6>
         </div>
