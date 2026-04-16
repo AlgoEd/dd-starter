@@ -1,22 +1,9 @@
 import type { Metadata } from 'next'
 
-import type { Media, Page, Post, Config } from '../payload-types'
+import type { Page, Post } from '../payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
-
-const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
-  const serverUrl = getServerSideURL()
-
-  let url = ''
-
-  if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url || image.url || ''
-    try { url = new URL(ogUrl).href } catch { url = serverUrl + ogUrl }
-  }
-
-  return url
-}
 
 export const generateMeta = async (args: {
   doc: Partial<Page> | Partial<Post> | null
@@ -24,9 +11,8 @@ export const generateMeta = async (args: {
   const { doc } = args
 
   const serverUrl = getServerSideURL()
-  const uploadedOgImage = getImageURL(doc?.meta?.image)
-  // Fall back to dynamic OG image generator for pages with a slug (competition pages)
-  const ogImage = uploadedOgImage || (doc?.slug ? `${serverUrl}/api/og?slug=${encodeURIComponent(doc.slug)}` : '')
+  // OG image is always auto-generated via /api/og — no manual upload picker exists
+  const ogImage = doc?.slug ? `${serverUrl}/api/og?slug=${encodeURIComponent(doc.slug)}` : ''
 
   const rawTitle = doc?.meta?.title || ''
   // Prepend brand prefix unless the title already contains it
