@@ -168,7 +168,7 @@ export async function GET(req: Request) {
               {titleLine2 && (
                 <span
                   style={{
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignSelf: 'flex-start',
                     fontSize: 44,
                     fontWeight: 700,
