@@ -100,11 +100,9 @@ export function CompetitionStructureRender({
 
   return (
     <section className="py-5 md:py-10">
-      <div className="max-w-5xl mx-auto px-2.5 md:px-5 lg:px-0">
-        {/* Heading — Figma 40px Bold #222 → 0.75× 30px. Gap to hero: 52→39px ≈ mb-10 (40px) */}
+      <div className="max-w-5xl mx-auto px-3 md:px-5 lg:px-0">
         <h2
-          className="font-bold text-center mb-10"
-          style={{ fontSize: '30px', lineHeight: '1.3', color: '#222' }}
+          className="font-bold text-center text-3xl leading-tight text-[#222] mb-5 md:mb-10"
         >
           {heading}
         </h2>
@@ -159,35 +157,32 @@ export function CompetitionStructureRender({
               >
                 {i === 0 && <Groups className="w-11 h-11 mb-3 text-[#909090]" />}
                 {i === 1 && <Category className="w-11 h-11 mb-3 text-[#909090]" />}
-                {/* Card heading — Figma 25px Bold #222 → 0.75× 18px = text-lg */}
-                {/* Heading→content: 20→15px ≈ mb-4 (16px) */}
+                {/* Card heading — Figma 25px Bold → text-lg */}
                 <h3
-                  className="font-bold mb-4 mt-0 text-lg"
-                  style={{ lineHeight: '1.3', color: '#222' }}
+                  className="font-bold mb-4 mt-0 text-lg leading-tight text-[#222]"
                 >
                   {card.heading}
                 </h3>
 
                 {/* Plain text body */}
                 {card.body && (
-                  <p className="m-0 text-[15px]" style={{ color: '#222' }}>
+                  <p className="m-0 text-base text-[#222]">
                     {card.body}
                   </p>
                 )}
 
                 {/* Structured items (categories) */}
-                {/* Between items: Figma 48→36px = mb-9 (36px) */}
                 {(card.items ?? []).map((item, j) => (
                   <div
                     key={`item-${item.name}-${j}`}
-                    className={j < card.items.length - 1 ? 'mb-9' : ''}
+                    className={j < card.items.length - 1 ? 'mb-4 md:mb-8' : ''}
                   >
-                    {/* Item name — Figma 22px SemiBold primaryColor → 0.75× 16px = text-base */}
-                    <div className="font-semibold text-base" style={{ lineHeight: '1.4', color }}>
+                    {/* Item name — Figma 22px SemiBold primaryColor → text-base */}
+                    <div className="font-semibold text-base leading-tight" style={{ color }}>
                       {item.name}
                     </div>
-                    {/* Item grades — Figma 18px Medium #222 → 0.75× 14px = text-sm */}
-                    <p className="m-0 text-sm" style={{ color: '#222' }}>
+                    {/* Item grades — Figma 18px Medium → text-sm */}
+                    <p className="m-0 text-sm text-[#222]">
                       {item.grades}
                     </p>
                   </div>
@@ -208,11 +203,9 @@ export function CompetitionStructureRender({
          *   </span>
          */}
 
-        {/* CTA buttons — Figma gap 38→29px ≈ gap-7 (28px), mt 52→39px ≈ mt-10 (40px) */}
-        {/* Btn1: primaryColor bg, white text, 8→6px corners ≈ rounded-md */}
-        {/* Btn2: transparent bg, primaryColor text+border (outline) */}
+        {/* CTA buttons */}
         {(ctaText || secondaryCtaText) && (
-          <div className="flex flex-wrap justify-center gap-7 mt-10">
+          <div className="flex flex-wrap justify-center gap-5 md:gap-6 mt-5 md:mt-10">
             {ctaText && (
               <CompetitionCTA
                 text={ctaText}
