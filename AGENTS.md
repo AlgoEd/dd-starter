@@ -108,7 +108,7 @@ if the right frame isn't obvious.
 |---|---|---|---|
 | Section node | Competition | HS desktop frame | Junior frame | Status |
 |---|---|---|---|---|
-| `6392:24638` | UNC | `6272:33298` | `6391:14298` | ✅ Both done |
+| `6392:24638` | UNC | `6391:14298` | `6272:33298` | ✅ Both done |
 | `6392:29351` | THURJ | `6386:14219` | `6391:19998` | ✅ Both done |
 | `6391:11413` | Boston | `6272:25391` | `6293:12596` | ✅ Both done |
 | `6413:24208` | Stanford | `6413:24209` | `6413:25999` | ✅ Both done |

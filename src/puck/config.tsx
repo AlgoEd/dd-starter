@@ -59,10 +59,10 @@ export const puckConfig = extendConfig({
       const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME, override)
       const c = resolveCtaStyle(ctaStyle ?? DEFAULT_CTA_STYLE)
       const heroCta = heroCtaColor === 'bright-dark'
-        ? { bg: 'var(--primary-bright)', text: 'var(--primary-dark)' }
+        ? { bg: 'var(--primary-bright)', text: 'var(--primary-dark)', cta2: 'var(--primary-bright)' }
         : heroCtaColor === 'bright-white'
-        ? { bg: 'var(--primary-bright)', text: '#ffffff' }
-        : { bg: 'var(--highlight-bg)', text: 'var(--highlight-text)' }
+        ? { bg: 'var(--primary-bright)', text: '#ffffff', cta2: 'var(--primary-bright)' }
+        : { bg: 'var(--highlight-bg)', text: 'var(--highlight-text)', cta2: 'var(--hero-text)' }
       return (
       <div style={{
         '--primary-dark': primaryDark || '#222',
@@ -73,6 +73,7 @@ export const puckConfig = extendConfig({
         '--highlight-text': t.highlightText,
         '--hero-cta-bg': heroCta.bg,
         '--hero-cta-text': heroCta.text,
+        '--hero-cta2-color': heroCta.cta2,
         '--cta-bg': c.bg,
         '--cta-text': c.text,
         '--cta2-bg': c.bg2,
