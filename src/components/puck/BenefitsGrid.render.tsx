@@ -46,18 +46,18 @@ export function BenefitsGridRender({
 
   return (
     <section className="py-5 md:py-10">
-      <div className="max-w-5xl mx-auto px-5 lg:px-0 flex flex-col items-center">
+      <div className="max-w-5xl mx-auto px-3 md:px-5 lg:px-0 flex flex-col items-center">
         <div className="flex flex-col items-start">
-          <h2 className="text-3xl font-bold leading-[1.3] mb-0 text-[#222]">{sectionHeading}</h2>
+          <h2 className="text-3xl font-bold leading-tight mb-5 md:mb-10 text-[#222]">{sectionHeading}</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-10 mt-10 mb-10 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 mb-5 md:mb-10 w-full">
           {benefits.map((benefit, i) => (
             <div key={i} className="flex flex-col items-start">
               {benefit.iconKey && benefitIconMap[benefit.iconKey] && (
                 <img src={benefitIconMap[benefit.iconKey].src} alt={benefit.heading} className="w-[123px] h-[123px]" />
               )}
-              <div className="text-lg font-semibold leading-[1.3] mt-5 mb-1.5" style={{ color }}>{benefit.heading}</div>
-              <p className="text-[15px] m-0 text-[#818181]">{benefit.description}</p>
+              <div className="text-lg font-semibold leading-tight mt-5 mb-1.5" style={{ color }}>{benefit.heading}</div>
+              <p className="text-base m-0 text-[#818181]">{benefit.description}</p>
             </div>
           ))}
         </div>
