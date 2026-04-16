@@ -34,7 +34,7 @@ const CTA_STYLE_MAP: Record<string, { bg: string; text: string; bg2: string; tex
   'warm-contrast':  { bg: B, text: D, bg2: W, text2: D, border2: D },
   'dark-signature': { bg: D, text: B, bg2: W, text2: D, border2: D },
   'classic-pop':    { bg: D, text: W, bg2: B, text2: D, border2: 'transparent' },
-  'full-identity':  { bg: D, text: B, bg2: B, text2: D, border2: D },
+  'full-identity':  { bg: D, text: B, bg2: B, text2: D, border2: 'transparent' },
 }
 
 export function resolveCtaStyle(style: string) {
