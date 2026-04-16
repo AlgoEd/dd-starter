@@ -75,7 +75,7 @@ export function AlgoEdFooterRender({
         <div className="flex items-center p-8 md:py-9 md:pl-28 md:pr-[max(1.25rem,calc((100vw-1024px)/2))]">
           <div>
             <p
-              className="font-semibold text-xl leading-8 mb-2.5"
+              className="font-semibold text-xl leading-relaxed mb-2.5"
               style={{ color: BRAND_DARK }}
             >
               AlgoEd is a platform that hosts curated competitions for K-12 students.
