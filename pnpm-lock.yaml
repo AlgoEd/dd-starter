@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@delmaredigital/payload-puck':
+    hash: b1d703707b5b391d28c9426c314375eb4a6b809aa25d18645dff8982017b2ba0
+    path: patches/@delmaredigital__payload-puck.patch
+
 importers:
 
   .:
@@ -28,7 +33,7 @@ importers:
         version: 0.3.13(@payloadcms/next@3.81.0(@types/react@19.2.14)(graphql@16.13.2)(monaco-editor@0.55.1)(next@16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.59.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.81.0(graphql@16.13.2)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(@payloadcms/ui@3.81.0(@types/react@19.2.14)(monaco-editor@0.55.1)(next@16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.59.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.81.0(graphql@16.13.2)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3))(@types/node@24.12.2)(@types/react@19.2.14)(next@16.2.2(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.59.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.77.4))(payload@3.81.0(graphql@16.13.2)(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@delmaredigital/payload-puck':
         specifier: ^0.6.23
-        version: 0.6.23(3524799e731aa5f33ca59ceae9225ce6)
+        version: 0.6.23(patch_hash=b1d703707b5b391d28c9426c314375eb4a6b809aa25d18645dff8982017b2ba0)(3524799e731aa5f33ca59ceae9225ce6)
       '@mcp-b/global':
         specifier: ^2.2.0
         version: 2.2.0(zod-to-json-schema@3.25.2(zod@4.3.6))(zod@4.3.6)
@@ -7436,7 +7441,7 @@ snapshots:
       - '@types/react'
       - react-dom
 
-  '@delmaredigital/payload-puck@0.6.23(3524799e731aa5f33ca59ceae9225ce6)':
+  '@delmaredigital/payload-puck@0.6.23(patch_hash=b1d703707b5b391d28c9426c314375eb4a6b809aa25d18645dff8982017b2ba0)(3524799e731aa5f33ca59ceae9225ce6)':
     dependencies:
       '@puckeditor/cloud-client': 0.6.0
       '@puckeditor/core': 0.21.2(@floating-ui/dom@1.7.6)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))

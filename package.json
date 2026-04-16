@@ -114,6 +114,9 @@
       "sharp",
       "esbuild",
       "unrs-resolver"
-    ]
+    ],
+    "patchedDependencies": {
+      "@delmaredigital/payload-puck": "patches/@delmaredigital__payload-puck.patch"
+    }
   }
 }

@@ -1,0 +1,13 @@
+diff --git a/dist/fields/FolderPickerField.js b/dist/fields/FolderPickerField.js
+index f441d8d6c3d97fb7329f43a9f0c85115b8dbf4c4..106be68b26f50c3ca36bee5ccad6fbb2633a29fe 100644
+--- a/dist/fields/FolderPickerField.js
++++ b/dist/fields/FolderPickerField.js
+@@ -447,7 +447,7 @@ export function FolderPickerField({ value, onChange, label = 'Folder', folderSlu
+                             padding: '8px 12px'
+                         },
+                         children: /*#__PURE__*/ _jsxs("a", {
+-                            href: "/admin/page-tree",
++                            href: (window.location.pathname.match(/^\/[^/]+/)?.[0] || '/admin') + "/page-tree",
+                             target: "_blank",
+                             rel: "noopener noreferrer",
+                             style: {
