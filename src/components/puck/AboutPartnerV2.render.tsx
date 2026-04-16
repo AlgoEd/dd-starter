@@ -26,14 +26,16 @@ export const defaultProps: AboutPartnerV2Props = {
 
 export function AboutPartnerV2Render(props: AboutPartnerV2Props) {
   return (
-    <TwoColumnFeatureRender
-      {...props}
-      ctaVariant="outline"
-      secondaryCtaText=""
-      secondaryCtaLink=""
-      layout="image-left"
-      bgColor={SURFACE_GREY}
-      headingColor="primary"
-    />
+    <div className="font-medium">
+      <TwoColumnFeatureRender
+        {...props}
+        ctaVariant="outline"
+        secondaryCtaText=""
+        secondaryCtaLink=""
+        layout="image-left"
+        bgColor={SURFACE_GREY}
+        headingColor="primary"
+      />
+    </div>
   )
 }
