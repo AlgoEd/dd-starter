@@ -234,14 +234,13 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        {/* Bottom: laurel badge — left padded, right edge flush to 50% midline */}
+        {/* Bottom: laurel badge — left-aligned with text content */}
         <img
           src={badgeBase64}
           style={{
             position: 'absolute',
             bottom: 20, /* tw-5 */
-            left: 40, /* tw-10, slightly less than content padding (52) */
-            width: 560, /* 600 - 40 = right edge at 50% midline */
+            left: 52, /* tw-13, matches content padding */
           }}
         />
       </div>
