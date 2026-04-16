@@ -1,7 +1,10 @@
 /**
  * Dynamic Open Graph image generator for competition pages.
- * Renders a simplified hero card using the page's brand colors,
- * hero bg photo, title, audience label, and partner logo.
+ * Serves at /api/og?slug=<slug> — referenced from generateMetadata in [...slug]/page.tsx.
+ *
+ * Moved from colocated opengraph-image.tsx because Next.js doesn't support
+ * metadata file conventions under catch-all routes ([...slug]).
+ * See: https://github.com/vercel/next.js/issues/56963
  *
  * Layout: hero bg + brand overlay → title block (left) → illustration (right) → laurel badge (bottom center)
  * Size: 1200×630 (standard OG)
@@ -14,8 +17,7 @@ import type { PuckPageData, CompetitionRootProps } from '@/puck/types'
 import type { CompetitionHeroProps } from '@/components/puck/CompetitionHero.render'
 import type { CompetitionNavProps } from '@/components/puck/CompetitionNav.render'
 
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
+const SIZE = { width: 1200, height: 630 }
 
 // Load Baskervville Italic for audience label (matches hero font-baskervville italic underline)
 const baskervvilleItalic = fetch(
@@ -33,13 +35,9 @@ function resolveColor(
   return '#ffffff'
 }
 
-export default async function OGImage({
-  params,
-}: {
-  params: Promise<{ slug: string[] }>
-}) {
-  const { slug: slugSegments } = await params
-  const slug = slugSegments ? slugSegments.map(decodeURIComponent).join('/') : 'home'
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url)
+  const slug = searchParams.get('slug') ?? ''
 
   const payload = await getPayload({ config: configPromise })
   const result = await payload.find({
@@ -54,7 +52,7 @@ export default async function OGImage({
       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#222', color: '#fff', fontSize: 48 }}>
         Page not found
       </div>,
-      size,
+      SIZE,
     )
   }
 
@@ -134,14 +132,14 @@ export default async function OGImage({
           }}
         />
 
-        {/* Content layer */}
+        {/* Content layer — spacings derived from Figma OG card (250×145 → 1200×630) */}
         <div
           style={{
             position: 'relative',
             display: 'flex',
             width: '100%',
             height: '100%',
-            padding: '48px 56px',
+            padding: 56, /* tw-14 */
           }}
         >
           {/* Left: text */}
@@ -151,7 +149,6 @@ export default async function OGImage({
               flexDirection: 'column',
               justifyContent: 'center',
               flex: 1,
-              gap: 8,
             }}
           >
             {/* Partner logo */}
@@ -165,7 +162,7 @@ export default async function OGImage({
 
             {/* Title — font size, line-height, colors all match hero (CompetitionHero.render.tsx).
                May individually tweak later for OG-specific sizing. */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 /* tw-2.5 */ }}>
               <span style={{ fontSize: 44, fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
                 {titleLine1}
               </span>
@@ -181,7 +178,7 @@ export default async function OGImage({
                     color: highlightText,
                     backgroundColor: highlightBg,
                     padding: '5px 10px', /* matches hero py-[5px] px-2.5 */
-                    borderRadius: 9,
+                    borderRadius: 8, /* tw rounded-lg */
                   }}
                 >
                   {titleLine2}
@@ -194,22 +191,24 @@ export default async function OGImage({
 
             {/* Audience label — matches hero: Baskervville italic underline, heroText color. */}
             {audienceLabel && (
-              <span style={{ fontFamily: 'Baskervville', fontSize: 22, color: heroText, fontStyle: 'italic', textDecoration: 'underline', marginTop: 8 }}>
+              <span style={{ fontFamily: 'Baskervville', fontSize: 24 /* tw text-2xl, matches hero */, color: heroText, fontStyle: 'italic', textDecoration: 'underline', marginTop: 56 /* tw-14 */ }}>
                 {audienceLabel}
               </span>
             )}
           </div>
 
-          {/* Right: illustration */}
+          {/* Right: illustration — right-flush, 45% of frame width per Figma */}
           {illustrationUrl ? (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 440 }}>
-              <img
-                src={illustrationUrl}
-                width={420}
-                height={420}
-                style={{ objectFit: 'contain' }}
-              />
-            </div>
+            <img
+              src={illustrationUrl}
+              width={540}
+              style={{
+                position: 'absolute',
+                right: 0,
+                bottom: 56, /* tw-14 */
+                objectFit: 'contain',
+              }}
+            />
           ) : null}
         </div>
 
@@ -217,7 +216,7 @@ export default async function OGImage({
         <div
           style={{
             position: 'absolute',
-            bottom: 24,
+            bottom: 20, /* tw-5 */
             left: 0,
             width: '100%',
             display: 'flex',
@@ -229,7 +228,7 @@ export default async function OGImage({
       </div>
     ),
     {
-      ...size,
+      ...SIZE,
       fonts: [
         { name: 'Baskervville', data: await baskervvilleItalic, weight: 400 as const, style: 'italic' as const },
       ],

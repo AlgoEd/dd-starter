@@ -23,7 +23,10 @@ export const generateMeta = async (args: {
 }): Promise<Metadata> => {
   const { doc } = args
 
-  const ogImage = getImageURL(doc?.meta?.image)
+  const serverUrl = getServerSideURL()
+  const uploadedOgImage = getImageURL(doc?.meta?.image)
+  // Fall back to dynamic OG image generator for pages with a slug (competition pages)
+  const ogImage = uploadedOgImage || (doc?.slug ? `${serverUrl}/api/og?slug=${encodeURIComponent(doc.slug)}` : '')
 
   const rawTitle = doc?.meta?.title || ''
   // Prepend brand prefix unless the title already contains it
@@ -31,7 +34,7 @@ export const generateMeta = async (args: {
     ? rawTitle.toLowerCase().includes('algoed') ? rawTitle : `AlgoEd | ${rawTitle}`
     : 'AlgoEd'
 
-  const canonicalUrl = doc?.slug ? `${getServerSideURL()}/${doc.slug}` : getServerSideURL()
+  const canonicalUrl = doc?.slug ? `${serverUrl}/${doc.slug}` : serverUrl
 
   return {
     description: doc?.meta?.description,
