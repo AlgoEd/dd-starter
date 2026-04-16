@@ -249,7 +249,7 @@ export interface Page {
     | {
         slug: string;
         changedAt: string;
-        reason?: ('move' | 'rename' | 'regenerate' | 'restore' | 'manual') | null;
+        reason?: ('move' | 'rename' | 'regenerate' | 'restore' | 'manual' | 'edit-url') | null;
         id?: string | null;
       }[]
     | null;
@@ -448,7 +448,7 @@ export interface Post {
     | {
         slug: string;
         changedAt: string;
-        reason?: ('move' | 'rename' | 'regenerate' | 'restore' | 'manual') | null;
+        reason?: ('move' | 'rename' | 'regenerate' | 'restore' | 'manual' | 'edit-url') | null;
         id?: string | null;
       }[]
     | null;
