@@ -163,19 +163,18 @@ export function AwardsSectionRender({
   const heading = headingRaw || defaultProps.heading
   return (
     <section className="py-5 md:py-10">
-      <div className="max-w-[960px] mx-auto px-5 lg:px-0">
+      <div className="max-w-[960px] mx-auto px-3 md:px-5 lg:px-0">
         {/* Heading — Figma 40px Bold → 30px (text-3xl) */}
-        <h2 className="font-bold text-3xl leading-tight text-[#222] mb-3 text-center">
+        <h2 className="font-bold text-3xl leading-tight text-[#222] mb-5 md:mb-6 text-center">
           {heading}
         </h2>
 
-        {/* Intro — Figma 20px Medium → 15px, supports rich text (e.g. <strong>) */}
         {introText && (
-          <RichText className="text-[15px] leading-relaxed text-[#222] mb-5 text-center">{introText}</RichText>
+          <RichText className="text-base leading-relaxed text-[#222] mb-5 md:mb-6 text-center">{introText}</RichText>
         )}
 
         {/* Default round card — Preliminary + Semi-Final side by side */}
-        <div className="relative overflow-hidden rounded-2xl mb-4 bg-[#fff5e5]">
+        <div className="relative overflow-hidden rounded-2xl mb-4 md:mb-8 bg-[#fff5e5]">
           <img
             src="/competition-assets/award-card-bg.svg"
             alt=""
@@ -223,13 +222,13 @@ export function AwardsSectionRender({
         </div>
 
         {/* Special Awards — fixed 2 cards (Individual + Team) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 md:mb-8">
           <SpecialAwardCard iconKey="individual" award={individualAward} />
           <SpecialAwardCard iconKey="team" award={teamAward} />
         </div>
 
         {/* Final round card */}
-        <div className="relative overflow-hidden rounded-2xl mb-10 bg-[#fff5e5]">
+        <div className="relative overflow-hidden rounded-2xl mb-5 md:mb-10 bg-[#fff5e5]">
           <img
             src="/competition-assets/award-card-bg.svg"
             alt=""
