@@ -37,11 +37,11 @@ export function SummaryGridRender({
   const heading = headingRaw || defaultProps.heading
   return (
     <section className="py-5 md:py-10">
-      <div className="max-w-5xl mx-auto px-5 lg:px-0">
-        <h2 className="text-3xl font-bold leading-[1.3] text-[#222] mb-5">
+      <div className="max-w-5xl mx-auto px-3 md:px-5 lg:px-0">
+        <h2 className="text-3xl font-bold leading-tight text-[#222] mb-5 md:mb-10">
           {heading}
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {cards.map((card, i) => (
             <div key={i}>
               <div className="flex items-center gap-1.5 mb-2">
@@ -52,13 +52,13 @@ export function SummaryGridRender({
                   })()}
                 </div>
                 <span
-                  className="font-bold text-lg leading-7 capitalize tracking-[0.02em]"
+                  className="font-bold text-lg leading-tight capitalize tracking-[0.02em]"
                   style={{ color: BRAND_DARK }}
                 >
                   {card.title}
                 </span>
               </div>
-              <p className="text-[15px] text-[#222] m-0">
+              <p className="text-base text-[#222] m-0">
                 {card.description}
               </p>
             </div>
