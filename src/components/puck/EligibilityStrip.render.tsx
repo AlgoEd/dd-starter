@@ -28,19 +28,19 @@ export function EligibilityStripRender({
 }: EligibilityStripProps) {
   const color = BRAND_DARK
   return (
-    <section style={{ paddingTop: '15px', paddingBottom: '15px', margin: 0 }}>
-      <div className="max-w-6xl mx-auto px-5 lg:px-0">
+    <section className="py-5 md:py-10">
+      <div className="max-w-6xl mx-auto px-3 md:px-5 lg:px-0">
         <div className="flex flex-col md:flex-row justify-center items-start md:items-center">
           <div className="flex flex-col md:flex-row items-start md:items-center">
             {leftIcon?.url && <img src={leftIcon.url} alt="" className="block md:hidden mb-2" />}
-            <div className="font-bold text-lg leading-7 md:ml-2">{leftText}</div>
+            <div className="font-bold text-lg leading-tight md:ml-2">{leftText}</div>
           </div>
           {/* Horizontal divider — 383x5px, hidden on desktop (source image-168 is display:none) */}
           <div className="block md:hidden w-[383px] max-w-full h-[5px] my-4 rounded" style={{ backgroundColor: color }} />
           {/* Vertical divider — 5x99px (source image-147) */}
           <div className="hidden md:block mx-[21px] rounded" style={{ width: '5px', height: '99px', backgroundColor: color }} />
           <div className="flex items-center md:mt-0">
-            <div className="font-semibold text-lg leading-7">{rightText}</div>
+            <div className="font-semibold text-lg leading-tight">{rightText}</div>
             {rightIcon?.url && <img src={rightIcon.url} alt="" className="hidden md:block ml-2" />}
           </div>
         </div>
