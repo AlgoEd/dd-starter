@@ -234,19 +234,16 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        {/* Bottom: laurel badge — right edge flush to 50% midline */}
-        <div
+        {/* Bottom: laurel badge — left at content padding, right edge at 50% midline */}
+        <img
+          src={badgeBase64}
+          width={548} /* 600 midline - 52 padding */
           style={{
             position: 'absolute',
             bottom: 20, /* tw-5 */
             left: 52, /* tw-13, matches content padding */
-            width: 548, /* 600 midline - 52 left = right edge at center */
-            display: 'flex',
-            justifyContent: 'flex-end',
           }}
-        >
-          <img src={badgeBase64} height={40} /* tw-10 */ />
-        </div>
+        />
       </div>
     ),
     {
