@@ -43,6 +43,13 @@ The deliverable is a fully wired, published Puck page — not just uploaded imag
 
 Full docs: `.cursor/rules/webmcp-agent-tools.md`
 
+## Patched Dependencies
+
+When bumping versions of these packages, check if the patch in `patches/` still applies and if the upstream bug is fixed. If fixed upstream, remove the patch.
+
+- **`@delmaredigital/payload-puck`** — `FolderPickerField.js` hardcodes `/admin/page-tree`. Patched to derive admin prefix from URL. Upstream issue: filed informally, no tracking number yet.
+- **`@delmaredigital/payload-page-tree`** — Using inlined copy at `src/plugins/page-tree/` instead of npm package. Fixes: deadlock on folder edit-url cascade (missing `req`), hardcoded `/admin` in nav link and edit action. Upstream issues: delmaredigital/payload-page-tree#2, #3. When both are fixed upstream, switch import in `src/plugins/index.ts` back to `@delmaredigital/payload-page-tree` and delete the inlined copy.
+
 ## Core Principles
 
 1. **TypeScript-First**: Always use TypeScript with proper types from Payload
