@@ -83,7 +83,7 @@ export function CompetitionHeroRender({
         paddingBottom: hasBadgeStrip ? '6rem' : '2.5rem',
       }}
     >
-      <div className="relative overflow-hidden px-5 lg:px-0">
+      <div className="relative overflow-hidden px-3 md:px-5 lg:px-0">
         {/* Content-first ordering: text + CTA in DOM before the illustration.
            Mobile: title, CTA, etc. render first, illustration below.
            Desktop: illustration gets lg:absolute and overlaps the right side
@@ -95,27 +95,34 @@ export function CompetitionHeroRender({
            breathing room from the viewport edges. */}
         <div className="max-w-5xl mx-auto relative z-10">
           <h1 className="m-0">
-            <span className="block font-bold uppercase text-3xl leading-[1.3] sm:text-5xl" style={{ color: HERO_TEXT }}>{titleLine1}</span>
+            <span className="block font-bold uppercase text-3xl leading-tight sm:text-5xl" style={{ color: HERO_TEXT }}>{titleLine1}</span>
+            {/* Highlight bar — Figma uses leading-[1.7] on the middle title to
+                inflate the line box as visual padding. We use leading-tight (system
+                standard) and compensate with explicit py-3 + my-1:
+                  Figma: 65px × 1.7 = 110.5px line box, 5px/2px external gaps
+                  Ours:  48px × 1.25 = 60px line box + 24px (py-3) = 84px bar
+                  my-1 (4px) = transparent sliver between title lines and bar edge
+                Perceived text-to-text gap: Figma 28.1/25.9px, ours 28/28px (±2px) */}
             {titleLine2 && (
-              <span className="inline-block my-5 px-2.5 py-[5px] rounded-[10px]" style={{ backgroundColor: HIGHLIGHT_BG }}>
-                <span className="block font-bold uppercase text-3xl leading-[1.7] sm:text-5xl" style={{ color: HIGHLIGHT_TEXT }}>{titleLine2}</span>
+              <span className="inline-block my-1 px-2.5 py-3 rounded-[10px]" style={{ backgroundColor: HIGHLIGHT_BG }}>
+                <span className="block font-bold uppercase text-3xl leading-tight sm:text-5xl" style={{ color: HIGHLIGHT_TEXT }}>{titleLine2}</span>
               </span>
             )}
-            <span className="block font-bold uppercase text-3xl leading-[1.3] sm:text-5xl" style={{ color: HERO_TEXT }}>{titleLine3}</span>
+            <span className="block font-bold uppercase text-3xl leading-tight sm:text-5xl" style={{ color: HERO_TEXT }}>{titleLine3}</span>
           </h1>
-          <p className="font-baskervville italic underline mb-0 mt-4 sm:mt-5 text-xl leading-[30px] sm:text-2xl sm:leading-[36px]" style={{ color: HERO_TEXT }}>{audienceLabel}</p>
+          <p className="font-baskervville italic underline mb-0 mt-4 sm:mt-5 text-xl sm:text-2xl leading-normal" style={{ color: HERO_TEXT }}>{audienceLabel}</p>
           {statusText && (
             <div className="flex items-center my-6">
               <div className="mr-2.5 w-12 h-12 rounded-full border-2 flex items-center justify-center shrink-0" style={{ borderColor: `color-mix(in srgb, ${HERO_TEXT} 45%, transparent)` }}>
                 <CalendarToday className="w-5 h-5" style={{ color: HERO_TEXT }} />
               </div>
               <div>
-                <span className="block font-semibold text-lg leading-7" style={{ color: HERO_TEXT }}>{statusText}</span>
-                {statusSubtext && <span className="block font-medium text-[15px] leading-6" style={{ color: HERO_TEXT }}>{statusSubtext}</span>}
+                <span className="block font-semibold text-lg leading-tight" style={{ color: HERO_TEXT }}>{statusText}</span>
+                {statusSubtext && <span className="block font-medium text-base leading-normal" style={{ color: HERO_TEXT }}>{statusSubtext}</span>}
               </div>
             </div>
           )}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-5 md:gap-6">
             <CompetitionCTA text={ctaText} href={ctaLink} bgColor={HERO_CTA_BG} textColor={HERO_CTA_TEXT} />
             <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor="transparent" textColor={HERO_CTA2_COLOR} border={`1px solid ${HERO_CTA2_COLOR}`} />
           </div>
@@ -137,13 +144,13 @@ export function CompetitionHeroRender({
       </div>
     </div>
       {hasBadgeStrip && (
-        <div className="max-w-[960px] mx-auto px-5 lg:px-0 relative z-10 -mt-16 mb-8">
+        <div className="max-w-[960px] mx-auto px-3 md:px-5 lg:px-0 relative z-10 -mt-16 mb-8">
           <div
             className="rounded-[15px] bg-white px-5 py-5"
             style={{ boxShadow: '0 -5px 50px rgba(62,63,65,0.08), 0 5px 50px rgba(62,63,65,0.08)' }}
           >
             {badgeStripHeading && (
-              <p className="text-center text-base font-medium leading-[1.3] mb-4 text-[#222]">
+              <p className="text-center text-base font-medium leading-tight mb-4 text-[#222]">
                 {badgeStripHeading}
               </p>
             )}
@@ -159,7 +166,7 @@ export function CompetitionHeroRender({
                       return <Icon className="w-5 h-5 sm:w-6 sm:h-6" style={{ color }} />
                     })()}
                   </div>
-                  <span className="text-[14px] sm:text-[18px] font-semibold uppercase leading-[1.3]"
+                  <span className="text-sm sm:text-lg font-semibold uppercase leading-tight"
                     style={{ color }}>
                     {badge.label}
                   </span>
