@@ -23,7 +23,7 @@ const SIZE = { width: 1200, height: 630 }
 // Uses fs.readFileSync instead of fetch — import.meta.url resolves to a relative /_next/static path
 // which isn't fetchable in server context.
 import { readFileSync } from 'fs'
-import { join } from 'path'
+import { join, basename } from 'path'
 const baskervvilleItalic = readFileSync(join(process.cwd(), 'public', 'competition-assets', 'Baskervville-Italic.ttf'))
 
 /** Resolve theme token to actual hex color. In Satori there's no CSS var context. */
@@ -86,8 +86,22 @@ export async function GET(req: Request) {
   const titleLine2 = hero?.titleLine2 || ''
   const titleLine3 = hero?.titleLine3 || ''
   const audienceLabel = hero?.audienceLabel || ''
-  const heroBgUrl = hero?.backgroundImage?.url || ''
-  const illustrationUrl = hero?.heroImage?.url || ''
+  // Resolve OG-sized image URLs via Payload media API — full-size images (7MB+) exceed
+  // Satori/Resvg's ~10MB SVG buffer limit. Query media by filename to get sizes.og.url.
+  const resolveOgUrl = async (url: string | undefined) => {
+    if (!url) return ''
+    const filename = basename(new URL(url).pathname)
+    const media = await payload.find({
+      collection: 'media',
+      where: { filename: { equals: filename } },
+      limit: 1,
+      select: { sizes: true, url: true },
+    })
+    const doc = media.docs?.[0]
+    return doc?.sizes?.og?.url || url
+  }
+  const heroBgUrl = await resolveOgUrl(hero?.backgroundImage?.url)
+  const illustrationUrl = await resolveOgUrl(hero?.heroImage?.url)
   const overlayTopOpacity = Math.round((hero?.overlayTopOpacity ?? 80) * 2.55).toString(16).padStart(2, '0')
   const overlayBottomOpacity = Math.round((hero?.overlayBottomOpacity ?? 100) * 2.55).toString(16).padStart(2, '0')
   const partnerLogoUrl = nav?.partnerLogo?.url || ''
