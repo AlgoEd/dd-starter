@@ -1,0 +1,238 @@
+/**
+ * Dynamic Open Graph image generator for competition pages.
+ * Renders a simplified hero card using the page's brand colors,
+ * hero bg photo, title, audience label, and partner logo.
+ *
+ * Layout: hero bg + brand overlay → title block (left) → illustration (right) → laurel badge (bottom center)
+ * Size: 1200×630 (standard OG)
+ */
+import { ImageResponse } from 'next/og'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
+import { DEFAULT_HERO_THEME } from '@/puck/theme'
+import type { PuckPageData, CompetitionRootProps } from '@/puck/types'
+import type { CompetitionHeroProps } from '@/components/puck/CompetitionHero.render'
+import type { CompetitionNavProps } from '@/components/puck/CompetitionNav.render'
+
+export const size = { width: 1200, height: 630 }
+export const contentType = 'image/png'
+
+// Load Baskervville Italic for audience label (matches hero font-baskervville italic underline)
+const baskervvilleItalic = fetch(
+  new URL('./fonts/Baskervville-Italic.ttf', import.meta.url),
+).then((res) => res.arrayBuffer())
+
+/** Resolve theme token to actual hex color. In Satori there's no CSS var context. */
+function resolveColor(
+  token: string,
+  primaryDark: string,
+  primaryBright: string,
+): string {
+  if (token === 'dark') return primaryDark
+  if (token === 'bright') return primaryBright
+  return '#ffffff'
+}
+
+export default async function OGImage({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>
+}) {
+  const { slug: slugSegments } = await params
+  const slug = slugSegments ? slugSegments.map(decodeURIComponent).join('/') : 'home'
+
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'pages',
+    limit: 1,
+    pagination: false,
+    where: { slug: { equals: slug } },
+  })
+  const page = result.docs?.[0]
+  if (!page) {
+    return new ImageResponse(
+      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#222', color: '#fff', fontSize: 48 }}>
+        Page not found
+      </div>,
+      size,
+    )
+  }
+
+  const puckData = page.puckData as PuckPageData | undefined
+  const rootProps: Partial<CompetitionRootProps> & Record<string, unknown> = puckData?.root?.props ?? {}
+
+  // Brand colors
+  const primaryDark = rootProps.primaryDark || '#222'
+  const primaryBright = rootProps.primaryBright || primaryDark
+
+  // Hero theme → overlay color
+  const theme = rootProps.heroTheme || DEFAULT_HERO_THEME
+  const [overlayToken, highlightBgToken, highlightTextToken] = theme.split('-')
+  const overlayColor = resolveColor(overlayToken, primaryDark, primaryBright)
+  const highlightBg = resolveColor(highlightBgToken, primaryDark, primaryBright)
+  const highlightText = resolveColor(highlightTextToken, primaryDark, primaryBright)
+  const oppositeOverlay = overlayToken === 'dark' ? 'bright' : 'dark'
+  const heroTextStyle = rootProps.heroTextStyle || 'default'
+  const heroText = heroTextStyle === 'white' ? '#ffffff'
+    : heroTextStyle === 'primary' ? resolveColor(oppositeOverlay, primaryDark, primaryBright)
+    : highlightBg
+
+  // Page content — cast to actual component prop types (defined in .render.tsx files).
+  const content = puckData?.content || []
+  const hero = content.find((c) => c.type === 'CompetitionHero')?.props as Partial<CompetitionHeroProps> | undefined
+  const nav = content.find((c) => c.type === 'CompetitionNav')?.props as Partial<CompetitionNavProps> | undefined
+
+  const titleLine1 = hero?.titleLine1 || String(rootProps.title || 'Competition')
+  const titleLine2 = hero?.titleLine2 || ''
+  const titleLine3 = hero?.titleLine3 || ''
+  const audienceLabel = hero?.audienceLabel || ''
+  const heroBgUrl = hero?.backgroundImage?.url || ''
+  const illustrationUrl = hero?.heroImage?.url || ''
+  const overlayTopOpacity = Math.round((hero?.overlayTopOpacity ?? 80) * 2.55).toString(16).padStart(2, '0')
+  const overlayBottomOpacity = Math.round((hero?.overlayBottomOpacity ?? 100) * 2.55).toString(16).padStart(2, '0')
+  const partnerLogoUrl = nav?.partnerLogo?.url || ''
+
+  // Read the laurel badge SVG as base64 for embedding
+  const fs = await import('fs')
+  const path = await import('path')
+  const badgePath = path.join(process.cwd(), 'public', 'competition-assets', 'og-proudly-hosted-badge.svg')
+  const badgeSvg = fs.readFileSync(badgePath)
+  const badgeBase64 = `data:image/svg+xml;base64,${badgeSvg.toString('base64')}`
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          position: 'relative',
+          fontFamily: 'sans-serif',
+        }}
+      >
+        {/* Background: hero photo or solid color */}
+        {heroBgUrl ? (
+          <img
+            src={heroBgUrl}
+            width={1200}
+            height={630}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        ) : null}
+
+        {/* Brand overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: heroBgUrl
+              ? `linear-gradient(${overlayColor}${overlayTopOpacity}, ${overlayColor}${overlayBottomOpacity})`
+              : overlayColor,
+          }}
+        />
+
+        {/* Content layer */}
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            width: '100%',
+            height: '100%',
+            padding: '48px 56px',
+          }}
+        >
+          {/* Left: text */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              flex: 1,
+              gap: 8,
+            }}
+          >
+            {/* Partner logo */}
+            {partnerLogoUrl ? (
+              <img
+                src={partnerLogoUrl}
+                height={48}
+                style={{ objectFit: 'contain', objectPosition: 'left', marginBottom: 16 }}
+              />
+            ) : null}
+
+            {/* Title — font size, line-height, colors all match hero (CompetitionHero.render.tsx).
+               May individually tweak later for OG-specific sizing. */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <span style={{ fontSize: 44, fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
+                {titleLine1}
+              </span>
+              {titleLine2 && (
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignSelf: 'flex-start',
+                    fontSize: 44,
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    lineHeight: 1.3, /* matches hero leading-[1.3] */
+                    color: highlightText,
+                    backgroundColor: highlightBg,
+                    padding: '5px 10px', /* matches hero py-[5px] px-2.5 */
+                    borderRadius: 9,
+                  }}
+                >
+                  {titleLine2}
+                </span>
+              )}
+              <span style={{ fontSize: 44, fontWeight: 700, color: heroText, textTransform: 'uppercase', lineHeight: 1.3 }}>
+                {titleLine3}
+              </span>
+            </div>
+
+            {/* Audience label — matches hero: Baskervville italic underline, heroText color. */}
+            {audienceLabel && (
+              <span style={{ fontFamily: 'Baskervville', fontSize: 22, color: heroText, fontStyle: 'italic', textDecoration: 'underline', marginTop: 8 }}>
+                {audienceLabel}
+              </span>
+            )}
+          </div>
+
+          {/* Right: illustration */}
+          {illustrationUrl ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 440 }}>
+              <img
+                src={illustrationUrl}
+                width={420}
+                height={420}
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+          ) : null}
+        </div>
+
+        {/* Bottom: laurel badge */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 24,
+            left: 0,
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <img src={badgeBase64} height={32} style={{ objectFit: 'contain' }} />
+        </div>
+      </div>
+    ),
+    {
+      ...size,
+      fonts: [
+        { name: 'Baskervville', data: await baskervvilleItalic, weight: 400 as const, style: 'italic' as const },
+      ],
+    },
+  )
+}

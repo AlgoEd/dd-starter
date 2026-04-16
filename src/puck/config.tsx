@@ -54,6 +54,7 @@ export const puckConfig = extendConfig({
       ctaStyle: DEFAULT_CTA_STYLE,
       heroCtaColor: 'default',
     },
+    // ⚠️ TYPE DEBT: inline type should use CompetitionRootProps from @/puck/types instead of repeating fields.
     render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, highlightOverride, ctaStyle, heroCtaColor, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; highlightOverride?: string; ctaStyle?: string; heroCtaColor?: string; children: ReactNode }) => {
       const override = heroTextStyle === 'default' ? undefined : heroTextStyle
       const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME, override)
