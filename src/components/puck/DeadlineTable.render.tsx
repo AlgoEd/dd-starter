@@ -48,14 +48,14 @@ export function DeadlineTableRender({
 
   return (
     <section className="py-5 md:py-10">
-      <div className="max-w-6xl mx-auto px-5 lg:px-0">
+      <div className="max-w-6xl mx-auto px-3 md:px-5 lg:px-0">
         <h2
-          className="font-bold mb-8 text-3xl leading-[1.3] text-[#222]"
+          className="font-bold mb-5 md:mb-10 text-3xl leading-tight text-[#222]"
         >
           {heading}
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-6 lg:gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-5 lg:gap-10">
           <div className="flex flex-col gap-5">
             {tiers.map((tier, i) => (
               <div
@@ -79,11 +79,11 @@ export function DeadlineTableRender({
                   style={{ transform: 'translate(12%, 4%)' }}
                 />
                 <div className="relative z-10 px-8 py-6">
-                  <div className="font-bold text-lg leading-[1.3]" style={{ color }}>{tier.title}</div>
-                  <p className="text-[15px] mt-3 mb-0 text-[#222]">
+                  <div className="font-bold text-lg leading-tight" style={{ color }}>{tier.title}</div>
+                  <p className="text-base mt-3 mb-0 text-[#222]">
                     <strong>Deadline: </strong>{tier.deadline}
                   </p>
-                  <p className="text-[15px] mt-3 mb-0 text-[#222]">
+                  <p className="text-base mt-3 mb-0 text-[#222]">
                     <strong>Fees: </strong>{tier.fee}
                   </p>
                 </div>
