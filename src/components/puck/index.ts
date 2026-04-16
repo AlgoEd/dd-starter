@@ -21,7 +21,6 @@ import { SummaryGridConfig } from './SummaryGrid'
 import { CategoryGridConfig } from './CategoryGrid'
 import { CompetitionNavConfig } from './CompetitionNav'
 import { ResponsiveImageSectionConfig } from './ResponsiveImageSection'
-import { HighlightBadgesConfig } from './HighlightBadges'
 import { EligibilitySectionConfig } from './EligibilitySection'
 import { CompetitionFormatV2Config } from './CompetitionFormatV2'
 import { AboutPartnerV2Config } from './AboutPartnerV2'
@@ -47,7 +46,6 @@ export const competitionComponents = {
   CategoryGrid: CategoryGridConfig,
   CompetitionNav: CompetitionNavConfig,
   ResponsiveImageSection: ResponsiveImageSectionConfig,
-  HighlightBadges: HighlightBadgesConfig,
   EligibilitySection: EligibilitySectionConfig,
   CompetitionFormatV2: CompetitionFormatV2Config,
   AboutPartnerV2: AboutPartnerV2Config,
@@ -77,7 +75,6 @@ export const competitionCategories = {
       'CategoryGrid',
       'CompetitionNav',
       'ResponsiveImageSection',
-      'HighlightBadges',
       'EligibilitySection',
       'CompetitionFormatV2',
       'AboutPartnerV2',

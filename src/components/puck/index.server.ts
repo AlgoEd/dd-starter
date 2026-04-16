@@ -75,10 +75,6 @@ import {
   defaultProps as responsiveImageDefaults,
 } from './ResponsiveImageSection.render'
 import {
-  HighlightBadgesRender,
-  defaultProps as highlightBadgesDefaults,
-} from './HighlightBadges.render'
-import {
   EligibilitySectionRender,
   defaultProps as eligibilitySectionDefaults,
 } from './EligibilitySection.render'
@@ -195,11 +191,6 @@ export const competitionComponentsServer = {
     label: 'Responsive Image Section',
     defaultProps: responsiveImageDefaults,
     render: ResponsiveImageSectionRender,
-  },
-  HighlightBadges: {
-    label: 'Highlight Badges',
-    defaultProps: highlightBadgesDefaults,
-    render: HighlightBadgesRender,
   },
   EligibilitySection: {
     label: 'Eligibility Section',

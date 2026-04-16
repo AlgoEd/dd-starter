@@ -75,8 +75,7 @@ export function CompetitionNavRender({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="no-underline whitespace-nowrap rounded-[12px] py-3"
-                style={{ color: '#000', fontSize: '16px', fontWeight: 500, lineHeight: '24px', letterSpacing: '-0.01em' }}
+                className="no-underline whitespace-nowrap rounded-[12px] py-3 text-base font-medium leading-normal text-black tracking-tight"
               >
                 {link.label}
               </a>
