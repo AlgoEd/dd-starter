@@ -58,9 +58,9 @@ export function TwoColumnFeatureRender({
 
   const textColumn = (
     <div className="flex flex-col justify-center items-start">
-      <h2 className="text-3xl font-bold leading-[1.3] mb-6" style={{ color: headingColor === 'primary' ? color : '#222' }}>{heading}</h2>
-      <RichText className="text-[15px] mb-6 text-[#222] text-justify">{body}</RichText>
-      <div className="flex flex-wrap gap-4">
+      <h2 className="text-3xl font-bold leading-tight mb-5 md:mb-6" style={{ color: headingColor === 'primary' ? color : '#222' }}>{heading}</h2>
+      <RichText className="text-base mb-5 md:mb-6 text-[#222] text-justify">{body}</RichText>
+      <div className="flex flex-wrap gap-5 md:gap-6">
         {ctaVariant === 'outline'
           ? <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA2_BG} textColor={CTA2_TEXT} border={`1px solid ${CTA2_BORDER}`} />
           : <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
@@ -130,8 +130,8 @@ export function TwoColumnFeatureRender({
 
   return (
     <section className="py-5 md:py-10" style={bgColor ? { backgroundColor: bgColor } : undefined}>
-      <div className="max-w-6xl mx-auto px-5 lg:px-0">
-        <div className={`grid grid-cols-1 gap-6 lg:gap-12 lg:items-center ${isImageRight ? 'lg:grid-cols-[3fr_2fr]' : 'lg:grid-cols-[2fr_3fr]'}`}>
+      <div className="max-w-6xl mx-auto px-3 md:px-5 lg:px-0">
+        <div className={`grid grid-cols-1 gap-5 lg:gap-10 lg:items-center ${isImageRight ? 'lg:grid-cols-[3fr_2fr]' : 'lg:grid-cols-[2fr_3fr]'}`}>
           {isImageRight ? <>{textColumn}{imageColumn}</> : <>{imageColumn}{textColumn}</>}
         </div>
       </div>
