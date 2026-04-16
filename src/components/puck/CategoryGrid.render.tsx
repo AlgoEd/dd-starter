@@ -52,7 +52,7 @@ export function CategoryGridRender({
               className="no-underline rounded-[15px] flex justify-center items-center text-center"
               style={{
                 backgroundColor: SURFACE_GREY,
-                backgroundImage: cat.backgroundImage?.url ? `url(${encodeURI(cat.backgroundImage.url)})` : 'url(/competition-assets/category-card-bg.png)',
+                backgroundImage: cat.backgroundImage?.url ? `url("${cat.backgroundImage.url}")` : 'url(/competition-assets/category-card-bg.png)',
                 backgroundSize: 'auto',
                 backgroundPosition: '100% 100%',
                 backgroundRepeat: 'no-repeat',

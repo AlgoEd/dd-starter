@@ -61,7 +61,7 @@ export function CompetitionHeroRender({
   badgeStripHeading, badgeStripItems,
 }: CompetitionHeroProps) {
   const color = BRAND_DARK
-  const bgImageUrl = encodeURI(backgroundImage?.url || '')
+  const bgImageUrl = backgroundImage?.url || ''
   const hasBadgeStrip = badgeStripItems && badgeStripItems.length > 0
 
   const topPct = overlayTopOpacity ?? 80
@@ -75,7 +75,7 @@ export function CompetitionHeroRender({
       style={{
         backgroundColor: HERO_OVERLAY,
         backgroundImage: bgImageUrl
-          ? `${overlayLayer}, url(${bgImageUrl})`
+          ? `${overlayLayer}, url("${bgImageUrl}")`
           : undefined,
         backgroundPosition: '0 0, 50%',
         backgroundSize: 'auto, cover',
