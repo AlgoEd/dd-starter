@@ -35,7 +35,7 @@ export interface CompetitionRootProps {
   heroTextStyle: string
   highlightOverride: string
   ctaStyle: string
-  heroCtaColor: string
+  heroCtaAccent: string
 }
 
 /**

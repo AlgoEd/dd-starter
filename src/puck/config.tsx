@@ -35,13 +35,15 @@ export const puckConfig = extendConfig({
         label: 'CTA Button Style',
         options: CTA_STYLES,
       },
-      heroCtaColor: {
+      heroCtaAccent: {
         type: 'select' as const,
-        label: 'Hero CTA Button Color',
+        label: 'Hero Button Accent',
         options: [
-          { label: 'Highlight bg, highlight text (default)', value: 'default' },
-          { label: 'Bright bg, dark text', value: 'bright-dark' },
-          { label: 'Bright bg, white text', value: 'bright-white' },
+          { label: 'Default', value: 'default' },
+          { label: 'Accent one, dark text on primary', value: 'accent-one-dark' },
+          { label: 'Accent one, white text on primary', value: 'accent-one-white' },
+          { label: 'Accent both, dark text on primary', value: 'accent-both-dark' },
+          { label: 'Accent both, white text on primary', value: 'accent-both-white' },
         ],
       },
     },
@@ -52,17 +54,18 @@ export const puckConfig = extendConfig({
       heroTextStyle: 'default',
       highlightOverride: '',
       ctaStyle: DEFAULT_CTA_STYLE,
-      heroCtaColor: 'default',
+      heroCtaAccent: 'default',
     },
     // ⚠️ TYPE DEBT: inline type should use CompetitionRootProps from @/puck/types instead of repeating fields.
-    render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, highlightOverride, ctaStyle, heroCtaColor, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; highlightOverride?: string; ctaStyle?: string; heroCtaColor?: string; children: ReactNode }) => {
+    render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, highlightOverride, ctaStyle, heroCtaAccent, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; highlightOverride?: string; ctaStyle?: string; heroCtaAccent?: string; children: ReactNode }) => {
       const override = heroTextStyle === 'default' ? undefined : heroTextStyle
       const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME, override)
       const c = resolveCtaStyle(ctaStyle ?? DEFAULT_CTA_STYLE)
-      const heroCta = heroCtaColor === 'bright-dark'
-        ? { bg: 'var(--primary-bright)', text: 'var(--primary-dark)', cta2: 'var(--primary-bright)' }
-        : heroCtaColor === 'bright-white'
-        ? { bg: 'var(--primary-bright)', text: '#ffffff', cta2: 'var(--primary-bright)' }
+      const accentBtn1 = heroCtaAccent?.startsWith('accent-')
+      const accentBoth = heroCtaAccent?.startsWith('accent-both')
+      const darkText = heroCtaAccent?.endsWith('-dark')
+      const heroCta = accentBtn1
+        ? { bg: 'var(--primary-bright)', text: darkText ? 'var(--primary-dark)' : '#ffffff', cta2: accentBoth ? 'var(--primary-bright)' : 'var(--hero-text)' }
         : { bg: 'var(--highlight-bg)', text: 'var(--highlight-text)', cta2: 'var(--hero-text)' }
       return (
       <div style={{

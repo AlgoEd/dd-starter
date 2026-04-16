@@ -16,14 +16,15 @@ export const puckServerConfig = extendConfig({
   components: competitionComponentsServer,
   root: {
     // ⚠️ TYPE DEBT: inline type should use CompetitionRootProps from @/puck/types instead of repeating fields.
-    render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, highlightOverride, ctaStyle, heroCtaColor, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; highlightOverride?: string; ctaStyle?: string; heroCtaColor?: string; children: ReactNode }) => {
+    render: ({ primaryDark, primaryBright, heroTheme, heroTextStyle, highlightOverride, ctaStyle, heroCtaAccent, children }: { primaryDark?: string; primaryBright?: string; heroTheme?: string; heroTextStyle?: string; highlightOverride?: string; ctaStyle?: string; heroCtaAccent?: string; children: ReactNode }) => {
       const override = heroTextStyle === 'default' ? undefined : heroTextStyle
       const t = resolveTheme(heroTheme ?? DEFAULT_HERO_THEME, override)
       const c = resolveCtaStyle(ctaStyle ?? DEFAULT_CTA_STYLE)
-      const heroCta = heroCtaColor === 'bright-dark'
-        ? { bg: 'var(--primary-bright)', text: 'var(--primary-dark)', cta2: 'var(--primary-bright)' }
-        : heroCtaColor === 'bright-white'
-        ? { bg: 'var(--primary-bright)', text: '#ffffff', cta2: 'var(--primary-bright)' }
+      const accentBtn1 = heroCtaAccent?.startsWith('accent-')
+      const accentBoth = heroCtaAccent?.startsWith('accent-both')
+      const darkText = heroCtaAccent?.endsWith('-dark')
+      const heroCta = accentBtn1
+        ? { bg: 'var(--primary-bright)', text: darkText ? 'var(--primary-dark)' : '#ffffff', cta2: accentBoth ? 'var(--primary-bright)' : 'var(--hero-text)' }
         : { bg: 'var(--highlight-bg)', text: 'var(--highlight-text)', cta2: 'var(--hero-text)' }
       return (
       <div style={{
