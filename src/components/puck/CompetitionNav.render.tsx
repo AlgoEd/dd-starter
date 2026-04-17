@@ -67,7 +67,7 @@ export function CompetitionNavRender({
               />
             </a>
           )}
-          <a href="/" target="_blank" rel="noopener noreferrer">
+          <a href="https://algoed.co" target="_blank" rel="noopener noreferrer">
             <img
               src="/competition-assets/algoed-logo.png"
               alt="AlgoEd"
