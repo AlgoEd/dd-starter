@@ -44,7 +44,7 @@ export function ResponsiveImageSectionRender({
           <img
             src={mobileImage.url}
             alt={mobileImage.alt || heading}
-            className="block md:hidden w-full"
+            className="block md:hidden w-full max-w-md mx-auto"
           />
         )}
       </div>

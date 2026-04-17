@@ -109,7 +109,7 @@ export function JoinCTARender({
              uploaded image can be any shape/size, object-cover fills
              the circle cleanly. Source image doesn't need to be round
              or pixel-exact. */}
-          <div className="relative">
+          <div className="relative w-full max-w-lg mx-auto md:max-w-none">
             <div
               className="block w-full pointer-events-none"
               style={{
