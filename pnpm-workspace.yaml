@@ -1,20 +1,33 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+
 blockExoticSubdeps: true
 
-# Block packages published less than 7 days ago (supply chain protection).
-# If install fails with ERR_PNPM_NO_MATURE_MATCHING_VERSION, delete
-# pnpm-lock.yaml + node_modules and reinstall — stale lockfile resolution
-# is the usual cause, not the age setting itself.
-minimumReleaseAge: 10080
-resolutionMode: time-based
-
-minimumReleaseAgeExclude:
-  - "@chenglou/pretext"  # 0.0.5 (4 days old); remove after Apr 16
-  - "@delmaredigital/payload-page-tree"  # 0.3.13 (6 days old); rename bug fix
-  - "react-arborist"  # inlined page-tree dep
-  - "sonner"  # inlined page-tree dep
-  - "@img/*"  # sharp platform-specific transitive deps
-  - "sharp"  # next.js image optimization dep
-  - "lightningcss-*"  # CSS compiler platform deps
+# ─────────────────────────────────────────────────────────────────────────────
+# minimumReleaseAge — age gate DISABLED (0) on pnpm 11.0.0-rc.1.
+# ─────────────────────────────────────────────────────────────────────────────
+# Intent when re-enabled: 10080 min (7d) supply-chain quarantine — block
+# packages published less than N minutes ago.
 #
+# Why it's 0 today:
+#   pnpm 11-rc.1 throws ERR_PNPM_MISSING_TIME for any package whose npm
+#   metadata lacks the `time` field. Affects many real packages in our graph
+#   (@payloadcms/*, @aws-sdk/*, @smithy/*, @lexical/*, drizzle-*, globals,
+#   use-sync-external-store, react-is, …). Neither `pnpm store prune` nor
+#   `pnpm store prune --force` clears it. The only per-package bypass is
+#   `minimumReleaseAgeExclude`, which is unworkable at this scope.
+#
+# Tracking issue:
+#   https://github.com/pnpm/pnpm/issues/11238
+#   (v11.0.0-rc.0: ERR_PNPM_MISSING_TIME — open)
+#
+# Restore to 10080 when:
+#   pnpm 11.x ships a fix and a clean install (`rm -rf node_modules
+#   pnpm-lock.yaml && pnpm install`) succeeds with this value set to 10080.
+#
+minimumReleaseAge: 0
+
 # trustPolicy: no-downgrade — disabled; too many transitive deps lost
 # provenance on recent releases. Re-enable when ecosystem stabilizes.

@@ -73,7 +73,8 @@
     "sonner": "2.0.7",
     "tailwind-merge": "^3.5.0",
     "tex-linebreak": "^0.8.1",
-    "zod-to-json-schema": "^3.25.2"
+    "zod-to-json-schema": "^3.25.2",
+    "zod": "^4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
@@ -105,16 +106,11 @@
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   },
-  "packageManager": "pnpm@10.27.0",
+  "packageManager": "pnpm@11.0.0-rc.1+sha512.0d7d837668eb35b81d28f560ef8ec5e103ff5d162e249fd0d30c546c39a551d290ac9cf15709353b94d2df6eb445bfa465c7a05148d328eda32950c02e40d060",
   "engines": {
     "node": ">=20.9.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "esbuild",
-      "unrs-resolver"
-    ],
     "patchedDependencies": {
       "@delmaredigital/payload-puck": "patches/@delmaredigital__payload-puck.patch"
     }
