@@ -148,12 +148,37 @@ Once you have the node, extract based on what the user said it is:
 
 Figma designs at 1728px frame width. All sizing scales **× 0.75** to CSS. Prefer Tailwind design tokens over exact values, inferring designer intent. See `src/components/puck/shared.tsx` for scale table and section width tiers.
 
-### Direct DB Edits (puckData)
+### Editing puckData
 
-WebMCP `update_page` is safe — it goes through Puck's editor path which handles defaults. For **direct SQL edits** to puckData:
+Drafts are **always on** for Pages. Every save creates a `_pages_v` row; `pages.puck_data` is the published copy. If these two drift, the next Puck editor save (or any Payload API write) loads the stale draft as the base and silently clobbers the published state. Use one of the two patterns below — never write to `pages.puck_data` alone.
 
+Helper: `scripts/puck-update.py --id <pid> --data <file.json> [--mode api|sql]`
+
+**Pattern A — sync-latest (SQL, for batched migrations):** single transaction
+```sql
+BEGIN;
+UPDATE pages SET puck_data = $1::jsonb WHERE id = $pid;
+UPDATE _pages_v SET version_puck_data = $1::jsonb
+  WHERE parent_id = $pid AND latest = true;
+COMMIT;
+```
+Then `POST /api/revalidate-all`. Overwrites the latest version in place — history lost, but fast.
+
+**Pattern C — API PATCH (default):** `PATCH /api/pages/:id` with `{"puckData": {...}}`. Payload handles versioning, hooks, and revalidation. Use this for one-off edits. WebMCP `update_page` uses this path.
+
+**Shape rules (both patterns):**
 - Use `jsonb_set` to target the deepest specific field — don't replace a whole object/array if you only need one sub-field.
 - When you do replace a field, write the **complete** value. The server renderer shallow-merges `defaultProps` with stored props — a missing key gets the default, but a partial value (e.g. `tiers: [{title: "A"}]` missing `fee`/`variant`) overrides the default entirely.
+
+**Drift audit (run after any bulk SQL migration):**
+```sql
+SELECT p.id FROM pages p
+LEFT JOIN _pages_v v ON v.parent_id = p.id AND v.latest = true
+WHERE p.puck_data IS NOT NULL
+  AND (v.version_puck_data IS NULL
+    OR md5(p.puck_data::text) != md5(v.version_puck_data::text));
+```
+Zero rows = safe. Any row means the next editor save will regress that page.
 
 ### Code Validation
 

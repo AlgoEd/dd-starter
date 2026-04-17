@@ -119,8 +119,8 @@ export const defaultProps: CompetitionFormatV2Props = {
   ],
   ctaText: 'Register Now!',
   ctaLink: '/register',
-  secondaryCtaText: 'Join the league',
-  secondaryCtaLink: '/league',
+  secondaryCtaText: '',
+  secondaryCtaLink: '',
 }
 
 /* ── Render ──────────────────────────────────────────────── */

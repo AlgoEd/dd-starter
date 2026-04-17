@@ -77,8 +77,8 @@ export const defaultProps: BenefitsGridProps = {
   ],
   ctaText: 'REGISTER NOW!',
   ctaLink: '#',
-  secondaryCtaText: 'JOIN THE LEAGUE',
-  secondaryCtaLink: '#',
+  secondaryCtaText: '',
+  secondaryCtaLink: '',
 }
 
 export function BenefitsGridRender({

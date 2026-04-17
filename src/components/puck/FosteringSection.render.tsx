@@ -21,8 +21,8 @@ export const defaultProps: FosteringSectionProps = {
   featureImage: null,
   ctaText: 'REGISTER NOW!',
   ctaLink: '#',
-  secondaryCtaText: 'JOIN THE LEAGUE',
-  secondaryCtaLink: '#',
+  secondaryCtaText: '',
+  secondaryCtaLink: '',
 }
 
 export function FosteringSectionRender(props: FosteringSectionProps) {
