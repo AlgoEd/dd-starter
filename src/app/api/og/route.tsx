@@ -13,8 +13,7 @@ import { ImageResponse } from 'next/og'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { DEFAULT_HERO_THEME } from '@/puck/theme'
-import type { PuckPageData, CompetitionRootProps } from '@/puck/types'
-import type { CompetitionHeroProps } from '@/components/puck/CompetitionHero.render'
+import type { PuckData } from '@/puck/types'
 
 const SIZE = { width: 1200, height: 630 }
 
@@ -58,30 +57,33 @@ export async function GET(req: Request) {
     )
   }
 
-  const puckData = page.puckData as PuckPageData | undefined
-  const rootProps: Partial<CompetitionRootProps> & Record<string, unknown> = puckData?.root?.props ?? {}
+  // One cast at the Payload DB boundary — payload's JSON column is typed `any`.
+  // Downstream access is fully typed via PuckData = Data<Components, RootProps>.
+  const puckData = page.puckData as PuckData | undefined
+  const rootProps = puckData?.root?.props
 
   // Brand colors
-  const primaryDark = rootProps.primaryDark || '#222'
-  const primaryBright = rootProps.primaryBright || primaryDark
+  const primaryDark = rootProps?.primaryDark || '#222'
+  const primaryBright = rootProps?.primaryBright || primaryDark
 
   // Hero theme → overlay color
-  const theme = rootProps.heroTheme || DEFAULT_HERO_THEME
+  const theme = rootProps?.heroTheme || DEFAULT_HERO_THEME
   const [overlayToken, highlightBgToken, highlightTextToken] = theme.split('-')
   const overlayColor = resolveColor(overlayToken, primaryDark, primaryBright)
   const highlightBg = resolveColor(highlightBgToken, primaryDark, primaryBright)
   const highlightText = resolveColor(highlightTextToken, primaryDark, primaryBright)
   const oppositeOverlay = overlayToken === 'dark' ? 'bright' : 'dark'
-  const heroTextStyle = rootProps.heroTextStyle || 'default'
+  const heroTextStyle = rootProps?.heroTextStyle || 'default'
   const heroText = heroTextStyle === 'white' ? '#ffffff'
     : heroTextStyle === 'primary' ? resolveColor(oppositeOverlay, primaryDark, primaryBright)
     : highlightBg
 
-  // Page content — cast to actual component prop types (defined in .render.tsx files).
-  const content = puckData?.content || []
-  const hero = content.find((c) => c.type === 'CompetitionHero')?.props as Partial<CompetitionHeroProps> | undefined
+  // Page content — typed discriminated union via Data<Components, RootProps>.
+  // `find` on type === 'CompetitionHero' narrows to CompetitionHeroProps automatically.
+  const content = puckData?.content ?? []
+  const hero = content.find((c) => c.type === 'CompetitionHero')?.props
 
-  const titleLine1 = hero?.titleLine1 || String(rootProps.title || 'Competition')
+  const titleLine1 = hero?.titleLine1 || rootProps?.title || 'Competition'
   const titleLine2 = hero?.titleLine2 || ''
   const titleLine3 = hero?.titleLine3 || ''
   const audienceLabel = hero?.audienceLabel || ''
