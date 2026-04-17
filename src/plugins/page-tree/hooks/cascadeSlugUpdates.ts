@@ -38,13 +38,17 @@ export function createCascadeSlugUpdatesHook(
       return doc
     }
 
-    req.payload.logger.info(`[cascade] START segmentChanged=${segmentChanged} parentChanged=${parentChanged}`)
+    req.payload.logger.info(
+      `[cascade] START segmentChanged=${segmentChanged} parentChanged=${parentChanged}`,
+    )
     const t0 = Date.now()
 
     // Find all folders that are children of this folder (at any depth)
     const childFolderIds = await getAllChildFolderIds(doc.id, req.payload, folderSlug)
     const allAffectedFolderIds = [doc.id, ...childFolderIds]
-    req.payload.logger.info(`[cascade] found ${allAffectedFolderIds.length} affected folders in ${Date.now() - t0}ms`)
+    req.payload.logger.info(
+      `[cascade] found ${allAffectedFolderIds.length} affected folders in ${Date.now() - t0}ms`,
+    )
 
     // Update all pages in affected folders
     for (const collectionSlug of collections) {
@@ -60,12 +64,16 @@ export function createCascadeSlugUpdatesHook(
           limit: 0,
           depth: 0,
         })
-        req.payload.logger.info(`[cascade] found ${pages.length} pages in ${collectionSlug} in ${Date.now() - t1}ms`)
+        req.payload.logger.info(
+          `[cascade] found ${pages.length} pages in ${collectionSlug} in ${Date.now() - t1}ms`,
+        )
 
         for (let i = 0; i < pages.length; i++) {
           const page = pages[i]
           const t2 = Date.now()
-          req.payload.logger.info(`[cascade] updating page ${i + 1}/${pages.length} id=${page.id}...`)
+          req.payload.logger.info(
+            `[cascade] updating page ${i + 1}/${pages.length} id=${page.id}...`,
+          )
           await req.payload.update({
             collection: collectionSlug as CollectionSlug,
             id: page.id,
@@ -75,7 +83,6 @@ export function createCascadeSlugUpdatesHook(
           })
           req.payload.logger.info(`[cascade] page ${page.id} updated in ${Date.now() - t2}ms`)
         }
-
       } catch (error) {
         req.payload.logger.info(`[cascade] ERROR in ${collectionSlug}: ${error}`)
         console.error(

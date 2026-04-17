@@ -38,7 +38,7 @@ interface PageTreeClientProps {
 function formatCollectionName(slug: string): string {
   return slug
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
 
@@ -160,7 +160,12 @@ function getAllChildFolderIds(node: TreeNodeType): string[] {
 }
 
 // Default edit URL generator - uses Puck if enabled, otherwise Payload collection URL
-const defaultGetEditUrl = (collection: string, id: string, adminRoute: string, puckEnabled: boolean): string => {
+const defaultGetEditUrl = (
+  collection: string,
+  id: string,
+  adminRoute: string,
+  puckEnabled: boolean,
+): string => {
   if (puckEnabled) {
     return `${adminRoute}/puck-editor/${collection}/${id}`
   }
@@ -197,14 +202,21 @@ function sortTreeData(nodes: TreeNodeType[], sortOption: SortOption): TreeNodeTy
   }
 
   return nodes
-    .map(node => ({
+    .map((node) => ({
       ...node,
       children: sortTreeData(node.children, sortOption),
     }))
     .sort(compare)
 }
 
-export function PageTreeClient({ treeData, collections, selectedCollection, adminRoute, puckEnabled = false, getEditUrl }: PageTreeClientProps) {
+export function PageTreeClient({
+  treeData,
+  collections,
+  selectedCollection,
+  adminRoute,
+  puckEnabled = false,
+  getEditUrl,
+}: PageTreeClientProps) {
   const [data, setData] = useState(treeData)
   const [search, setSearch] = useState('')
   const [sortOption, setSortOption] = useState<SortOption>('default')
@@ -364,7 +376,7 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
       if (itemsToMove.length === 0) return
 
       // Check if any items need confirmation
-      const needsConfirmation = itemsToMove.some(item => item.requiresConfirmation)
+      const needsConfirmation = itemsToMove.some((item) => item.requiresConfirmation)
 
       if (!needsConfirmation) {
         // Execute all moves immediately
@@ -376,11 +388,17 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
       }
 
       // Start bulk move confirmation flow - find first item needing confirmation
-      const firstConfirmIndex = itemsToMove.findIndex(item => item.requiresConfirmation)
+      const firstConfirmIndex = itemsToMove.findIndex((item) => item.requiresConfirmation)
 
       // Execute items before the first confirmation
       for (let i = 0; i < firstConfirmIndex; i++) {
-        executeMove([itemsToMove[i].dragId], itemsToMove[i].parentId, itemsToMove[i].index, itemsToMove[i].node, false)
+        executeMove(
+          [itemsToMove[i].dragId],
+          itemsToMove[i].parentId,
+          itemsToMove[i].index,
+          itemsToMove[i].node,
+          false,
+        )
       }
 
       setPendingBulkMove({
@@ -399,20 +417,14 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
       if (!pendingMove) return
 
       // Folder moves with children + Update URLs require type-to-confirm
-      if (
-        updateSlugs &&
-        pendingMove.node.type === 'folder' &&
-        pendingMove.affectedCount > 0
-      ) {
+      if (updateSlugs && pendingMove.node.type === 'folder' && pendingMove.affectedCount > 0) {
         // SAFETY: if pathSegment is missing or empty, the type-to-confirm gate
         // becomes "type empty string to confirm" which any input satisfies —
         // defeating the entire safety mechanism. Refuse to proceed and surface
         // an error instead.
         const expectedSegment = pendingMove.node.pathSegment
         if (!expectedSegment) {
-          toast.error(
-            `Cannot update URLs: folder "${pendingMove.node.name}" has no URL segment`,
-          )
+          toast.error(`Cannot update URLs: folder "${pendingMove.node.name}" has no URL segment`)
           setPendingMove(null)
           return
         }
@@ -486,16 +498,10 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
       // Pause the bulk flow (the bulk modal will hide via its render guard)
       // and show the gate. The gate's confirm/cancel will resume the bulk
       // flow at the next item.
-      if (
-        updateSlugs &&
-        currentItem.node.type === 'folder' &&
-        currentItem.affectedCount > 0
-      ) {
+      if (updateSlugs && currentItem.node.type === 'folder' && currentItem.affectedCount > 0) {
         const expectedSegment = getValidatedSegment(currentItem.node)
         if (!expectedSegment) {
-          toast.error(
-            `Cannot update URLs: folder "${currentItem.node.name}" has no URL segment`,
-          )
+          toast.error(`Cannot update URLs: folder "${currentItem.node.name}" has no URL segment`)
           // Skip this item entirely — advance bulk to the next
           advanceBulkMove(pendingBulkMove, pendingBulkMove.currentIndex + 1)
           return
@@ -547,9 +553,7 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
       for (let i = pendingBulkMove.currentIndex; i < pendingBulkMove.items.length; i++) {
         const item = pendingBulkMove.items[i]
         const isGatedFolder =
-          item.requiresConfirmation &&
-          item.node.type === 'folder' &&
-          item.affectedCount > 0
+          item.requiresConfirmation && item.node.type === 'folder' && item.affectedCount > 0
 
         if (isGatedFolder) {
           const seg = getValidatedSegment(item.node)
@@ -753,9 +757,12 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
         case 'newPage':
           try {
             // Handle 'root' as null (create at root level)
-            const pageParentId = node.id === 'root'
-              ? null
-              : node.type === 'folder' ? rawId : stripIdPrefix(node.folderId ?? null)
+            const pageParentId =
+              node.id === 'root'
+                ? null
+                : node.type === 'folder'
+                  ? rawId
+                  : stripIdPrefix(node.folderId ?? null)
             const result = (await apiCall('/page-tree/create', {
               method: 'POST',
               body: JSON.stringify({
@@ -791,9 +798,12 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
         case 'newFolder':
           try {
             // Handle 'root' as null (create at root level)
-            const folderParentId = node.id === 'root'
-              ? null
-              : node.type === 'folder' ? rawId : stripIdPrefix(node.folderId ?? null)
+            const folderParentId =
+              node.id === 'root'
+                ? null
+                : node.type === 'folder'
+                  ? rawId
+                  : stripIdPrefix(node.folderId ?? null)
             const result = (await apiCall('/page-tree/create', {
               method: 'POST',
               body: JSON.stringify({
@@ -861,10 +871,9 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
         case 'regenerateSlugs':
           if (node.type === 'folder') {
             try {
-              const result = await apiCall(
-                `/page-tree/regenerate-slugs?folderId=${rawId}`,
-                { method: 'POST' },
-              )
+              const result = await apiCall(`/page-tree/regenerate-slugs?folderId=${rawId}`, {
+                method: 'POST',
+              })
               if (result.success) {
                 toast.success(`Updated ${result.count} page URLs`)
                 // Refresh to show updated slugs
@@ -888,7 +897,7 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
           // Get all selected nodes from react-arborist (or just the right-clicked node)
           const selectedIds = treeRef.current?.selectedIds || new Set([node.id])
           const selectedNodes = Array.from(selectedIds)
-            .map(id => findNode(data, id))
+            .map((id) => findNode(data, id))
             .filter((n): n is TreeNodeType => n !== null)
 
           // If clicked node is not in selection, use just the clicked node
@@ -896,7 +905,7 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
 
           // Calculate excluded folder IDs (can't move folder into itself or children)
           const excludeIds: string[] = []
-          nodesToMove.forEach(n => {
+          nodesToMove.forEach((n) => {
             if (n.type === 'folder') {
               excludeIds.push(n.id)
               excludeIds.push(...getAllChildFolderIds(n))
@@ -952,10 +961,9 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
     async (node: TreeNodeType) => {
       const rawId = getRawId(node)
       try {
-        await apiCall(
-          `/page-tree/delete?type=${node.type}&id=${rawId}&deleteChildren=true`,
-          { method: 'DELETE' },
-        )
+        await apiCall(`/page-tree/delete?type=${node.type}&id=${rawId}&deleteChildren=true`, {
+          method: 'DELETE',
+        })
         // Remove node and recalculate page counts
         const removedData = removeNodeFromTree(data, node.id)
         const newData = recalculatePageCounts(removedData)
@@ -1095,7 +1103,7 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
       setMoveToModal(null)
 
       // Check if any items need confirmation
-      const needsConfirmation = itemsToMove.some(item => item.requiresConfirmation)
+      const needsConfirmation = itemsToMove.some((item) => item.requiresConfirmation)
 
       if (!needsConfirmation) {
         // Execute all moves immediately
@@ -1119,11 +1127,17 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
         })
       } else {
         // Multiple items - use bulk move confirmation
-        const firstConfirmIndex = itemsToMove.findIndex(item => item.requiresConfirmation)
+        const firstConfirmIndex = itemsToMove.findIndex((item) => item.requiresConfirmation)
 
         // Execute items before the first confirmation
         for (let i = 0; i < firstConfirmIndex; i++) {
-          executeMove([itemsToMove[i].dragId], itemsToMove[i].parentId, itemsToMove[i].index, itemsToMove[i].node, false)
+          executeMove(
+            [itemsToMove[i].dragId],
+            itemsToMove[i].parentId,
+            itemsToMove[i].index,
+            itemsToMove[i].node,
+            false,
+          )
         }
 
         setPendingBulkMove({
@@ -1154,7 +1168,11 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
   )
 
   return (
-    <ContextMenuProvider adminRoute={adminRoute} onAction={handleContextAction} puckEnabled={puckEnabled}>
+    <ContextMenuProvider
+      adminRoute={adminRoute}
+      onAction={handleContextAction}
+      puckEnabled={puckEnabled}
+    >
       {/* Toast notifications */}
       <Toaster
         position="top-right"
@@ -1231,50 +1249,56 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
         />
 
         {/* Bulk Move Confirmation Modal — hides when the type-gate is active */}
-        {pendingBulkMove && pendingBulkMoveTypeGate === null && (() => {
-          const currentItem = pendingBulkMove.items[pendingBulkMove.currentIndex]
-          const confirmCount = pendingBulkMove.items.filter(i => i.requiresConfirmation).length
-          const currentConfirmNumber = pendingBulkMove.items.slice(0, pendingBulkMove.currentIndex + 1).filter(i => i.requiresConfirmation).length
-          const remainingCount = confirmCount - currentConfirmNumber + 1
+        {pendingBulkMove &&
+          pendingBulkMoveTypeGate === null &&
+          (() => {
+            const currentItem = pendingBulkMove.items[pendingBulkMove.currentIndex]
+            const confirmCount = pendingBulkMove.items.filter((i) => i.requiresConfirmation).length
+            const currentConfirmNumber = pendingBulkMove.items
+              .slice(0, pendingBulkMove.currentIndex + 1)
+              .filter((i) => i.requiresConfirmation).length
+            const remainingCount = confirmCount - currentConfirmNumber + 1
 
-          return (
-            <ConfirmationModal
-              isOpen={true}
-              title={`Move ${pendingBulkMove.items.length} Items`}
-              message={`Moving "${currentItem.node.name}" (${currentConfirmNumber} of ${confirmCount} requiring confirmation)`}
-              details={
-                currentItem.node.type === 'folder'
-                  ? `Contains ${currentItem.affectedCount} page${currentItem.affectedCount === 1 ? '' : 's'}.`
-                  : `Current URL: /${currentItem.node.slug || ''}`
-              }
-              onCancel={cancelBulkMove}
-              actions={[
-                {
-                  label: 'Keep existing URL',
-                  onClick: () => confirmBulkMoveItem(false),
-                  variant: 'secondary',
-                },
-                {
-                  label: 'Update URL',
-                  onClick: () => confirmBulkMoveItem(true),
-                  variant: 'primary',
-                },
-                ...(remainingCount > 1 ? [
+            return (
+              <ConfirmationModal
+                isOpen={true}
+                title={`Move ${pendingBulkMove.items.length} Items`}
+                message={`Moving "${currentItem.node.name}" (${currentConfirmNumber} of ${confirmCount} requiring confirmation)`}
+                details={
+                  currentItem.node.type === 'folder'
+                    ? `Contains ${currentItem.affectedCount} page${currentItem.affectedCount === 1 ? '' : 's'}.`
+                    : `Current URL: /${currentItem.node.slug || ''}`
+                }
+                onCancel={cancelBulkMove}
+                actions={[
                   {
-                    label: `Keep All URLs (${remainingCount})`,
-                    onClick: () => confirmBulkMoveAll(false),
-                    variant: 'secondary' as const,
+                    label: 'Keep existing URL',
+                    onClick: () => confirmBulkMoveItem(false),
+                    variant: 'secondary',
                   },
                   {
-                    label: `Update All URLs (${remainingCount})`,
-                    onClick: () => confirmBulkMoveAll(true),
-                    variant: 'primary' as const,
+                    label: 'Update URL',
+                    onClick: () => confirmBulkMoveItem(true),
+                    variant: 'primary',
                   },
-                ] : []),
-              ]}
-            />
-          )
-        })()}
+                  ...(remainingCount > 1
+                    ? [
+                        {
+                          label: `Keep All URLs (${remainingCount})`,
+                          onClick: () => confirmBulkMoveAll(false),
+                          variant: 'secondary' as const,
+                        },
+                        {
+                          label: `Update All URLs (${remainingCount})`,
+                          onClick: () => confirmBulkMoveAll(true),
+                          variant: 'primary' as const,
+                        },
+                      ]
+                    : []),
+                ]}
+              />
+            )
+          })()}
 
         {/* Bulk Move Type-to-Confirm Modal */}
         {pendingBulkMoveTypeGate && (
@@ -1307,7 +1331,7 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
           />
         )}
 
-{/* Delete Confirmation Modal */}
+        {/* Delete Confirmation Modal */}
         <ConfirmationModal
           isOpen={pendingDelete !== null}
           title={pendingDelete?.node.type === 'folder' ? 'Delete Folder' : 'Delete Page'}
@@ -1317,7 +1341,8 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
               : `Are you sure you want to delete "${pendingDelete?.node.name}"?`
           }
           details={
-            pendingDelete?.node.type === 'folder' && (pendingDelete.pageCount > 0 || pendingDelete.folderCount > 0)
+            pendingDelete?.node.type === 'folder' &&
+            (pendingDelete.pageCount > 0 || pendingDelete.folderCount > 0)
               ? `${pendingDelete.pageCount} page${pendingDelete.pageCount === 1 ? '' : 's'} and ${pendingDelete.folderCount} folder${pendingDelete.folderCount === 1 ? '' : 's'} will be permanently deleted.`
               : 'This action cannot be undone.'
           }
@@ -1340,9 +1365,13 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
         {/* Move To Modal */}
         <FolderSelectModal
           isOpen={moveToModal !== null}
-          title={moveToModal ? `Move ${moveToModal.nodes.length} item${moveToModal.nodes.length > 1 ? 's' : ''}` : ''}
+          title={
+            moveToModal
+              ? `Move ${moveToModal.nodes.length} item${moveToModal.nodes.length > 1 ? 's' : ''}`
+              : ''
+          }
           treeData={data}
-          currentFolderIds={moveToModal?.nodes.map(n => n.folderId ?? null) || []}
+          currentFolderIds={moveToModal?.nodes.map((n) => n.folderId ?? null) || []}
           excludeIds={moveToModal?.excludeIds || []}
           onSelect={handleMoveToSelect}
           onCancel={cancelMoveToModal}
@@ -1603,7 +1632,12 @@ export function PageTreeClient({ treeData, collections, selectedCollection, admi
               disableDrop={sortOption !== 'default'}
             >
               {(props) => (
-                <TreeNode {...props} adminRoute={adminRoute} onAction={handleNodeAction} puckEnabled={puckEnabled} />
+                <TreeNode
+                  {...props}
+                  adminRoute={adminRoute}
+                  onAction={handleNodeAction}
+                  puckEnabled={puckEnabled}
+                />
               )}
             </Tree>
           )}

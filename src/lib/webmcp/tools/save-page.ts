@@ -11,7 +11,8 @@ export function createSavePageTool(accessors: PuckStateAccessors) {
       properties: {
         publish: {
           type: 'boolean',
-          description: 'If true, publishes the page (makes it live). If false or omitted, saves as draft.',
+          description:
+            'If true, publishes the page (makes it live). If false or omitted, saves as draft.',
         },
       },
     },
@@ -52,18 +53,33 @@ export function createSavePageTool(accessors: PuckStateAccessors) {
         if (!response.ok) {
           const errorData = await response.json()
           return {
-            content: [{ type: 'text', text: `Error: ${errorData.error || errorData.message || 'Save failed'} (${response.status})` }],
+            content: [
+              {
+                type: 'text',
+                text: `Error: ${errorData.error || errorData.message || 'Save failed'} (${response.status})`,
+              },
+            ],
             isError: true,
           }
         }
 
         const action = params.publish ? 'Published' : 'Saved as draft'
         return {
-          content: [{ type: 'text', text: `${action} successfully. Page "${rootProps.title}" (/${rootProps.slug}).` }],
+          content: [
+            {
+              type: 'text',
+              text: `${action} successfully. Page "${rootProps.title}" (/${rootProps.slug}).`,
+            },
+          ],
         }
       } catch (error) {
         return {
-          content: [{ type: 'text', text: `Error: ${error instanceof Error ? error.message : String(error)}` }],
+          content: [
+            {
+              type: 'text',
+              text: `Error: ${error instanceof Error ? error.message : String(error)}`,
+            },
+          ],
           isError: true,
         }
       }

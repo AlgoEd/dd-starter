@@ -7,10 +7,7 @@ import { Component, type ReactNode } from 'react'
  * when richtext field content is an empty string) and renders nothing instead
  * of crashing the entire page.
  */
-export class RichTextBoundary extends Component<
-  { children: ReactNode },
-  { hasError: boolean }
-> {
+export class RichTextBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: { children: ReactNode }) {
     super(props)
     this.state = { hasError: false }

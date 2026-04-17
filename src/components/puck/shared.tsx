@@ -130,7 +130,11 @@ export function safeHex(color: string, fallback = '#333'): string {
 /** Normalises hex to 6-digit body (no #). */
 function normalizeHex(hex: string): string {
   let clean = safeHex(hex).replace('#', '')
-  if (clean.length === 3) clean = clean.split('').map(c => c + c).join('')
+  if (clean.length === 3)
+    clean = clean
+      .split('')
+      .map((c) => c + c)
+      .join('')
   return clean.slice(0, 6)
 }
 
@@ -151,7 +155,8 @@ export const HERO_TEXT = 'var(--hero-text, #ffffff)'
 export const HIGHLIGHT_BG = 'var(--highlight-bg, #ffffff)'
 export const HIGHLIGHT_TEXT = 'var(--highlight-text, var(--primary-dark, #222))'
 export const HERO_CTA_BG = 'var(--hero-cta-bg, var(--highlight-bg, #ffffff))'
-export const HERO_CTA_TEXT = 'var(--hero-cta-text, var(--highlight-text, var(--primary-dark, #222)))'
+export const HERO_CTA_TEXT =
+  'var(--hero-cta-text, var(--highlight-text, var(--primary-dark, #222)))'
 export const HERO_CTA2_COLOR = 'var(--hero-cta2-color, var(--hero-text, #ffffff))'
 export const CTA_BG = 'var(--cta-bg, var(--primary-dark, #222))'
 export const CTA_TEXT = 'var(--cta-text, #ffffff)'
@@ -175,7 +180,13 @@ export const TINT_FALLBACK_CLASS = 'bg-[#e9e9e9]'
  * Wraps children in RichTextBoundary to catch TipTap crashes on empty strings —
  * Puck's RichTextRender creates invalid ProseMirror nodes from "" content.
  */
-export function RichText({ children, className }: { children: React.ReactNode; className?: string }) {
+export function RichText({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   if (!children) return null
   return (
     <div className={`prose prose-sm max-w-none ${className ?? ''}`}>

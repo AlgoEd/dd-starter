@@ -17,31 +17,27 @@ export const defaultProps: CompetitionFooterProps = {
   bgSource: 'dark',
 }
 
-export function CompetitionFooterRender({
-  bgSource,
-}: CompetitionFooterProps) {
+export function CompetitionFooterRender({ bgSource }: CompetitionFooterProps) {
   const color = (bgSource ?? 'dark') === 'bright' ? BRAND_BRIGHT : BRAND_DARK
 
   return (
     <section className="py-4 md:py-8" style={{ backgroundColor: color }}>
       <div className="px-3 md:px-5">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-5 md:gap-0">
-          <Link href="/legal/privacy-policy" className="no-underline">
-            <h6 className="text-white font-medium text-base leading-tight m-0">
-              PRIVACY POLICY
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-5 md:gap-0">
+            <Link href="/legal/privacy-policy" className="no-underline">
+              <h6 className="text-white font-medium text-base leading-tight m-0">PRIVACY POLICY</h6>
+            </Link>
+            <Link href="/legal/terms-conditions" className="no-underline">
+              <h6 className="text-white font-medium text-base leading-tight m-0">
+                TERMS &amp; CONDITIONS
+              </h6>
+            </Link>
+            <h6 className="text-white font-semibold text-base leading-tight m-0">
+              &copy;AlgoEd 2026
             </h6>
-          </Link>
-          <Link href="/legal/terms-conditions" className="no-underline">
-            <h6 className="text-white font-medium text-base leading-tight m-0">
-              TERMS &amp; CONDITIONS
-            </h6>
-          </Link>
-          <h6 className="text-white font-semibold text-base leading-tight m-0">
-            &copy;AlgoEd 2026
-          </h6>
+          </div>
         </div>
-      </div>
       </div>
     </section>
   )

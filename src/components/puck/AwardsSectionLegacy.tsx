@@ -6,7 +6,12 @@ import { createMediaField } from '@delmaredigital/payload-puck/fields'
 import { AwardsSectionLegacyRender, defaultProps } from './AwardsSectionLegacy.render'
 import type { AwardsSectionLegacyProps } from './AwardsSectionLegacy.render'
 
-export type { AwardsSectionLegacyProps, LegacyAwardGroup, LegacyBadgeItem, LegacySpecialAward } from './AwardsSectionLegacy.render'
+export type {
+  AwardsSectionLegacyProps,
+  LegacyAwardGroup,
+  LegacyBadgeItem,
+  LegacySpecialAward,
+} from './AwardsSectionLegacy.render'
 export { AwardsSectionLegacyRender, defaultProps } from './AwardsSectionLegacy.render'
 
 export const AwardsSectionLegacyConfig: ComponentConfig<AwardsSectionLegacyProps> = {

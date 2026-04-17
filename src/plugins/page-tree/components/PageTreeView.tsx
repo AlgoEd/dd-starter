@@ -8,11 +8,7 @@ import { redirect } from 'next/navigation.js'
 
 type PageTreeViewProps = AdminViewProps
 
-export async function PageTreeView({
-  initPageResult,
-  params,
-  searchParams,
-}: PageTreeViewProps) {
+export async function PageTreeView({ initPageResult, params, searchParams }: PageTreeViewProps) {
   // Get payload instance from initPageResult
   const { req } = initPageResult
   const { payload } = req
@@ -26,19 +22,19 @@ export async function PageTreeView({
   }
 
   // Get plugin config from payload.config.custom
-  const pageTreeConfig = payload.config.custom?.pageTree as {
-    collections: string[]
-    folderSlug: string
-  } | undefined
+  const pageTreeConfig = payload.config.custom?.pageTree as
+    | {
+        collections: string[]
+        folderSlug: string
+      }
+    | undefined
 
   // Fallback to defaults if config not found (shouldn't happen if plugin is properly configured)
   const collections = pageTreeConfig?.collections || ['pages']
   const folderSlug = pageTreeConfig?.folderSlug || 'payload-folders'
 
   // Get selected collection from URL params, default to first configured collection
-  const selectedCollection =
-    (searchParams?.collection as string) ||
-    collections[0]
+  const selectedCollection = (searchParams?.collection as string) || collections[0]
 
   // Validate selected collection is in configured list
   const validSelectedCollection = collections.includes(selectedCollection)
@@ -61,7 +57,7 @@ export async function PageTreeView({
     // A folder allows a collection if:
     // 1. folderType is null/undefined/empty (allows all collections)
     // 2. folderType array includes the selected collection
-    folders = allFolders.filter(folder => {
+    folders = allFolders.filter((folder) => {
       if (!folder.folderType || folder.folderType.length === 0) {
         return true // No restriction, allow all
       }
@@ -82,16 +78,13 @@ export async function PageTreeView({
       overrideAccess: false, // Apply access control based on req.user
     })
     // Add collection slug to each page for context menu actions
-    const pagesWithCollection = (result.docs as unknown as PageDocument[]).map(page => ({
+    const pagesWithCollection = (result.docs as unknown as PageDocument[]).map((page) => ({
       ...page,
       _collection: validSelectedCollection,
     }))
     allPages = pagesWithCollection
   } catch (error) {
-    console.error(
-      `[payload-page-tree] Error fetching ${validSelectedCollection}:`,
-      error,
-    )
+    console.error(`[payload-page-tree] Error fetching ${validSelectedCollection}:`, error)
   }
 
   // Build tree structure
@@ -104,11 +97,13 @@ export async function PageTreeView({
   // We check the currently selected collection
   // Check both top-level fields and flattenedFields (handles SEO plugin tabbedUI wrapping)
   let puckEnabled = false
-  const currentCollection = payload.config.collections.find(c => c.slug === validSelectedCollection)
+  const currentCollection = payload.config.collections.find(
+    (c) => c.slug === validSelectedCollection,
+  )
   if (currentCollection) {
-    const hasPuckData = currentCollection.fields.some(
-      f => 'name' in f && f.name === 'puckData'
-    ) || currentCollection.flattenedFields?.some(f => f.name === 'puckData')
+    const hasPuckData =
+      currentCollection.fields.some((f) => 'name' in f && f.name === 'puckData') ||
+      currentCollection.flattenedFields?.some((f) => f.name === 'puckData')
     puckEnabled = hasPuckData
   }
 

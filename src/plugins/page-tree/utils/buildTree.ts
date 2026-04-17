@@ -118,10 +118,7 @@ export function buildTreeStructure(
 /**
  * Update page counts for a folder and all its ancestors
  */
-function updatePageCounts(
-  node: TreeNode,
-  folderMap: Map<string, TreeNode>,
-) {
+function updatePageCounts(node: TreeNode, folderMap: Map<string, TreeNode>) {
   node.pageCount += 1
 
   if (node.folderId && folderMap.has(node.folderId)) {

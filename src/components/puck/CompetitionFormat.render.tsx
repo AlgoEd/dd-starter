@@ -39,16 +39,19 @@ export const defaultProps: CompetitionFormatProps = {
       formatBullets: [
         { text: 'Test (multiple choice and short questions)' },
         { text: 'Each team member will individually attempt the same set of test questions' },
-        { text: 'Only the top two scores will be used to calculate the team\'s total score' },
+        { text: "Only the top two scores will be used to calculate the team's total score" },
       ],
       timeAllowed: '1 hour',
-      times: 'Asia Pacific: 12:00 noon Tokyo Time\nEurope, Middle East, Africa: 9:00 am London Time\nNorth America, South America: 11:00 am New York Time',
+      times:
+        'Asia Pacific: 12:00 noon Tokyo Time\nEurope, Middle East, Africa: 9:00 am London Time\nNorth America, South America: 11:00 am New York Time',
     },
     {
       title: 'Final Round: Top 8 teams',
-      description: 'The top 8 performing teams from the preliminary round in each of the Middle School and High School Categories will be invited to compete in the global final round',
+      description:
+        'The top 8 performing teams from the preliminary round in each of the Middle School and High School Categories will be invited to compete in the global final round',
       date: 'April 4, 2026',
-      formatText: 'Live Zoom presentation to a panel of judges composed of professors and industry experts',
+      formatText:
+        'Live Zoom presentation to a panel of judges composed of professors and industry experts',
       formatBullets: [],
       timeAllowed: '',
       times: '',
@@ -59,7 +62,11 @@ export const defaultProps: CompetitionFormatProps = {
 }
 
 export function CompetitionFormatRender({
-  heading, formatImage, rounds, ctaText, ctaLink,
+  heading,
+  formatImage,
+  rounds,
+  ctaText,
+  ctaLink,
 }: CompetitionFormatProps) {
   const color = BRAND_DARK
 
@@ -70,7 +77,11 @@ export function CompetitionFormatRender({
           {/* Left column: image */}
           <div className="flex justify-center items-center">
             {formatImage?.url && (
-              <img src={formatImage.url} alt={formatImage.alt || ''} className="max-w-full h-auto" />
+              <img
+                src={formatImage.url}
+                alt={formatImage.alt || ''}
+                className="max-w-full h-auto"
+              />
             )}
           </div>
 
@@ -115,7 +126,9 @@ export function CompetitionFormatRender({
 
                 {round.formatBullets && round.formatBullets.length > 0 ? (
                   <div className="mt-0 mb-5 flex">
-                    <div><strong>Format:</strong></div>
+                    <div>
+                      <strong>Format:</strong>
+                    </div>
                     <ul className="mb-0 pl-[30px]">
                       {round.formatBullets.map((bullet, j) => (
                         <li
@@ -129,13 +142,18 @@ export function CompetitionFormatRender({
                   </div>
                 ) : round.formatText ? (
                   <p className="mt-0 mb-5">
-                    <strong>Format: </strong>{round.formatText}
+                    <strong>Format: </strong>
+                    {round.formatText}
                   </p>
                 ) : null}
 
                 {round.date && (
-                  <p className="mb-0" style={round.timeAllowed ? { marginBottom: '10px' } : undefined}>
-                    <strong>Date: </strong>{round.date}
+                  <p
+                    className="mb-0"
+                    style={round.timeAllowed ? { marginBottom: '10px' } : undefined}
+                  >
+                    <strong>Date: </strong>
+                    {round.date}
                   </p>
                 )}
 
@@ -147,7 +165,9 @@ export function CompetitionFormatRender({
 
                 {round.times && (
                   <div className="flex items-start">
-                    <div className="mr-[10px]"><strong>Time: </strong></div>
+                    <div className="mr-[10px]">
+                      <strong>Time: </strong>
+                    </div>
                     <ul className="m-0 pl-5">
                       {round.times.split('\n').map((time, j) => (
                         <li key={j}>{time}</li>
@@ -158,7 +178,13 @@ export function CompetitionFormatRender({
               </div>
             ))}
 
-            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} fullWidth />
+            <CompetitionCTA
+              text={ctaText}
+              href={ctaLink}
+              bgColor={CTA_BG}
+              textColor={CTA_TEXT}
+              fullWidth
+            />
           </div>
         </div>
       </div>

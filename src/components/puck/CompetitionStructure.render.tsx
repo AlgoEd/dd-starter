@@ -15,7 +15,17 @@
  *   0 4px 6px -2px rgba(10,13,18,0.03), 0 12px 16px -4px rgba(10,13,18,0.08)
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK, HERO_OVERLAY, CTA_BG, CTA_TEXT, CTA2_BG, CTA2_TEXT, CTA2_BORDER, SURFACE_GREY } from './shared'
+import {
+  CompetitionCTA,
+  BRAND_DARK,
+  HERO_OVERLAY,
+  CTA_BG,
+  CTA_TEXT,
+  CTA2_BG,
+  CTA2_TEXT,
+  CTA2_BORDER,
+  SURFACE_GREY,
+} from './shared'
 import { Groups, Category } from './icons'
 
 const CARD_SHADOW = '0 4px 6px -2px rgba(10,13,18,0.03), 0 12px 16px -4px rgba(10,13,18,0.08)'
@@ -101,9 +111,7 @@ export function CompetitionStructureRender({
   return (
     <section className="py-5 md:py-10 px-3 md:px-5">
       <div className="max-w-5xl mx-auto">
-        <h2
-          className="font-bold text-center text-2xl md:text-3xl leading-tight text-[#222] mb-5 md:mb-10"
-        >
+        <h2 className="font-bold text-center text-2xl md:text-3xl leading-tight text-[#222] mb-5 md:mb-10">
           {heading}
         </h2>
 
@@ -158,18 +166,12 @@ export function CompetitionStructureRender({
                 {i === 0 && <Groups className="w-11 h-11 mb-3 text-[#909090]" />}
                 {i === 1 && <Category className="w-11 h-11 mb-3 text-[#909090]" />}
                 {/* Card heading — Figma 25px Bold → text-lg */}
-                <h3
-                  className="font-bold mb-4 mt-0 text-lg leading-tight text-[#222]"
-                >
+                <h3 className="font-bold mb-4 mt-0 text-lg leading-tight text-[#222]">
                   {card.heading}
                 </h3>
 
                 {/* Plain text body */}
-                {card.body && (
-                  <p className="m-0 text-base text-[#222]">
-                    {card.body}
-                  </p>
-                )}
+                {card.body && <p className="m-0 text-base text-[#222]">{card.body}</p>}
 
                 {/* Structured items (categories) */}
                 {(card.items ?? []).map((item, j) => (
@@ -182,9 +184,7 @@ export function CompetitionStructureRender({
                       {item.name}
                     </div>
                     {/* Item grades — Figma 18px Medium → text-sm */}
-                    <p className="m-0 text-sm text-[#222]">
-                      {item.grades}
-                    </p>
+                    <p className="m-0 text-sm text-[#222]">{item.grades}</p>
                   </div>
                 ))}
               </div>
@@ -207,12 +207,7 @@ export function CompetitionStructureRender({
         {(ctaText || secondaryCtaText) && (
           <div className="flex flex-wrap justify-center gap-5 md:gap-6 mt-5 md:mt-10">
             {ctaText && (
-              <CompetitionCTA
-                text={ctaText}
-                href={ctaLink}
-                bgColor={CTA_BG}
-                textColor={CTA_TEXT}
-              />
+              <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
             )}
             {secondaryCtaText && (
               <CompetitionCTA

@@ -21,7 +21,13 @@ import {
 } from './endpoints/treeOperations.js'
 
 export type { PageTreePluginConfig, BuildSlugFn, BuildSlugArgs } from './types.js'
-export type { TreeNode, FolderDocument, PageDocument, SlugHistoryEntry, SlugChangeReason } from './types.js'
+export type {
+  TreeNode,
+  FolderDocument,
+  PageDocument,
+  SlugHistoryEntry,
+  SlugChangeReason,
+} from './types.js'
 export { getFolderPath, slugify } from './utils/getFolderPath.js'
 export { buildTreeStructure } from './utils/buildTree.js'
 export type { BuildTreeOptions } from './utils/buildTree.js'
@@ -58,10 +64,7 @@ export function pageTreePlugin(pluginOptions: PageTreePluginConfig = {}) {
     customizeFolderCollection,
   } = pluginOptions
 
-  const {
-    enabled: adminViewEnabled = true,
-    path: adminViewPath = '/page-tree',
-  } = adminView
+  const { enabled: adminViewEnabled = true, path: adminViewPath = '/page-tree' } = adminView
 
   // The folder field name that Payload's folders feature adds
   const folderFieldName = 'folder'
@@ -72,24 +75,24 @@ export function pageTreePlugin(pluginOptions: PageTreePluginConfig = {}) {
 
     // Auto-filter collections to only include ones that actually exist in the config
     // This allows defaulting to ['pages', 'posts'] without errors if 'posts' doesn't exist
-    const existingCollectionSlugs = new Set(
-      (config.collections || []).map(c => c.slug)
-    )
-    const validCollections = collections.filter(slug => existingCollectionSlugs.has(slug))
+    const existingCollectionSlugs = new Set((config.collections || []).map((c) => c.slug))
+    const validCollections = collections.filter((slug) => existingCollectionSlugs.has(slug))
 
     // Warn about missing collections - this usually means plugin order is wrong
-    const missingCollections = collections.filter(slug => !existingCollectionSlugs.has(slug))
+    const missingCollections = collections.filter((slug) => !existingCollectionSlugs.has(slug))
     if (missingCollections.length > 0) {
       console.warn(
         `[payload-page-tree] Collections not found: ${missingCollections.join(', ')}. ` +
-        `If using payload-puck with autoGenerateCollection, ensure createPuckPlugin() runs BEFORE pageTreePlugin(). ` +
-        `See: https://github.com/delmaredigital/payload-page-tree#plugin-order`
+          `If using payload-puck with autoGenerateCollection, ensure createPuckPlugin() runs BEFORE pageTreePlugin(). ` +
+          `See: https://github.com/delmaredigital/payload-page-tree#plugin-order`,
       )
     }
 
     // If no valid collections, skip plugin setup but still add folder fields
     if (validCollections.length === 0) {
-      console.warn('[payload-page-tree] No matching collections found. Plugin will only add folder fields.')
+      console.warn(
+        '[payload-page-tree] No matching collections found. Plugin will only add folder fields.',
+      )
     }
 
     // Get existing folder config (handle false, undefined, or object)
@@ -160,7 +163,9 @@ export function pageTreePlugin(pluginOptions: PageTreePluginConfig = {}) {
           // Apply custom folder collection modifications if provided
           // This allows adding org scoping, custom fields, or access control
           if (customizeFolderCollection) {
-            return customizeFolderCollection(folderCollection as unknown as Parameters<typeof customizeFolderCollection>[0]) as typeof folderCollection
+            return customizeFolderCollection(
+              folderCollection as unknown as Parameters<typeof customizeFolderCollection>[0],
+            ) as typeof folderCollection
           }
 
           return folderCollection
@@ -271,7 +276,12 @@ export function pageTreePlugin(pluginOptions: PageTreePluginConfig = {}) {
         })
 
         // Add the pageSegment, sortOrder, and slugHistory fields
-        updatedCollection.fields = [...modifiedFields, pageSegmentField, pageSortOrderField, slugHistoryField]
+        updatedCollection.fields = [
+          ...modifiedFields,
+          pageSegmentField,
+          pageSortOrderField,
+          slugHistoryField,
+        ]
 
         // Add beforeChange hook for slug generation
         if (shouldAddHooks) {

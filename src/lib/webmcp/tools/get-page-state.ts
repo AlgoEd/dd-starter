@@ -38,9 +38,7 @@ export function createGetPageStateTool(accessors: PuckStateAccessors) {
       }
 
       return {
-        content: [
-          { type: 'text', text: JSON.stringify({ puckData: data, summary }, null, 2) },
-        ],
+        content: [{ type: 'text', text: JSON.stringify({ puckData: data, summary }, null, 2) }],
       }
     },
   }

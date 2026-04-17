@@ -32,15 +32,11 @@ export const defaultProps: CategoryGridProps = {
   ],
 }
 
-export function CategoryGridRender({
-  heading, categories,
-}: CategoryGridProps) {
+export function CategoryGridRender({ heading, categories }: CategoryGridProps) {
   return (
     <section className="py-5 md:py-10 px-3 md:px-5">
       <div className="max-w-6xl mx-auto">
-        <h2
-          className="font-bold text-center text-2xl md:text-3xl leading-tight mb-5 md:mb-10"
-        >
+        <h2 className="font-bold text-center text-2xl md:text-3xl leading-tight mb-5 md:mb-10">
           {heading}
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
@@ -51,7 +47,9 @@ export function CategoryGridRender({
               className="no-underline rounded-[15px] flex justify-center items-center text-center"
               style={{
                 backgroundColor: SURFACE_GREY,
-                backgroundImage: cat.backgroundImage?.url ? `url("${cat.backgroundImage.url}")` : 'url(/competition-assets/category-card-bg.png)',
+                backgroundImage: cat.backgroundImage?.url
+                  ? `url("${cat.backgroundImage.url}")`
+                  : 'url(/competition-assets/category-card-bg.png)',
                 backgroundSize: 'auto',
                 backgroundPosition: '100% 100%',
                 backgroundRepeat: 'no-repeat',

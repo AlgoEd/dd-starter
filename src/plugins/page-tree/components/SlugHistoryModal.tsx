@@ -91,7 +91,14 @@ export function SlugHistoryModal({
             justifyContent: 'space-between',
           }}
         >
-          <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 600, color: 'var(--theme-elevation-800)' }}>
+          <h2
+            style={{
+              margin: 0,
+              fontSize: '16px',
+              fontWeight: 600,
+              color: 'var(--theme-elevation-800)',
+            }}
+          >
             URL History for "{pageName}"
           </h2>
           <button
@@ -107,7 +114,14 @@ export function SlugHistoryModal({
               color: 'var(--theme-elevation-500)',
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -122,7 +136,9 @@ export function SlugHistoryModal({
             borderBottom: '1px solid var(--theme-elevation-100)',
           }}
         >
-          <div style={{ fontSize: '12px', color: 'var(--theme-elevation-500)', marginBottom: '4px' }}>
+          <div
+            style={{ fontSize: '12px', color: 'var(--theme-elevation-500)', marginBottom: '4px' }}
+          >
             Current URL
           </div>
           <div
@@ -145,12 +161,16 @@ export function SlugHistoryModal({
             padding: '12px 20px',
           }}
         >
-          <div style={{ fontSize: '12px', color: 'var(--theme-elevation-500)', marginBottom: '12px' }}>
+          <div
+            style={{ fontSize: '12px', color: 'var(--theme-elevation-500)', marginBottom: '12px' }}
+          >
             Previous URLs ({history.length})
           </div>
 
           {history.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '20px', color: 'var(--theme-elevation-400)' }}>
+            <div
+              style={{ textAlign: 'center', padding: '20px', color: 'var(--theme-elevation-400)' }}
+            >
               No URL history available
             </div>
           ) : (

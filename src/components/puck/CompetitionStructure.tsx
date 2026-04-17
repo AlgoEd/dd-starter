@@ -6,13 +6,21 @@ import { createMediaField } from '@delmaredigital/payload-puck/fields'
 import { CompetitionStructureRender, defaultProps } from './CompetitionStructure.render'
 import type { CompetitionStructureProps } from './CompetitionStructure.render'
 
-export type { CompetitionStructureProps, InfoCard, InfoCardItem } from './CompetitionStructure.render'
+export type {
+  CompetitionStructureProps,
+  InfoCard,
+  InfoCardItem,
+} from './CompetitionStructure.render'
 export { CompetitionStructureRender, defaultProps } from './CompetitionStructure.render'
 
 export const CompetitionStructureConfig: ComponentConfig<CompetitionStructureProps> = {
   label: 'Competition Structure',
   fields: {
-    heading: { type: 'text', label: 'Heading (empty = default)', placeholder: defaultProps.heading },
+    heading: {
+      type: 'text',
+      label: 'Heading (empty = default)',
+      placeholder: defaultProps.heading,
+    },
     heroImage: createMediaField({ label: 'Hero Image' }),
     heroOverlayOpacity: {
       type: 'number',

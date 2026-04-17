@@ -1,6 +1,14 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, useRef, useLayoutEffect, type ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+  type ReactNode,
+} from 'react'
 import type { TreeNode, ContextMenuAction } from '../types.js'
 
 interface ContextMenuState {
@@ -34,7 +42,12 @@ interface ContextMenuProviderProps {
   puckEnabled?: boolean
 }
 
-export function ContextMenuProvider({ children, adminRoute, onAction, puckEnabled = false }: ContextMenuProviderProps) {
+export function ContextMenuProvider({
+  children,
+  adminRoute,
+  onAction,
+  puckEnabled = false,
+}: ContextMenuProviderProps) {
   const [state, setState] = useState<ContextMenuState>({
     isOpen: false,
     x: 0,

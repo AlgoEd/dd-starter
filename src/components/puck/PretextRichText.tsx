@@ -19,9 +19,7 @@ import { breakLines, positionItems, forcedBreak, type InputItem } from 'tex-line
 const SPACE_STRETCH = 1.5
 const SPACE_SHRINK = 0.6
 
-type Block =
-  | { type: 'p'; text: string }
-  | { type: 'list'; html: string }
+type Block = { type: 'p'; text: string } | { type: 'list'; html: string }
 
 function splitIntoBlocks(html: string): Block[] {
   if (typeof DOMParser === 'undefined') {
@@ -45,10 +43,7 @@ function splitIntoBlocks(html: string): Block[] {
   return blocks
 }
 
-function segmentsToItems(
-  segments: readonly string[],
-  widths: readonly number[],
-): InputItem[] {
+function segmentsToItems(segments: readonly string[], widths: readonly number[]): InputItem[] {
   const items: InputItem[] = []
   for (let i = 0; i < segments.length; i++) {
     const seg = segments[i]!
@@ -77,9 +72,7 @@ function proposeCandidateLines(text: string, width: number, font: string): strin
     lineMap.get(pos.line)!.push(seg)
   }
 
-  return [...lineMap.entries()]
-    .sort((a, b) => a[0] - b[0])
-    .map(([, segs]) => segs)
+  return [...lineMap.entries()].sort((a, b) => a[0] - b[0]).map(([, segs]) => segs)
 }
 
 function validateLines(candidates: string[][], width: number, span: HTMLSpanElement): string[] {
@@ -108,14 +101,25 @@ function validateLines(candidates: string[][], width: number, span: HTMLSpanElem
 }
 
 function contentBoxWidth(el: HTMLElement, cs: CSSStyleDeclaration): number {
-  return el.getBoundingClientRect().width
-    - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)
-    - parseFloat(cs.borderLeftWidth) - parseFloat(cs.borderRightWidth)
+  return (
+    el.getBoundingClientRect().width -
+    parseFloat(cs.paddingLeft) -
+    parseFloat(cs.paddingRight) -
+    parseFloat(cs.borderLeftWidth) -
+    parseFloat(cs.borderRightWidth)
+  )
 }
 
 function computedFont(cs: CSSStyleDeclaration): string {
-  return [cs.fontStyle, cs.fontVariant, cs.fontWeight,
-    `${cs.fontSize}/${cs.lineHeight}`, cs.fontFamily].filter(Boolean).join(' ')
+  return [
+    cs.fontStyle,
+    cs.fontVariant,
+    cs.fontWeight,
+    `${cs.fontSize}/${cs.lineHeight}`,
+    cs.fontFamily,
+  ]
+    .filter(Boolean)
+    .join(' ')
 }
 
 function JustifiedParagraph({ text }: { text: string }) {
@@ -178,22 +182,18 @@ function JustifiedParagraph({ text }: { text: string }) {
   )
 }
 
-export function PretextRichText({
-  html,
-  className,
-}: {
-  html: string
-  className?: string
-}) {
+export function PretextRichText({ html, className }: { html: string; className?: string }) {
   if (!html) return null
   const blocks = splitIntoBlocks(html)
 
   return (
     <div className={`prose prose-sm max-w-none ${className ?? ''}`}>
       {blocks.map((block, i) =>
-        block.type === 'list'
-          ? <div key={i} dangerouslySetInnerHTML={{ __html: block.html }} />
-          : <JustifiedParagraph key={i} text={block.text} />
+        block.type === 'list' ? (
+          <div key={i} dangerouslySetInnerHTML={{ __html: block.html }} />
+        ) : (
+          <JustifiedParagraph key={i} text={block.text} />
+        ),
       )}
     </div>
   )

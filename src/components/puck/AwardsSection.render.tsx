@@ -65,7 +65,8 @@ export interface AwardsSectionProps {
 
 export const defaultProps: AwardsSectionProps = {
   heading: 'Recognition',
-  introText: '<p>All participants will receive a <strong>Certificate</strong> for participation</p>',
+  introText:
+    '<p>All participants will receive a <strong>Certificate</strong> for participation</p>',
   preliminary: {
     title: 'Preliminary Round',
     badges: [
@@ -75,9 +76,7 @@ export const defaultProps: AwardsSectionProps = {
   },
   semiFinal: {
     title: 'Semi- Final Round',
-    badges: [
-      { badgeIcon: 'semi-finalist', label: 'Semi Finalist', sublabel: '' },
-    ],
+    badges: [{ badgeIcon: 'semi-finalist', label: 'Semi Finalist', sublabel: '' }],
   },
   final: {
     title: 'Final Round',
@@ -91,7 +90,8 @@ export const defaultProps: AwardsSectionProps = {
   },
   individualAward: {
     title: 'Individual Category',
-    description: 'Top participants will receive individual honors, even if their teams may not win any awards.',
+    description:
+      'Top participants will receive individual honors, even if their teams may not win any awards.',
   },
   teamAward: {
     title: 'Team category',
@@ -114,8 +114,12 @@ function BadgeTile({ badge }: { badge: BadgeItem }) {
       {badgeIconUrl(badge.badgeIcon) && (
         <img src={badgeIconUrl(badge.badgeIcon)!} alt={badge.label} className="block w-[105px]" />
       )}
-      <span className="text-xs text-center whitespace-nowrap text-[#222] font-medium">{badge.label}</span>
-      {badge.sublabel && <span className="text-xs text-center whitespace-nowrap text-[#666]">{badge.sublabel}</span>}
+      <span className="text-xs text-center whitespace-nowrap text-[#222] font-medium">
+        {badge.label}
+      </span>
+      {badge.sublabel && (
+        <span className="text-xs text-center whitespace-nowrap text-[#666]">{badge.sublabel}</span>
+      )}
     </div>
   )
 }
@@ -124,12 +128,19 @@ function BadgeTile({ badge }: { badge: BadgeItem }) {
 // Decoration (cup watermark) is positioned content-centered within Figma's
 // boolean-op bounds. SVGs are cropped to visible pixels; percentages reflect
 // the SVG's content size, not the bounding box.
-function SpecialAwardCard({ iconKey, award }: { iconKey: 'individual' | 'team'; award: SpecialAward }) {
+function SpecialAwardCard({
+  iconKey,
+  award,
+}: {
+  iconKey: 'individual' | 'team'
+  award: SpecialAward
+}) {
   // Individual decor (80×88 SVG in 92.34×93.22 bounds on 637×144 card)
   // Team decor       (112×105 SVG in 127.52×114.63 bounds on 638×144 card)
-  const decor = iconKey === 'individual'
-    ? { left: '88.72%', top: '56.50%', width: '12.56%' }
-    : { left: '86.13%', top: '38.07%', width: '17.55%' }
+  const decor =
+    iconKey === 'individual'
+      ? { left: '88.72%', top: '56.50%', width: '12.56%' }
+      : { left: '86.13%', top: '38.07%', width: '17.55%' }
   return (
     <div
       className={`relative overflow-hidden rounded-lg bg-[#fcfcfc] py-3.5 pl-3.5 ${iconKey === 'individual' ? 'pr-16' : 'pr-20'}`}
@@ -143,7 +154,9 @@ function SpecialAwardCard({ iconKey, award }: { iconKey: 'individual' | 'team'; 
       />
       <div className="relative inline-flex items-center gap-2 bg-white rounded-full px-3 py-1 mb-2.5">
         <img src={`/competition-assets/icon-${iconKey}.svg`} alt="" className="w-5 h-5" />
-        <span className="font-bold text-xs" style={{ color: '#f28a15' }}>{award.title}</span>
+        <span className="font-bold text-xs" style={{ color: '#f28a15' }}>
+          {award.title}
+        </span>
       </div>
       <p className="relative text-xs leading-relaxed text-[#222] m-0">{award.description}</p>
     </div>
@@ -158,7 +171,8 @@ export function AwardsSectionRender({
   final = defaultProps.final,
   individualAward = defaultProps.individualAward,
   teamAward = defaultProps.teamAward,
-  noteText, noteIcon,
+  noteText,
+  noteIcon,
 }: AwardsSectionProps) {
   const heading = headingRaw || defaultProps.heading
   return (
@@ -170,7 +184,9 @@ export function AwardsSectionRender({
         </h2>
 
         {introText && (
-          <RichText className="text-base leading-relaxed text-[#222] mb-5 md:mb-6 text-center">{introText}</RichText>
+          <RichText className="text-base leading-relaxed text-[#222] mb-5 md:mb-6 text-center">
+            {introText}
+          </RichText>
         )}
 
         {/* Default round card — Preliminary + Semi-Final side by side */}
@@ -208,13 +224,17 @@ export function AwardsSectionRender({
                 {preliminary.title}
               </h3>
               <div className="flex flex-col items-center gap-4 max-w-xl mx-auto w-full sm:flex-row sm:flex-wrap sm:justify-evenly md:col-start-1 md:row-start-2 md:self-center">
-                {preliminary.badges.map((b, i) => <BadgeTile key={i} badge={b} />)}
+                {preliminary.badges.map((b, i) => (
+                  <BadgeTile key={i} badge={b} />
+                ))}
               </div>
               <h3 className="font-bold text-lg leading-tight text-[#222] md:mb-6 text-center md:col-start-3 md:row-start-1">
                 {semiFinal.title}
               </h3>
               <div className="flex flex-col items-center gap-4 max-w-xl mx-auto w-full sm:flex-row sm:flex-wrap sm:justify-evenly md:col-start-3 md:row-start-2 md:self-center">
-                {semiFinal.badges.map((b, i) => <BadgeTile key={i} badge={b} />)}
+                {semiFinal.badges.map((b, i) => (
+                  <BadgeTile key={i} badge={b} />
+                ))}
               </div>
               <div className="hidden md:block md:col-start-2 md:row-span-2 my-4 bg-gray-300" />
             </div>
@@ -264,7 +284,9 @@ export function AwardsSectionRender({
               )}
             </div>
             <div className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto sm:flex-row sm:flex-wrap sm:justify-evenly">
-              {final.badges.map((b, i) => <BadgeTile key={i} badge={b} />)}
+              {final.badges.map((b, i) => (
+                <BadgeTile key={i} badge={b} />
+              ))}
             </div>
           </div>
         </div>
@@ -274,7 +296,9 @@ export function AwardsSectionRender({
           <div className="flex items-start gap-2 rounded-xl bg-[#f6eeee] p-4">
             {noteIcon?.url && <img src={noteIcon.url} alt="" className="w-6 h-6" />}
             <div>
-              <div className="font-medium text-sm" style={{ color: '#850c10' }}>Note</div>
+              <div className="font-medium text-sm" style={{ color: '#850c10' }}>
+                Note
+              </div>
               <div className="text-xs leading-relaxed mt-1">{noteText}</div>
             </div>
           </div>

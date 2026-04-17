@@ -122,9 +122,7 @@ export interface PageTreePluginConfig {
  * Receives the collection config after the plugin has added its fields.
  * Must return a valid collection config.
  */
-export type CustomizeFolderCollection = (
-  collection: FolderCollectionInput
-) => FolderCollectionInput
+export type CustomizeFolderCollection = (collection: FolderCollectionInput) => FolderCollectionInput
 
 /**
  * Folder collection config type - uses generic record to avoid

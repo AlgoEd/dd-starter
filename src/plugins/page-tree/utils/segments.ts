@@ -36,9 +36,7 @@ async function getExistingSegments(opts: SegmentLookupOptions): Promise<string[]
 
   const segmentField = type === 'folder' ? 'pathSegment' : 'pageSegment'
 
-  const folderClause = parentId
-    ? { folder: { equals: parentId } }
-    : { folder: { exists: false } }
+  const folderClause = parentId ? { folder: { equals: parentId } } : { folder: { exists: false } }
 
   const where =
     excludeId !== undefined

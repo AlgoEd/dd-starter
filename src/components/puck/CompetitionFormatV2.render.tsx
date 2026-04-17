@@ -15,7 +15,17 @@
  * Round card bg: rgb(234,242,255), corners 16→12px = rounded-xl
  * Inner detail cards: white bg, corners 14→10.5px = rounded-xl
  */
-import { CompetitionCTA, RichText, BRAND_DARK, CTA_BG, CTA_TEXT, CTA2_BG, CTA2_TEXT, CTA2_BORDER, TINT_FALLBACK_CLASS } from './shared'
+import {
+  CompetitionCTA,
+  RichText,
+  BRAND_DARK,
+  CTA_BG,
+  CTA_TEXT,
+  CTA2_BG,
+  CTA2_TEXT,
+  CTA2_BORDER,
+  TINT_FALLBACK_CLASS,
+} from './shared'
 import { CalendarToday } from './icons'
 
 /* ── Types ──────────────────────────────────────────────── */
@@ -51,8 +61,7 @@ export const defaultProps: CompetitionFormatV2Props = {
   rounds: [
     {
       title: 'Preliminary round: Online Challenge',
-      description:
-        'The preliminary round is open to all registered teams worldwide',
+      description: 'The preliminary round is open to all registered teams worldwide',
       dateLabel: 'March 20, 2027',
       infoCards: [
         {
@@ -64,7 +73,8 @@ export const defaultProps: CompetitionFormatV2Props = {
           body: '<ul><li>Lower Primary School Category: 45 minutes</li><li>Upper Primary School Category: 1 hour</li></ul>',
         },
       ],
-      formatDetails: '<ul><li>Online challenge (multiple choice, fill in the blanks, and free-response questions)</li></ul>',
+      formatDetails:
+        '<ul><li>Online challenge (multiple choice, fill in the blanks, and free-response questions)</li></ul>',
       formatCards: [
         {
           heading: 'Lower Primary School Category (Grades K\u20132):',
@@ -130,9 +140,7 @@ export function CompetitionFormatV2Render({
   return (
     <section className="py-5 md:py-10 px-3 md:px-5">
       <div className="max-w-5xl mx-auto">
-        <h2
-          className="font-bold text-center text-2xl md:text-3xl leading-tight text-[#222] mb-5 md:mb-10"
-        >
+        <h2 className="font-bold text-center text-2xl md:text-3xl leading-tight text-[#222] mb-5 md:mb-10">
           {heading}
         </h2>
 
@@ -144,10 +152,7 @@ export function CompetitionFormatV2Render({
             style={{ backgroundColor: `color-mix(in srgb, ${color} 10%, white)` }}
           >
             {/* Round title — Figma 26px Bold primaryColor → text-xl */}
-            <h3
-              className="font-bold mt-0 mb-2 text-xl leading-tight"
-              style={{ color }}
-            >
+            <h3 className="font-bold mt-0 mb-2 text-xl leading-tight" style={{ color }}>
               {round.title}
             </h3>
 
@@ -169,9 +174,13 @@ export function CompetitionFormatV2Render({
             )}
 
             {/* Divider line */}
-            {(round.dateLabel && ((round.infoCards ?? []).length > 0 || round.formatDetails || (round.formatCards ?? []).length > 0 || round.body)) && (
-              <hr className="mb-4 border-0 border-t" style={{ borderColor: '#ddd' }} />
-            )}
+            {round.dateLabel &&
+              ((round.infoCards ?? []).length > 0 ||
+                round.formatDetails ||
+                (round.formatCards ?? []).length > 0 ||
+                round.body) && (
+                <hr className="mb-4 border-0 border-t" style={{ borderColor: '#ddd' }} />
+              )}
 
             {/* Info cards (Time/Duration) — nested card grid */}
             {(round.infoCards ?? []).length > 0 && (
@@ -194,7 +203,9 @@ export function CompetitionFormatV2Render({
             {/* Format section — "Format :" label shown when formatDetails or formatCards exist */}
             {(round.formatDetails || (round.formatCards ?? []).length > 0) && (
               <div className="mb-5">
-                <div className="font-bold text-base mb-0" style={{ color }}>Format :</div>
+                <div className="font-bold text-base mb-0" style={{ color }}>
+                  Format :
+                </div>
                 {round.formatDetails && (
                   <RichText className="m-0 text-base text-[#222]">{round.formatDetails}</RichText>
                 )}
@@ -220,9 +231,7 @@ export function CompetitionFormatV2Render({
             )}
 
             {/* Body — richtext (paragraphs, bullets, bold, whatever the round needs) */}
-            {round.body && (
-              <RichText className="m-0 text-base text-[#222]">{round.body}</RichText>
-            )}
+            {round.body && <RichText className="m-0 text-base text-[#222]">{round.body}</RichText>}
           </div>
         ))}
 
@@ -230,12 +239,7 @@ export function CompetitionFormatV2Render({
         {(ctaText || secondaryCtaText) && (
           <div className="flex flex-wrap justify-center gap-5 md:gap-6 mt-5 md:mt-10">
             {ctaText && (
-              <CompetitionCTA
-                text={ctaText}
-                href={ctaLink}
-                bgColor={CTA_BG}
-                textColor={CTA_TEXT}
-              />
+              <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
             )}
             {secondaryCtaText && (
               <CompetitionCTA

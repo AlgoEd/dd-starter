@@ -23,40 +23,47 @@ export const defaultProps: AboutPartnerProps = {
   ctaLink: '#',
 }
 
-export function AboutPartnerRender({
-  heading, body, ctaText, ctaLink,
-}: AboutPartnerProps) {
+export function AboutPartnerRender({ heading, body, ctaText, ctaLink }: AboutPartnerProps) {
   const color = BRAND_DARK
 
   return (
-    <section className="overflow-hidden" style={{ backgroundColor: color, paddingTop: '45px', paddingBottom: '45px' }}>
+    <section
+      className="overflow-hidden"
+      style={{ backgroundColor: color, paddingTop: '45px', paddingBottom: '45px' }}
+    >
       <div className="px-3 md:px-5">
-      <div className="max-w-6xl mx-auto flex flex-col items-stretch md:items-center">
-        {/* Source .div-block-206: flex row on desktop (heading | divider | body), column on mobile */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-center mb-6">
-          <h2
-            className="font-semibold text-white text-left md:text-right m-0 text-2xl md:text-3xl leading-tight"
-          >
-            {heading}
-          </h2>
-          {/* Decorative dividers — source image-164 (383x5, horizontal, mobile only) + image-148 (5x175, vertical, desktop only) */}
-          <div className="block lg:hidden w-[383px] max-w-full h-[5px] my-4 rounded" style={{ backgroundColor: '#fff' }} />
-          {/* Vertical divider — self-stretch to match sibling height dynamically */}
-          <div className="hidden lg:block rounded self-stretch" style={{ width: '5px', backgroundColor: '#fff', marginLeft: '25px', marginRight: '25px', flexShrink: 0 }} />
-          <p
-            className="text-white mb-0 whitespace-pre-line text-base"
-          >
-            {body}
-          </p>
+        <div className="max-w-6xl mx-auto flex flex-col items-stretch md:items-center">
+          {/* Source .div-block-206: flex row on desktop (heading | divider | body), column on mobile */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-center mb-6">
+            <h2 className="font-semibold text-white text-left md:text-right m-0 text-2xl md:text-3xl leading-tight">
+              {heading}
+            </h2>
+            {/* Decorative dividers — source image-164 (383x5, horizontal, mobile only) + image-148 (5x175, vertical, desktop only) */}
+            <div
+              className="block lg:hidden w-[383px] max-w-full h-[5px] my-4 rounded"
+              style={{ backgroundColor: '#fff' }}
+            />
+            {/* Vertical divider — self-stretch to match sibling height dynamically */}
+            <div
+              className="hidden lg:block rounded self-stretch"
+              style={{
+                width: '5px',
+                backgroundColor: '#fff',
+                marginLeft: '25px',
+                marginRight: '25px',
+                flexShrink: 0,
+              }}
+            />
+            <p className="text-white mb-0 whitespace-pre-line text-base">{body}</p>
+          </div>
+          <CompetitionCTA
+            text={ctaText}
+            href={ctaLink}
+            bgColor="#ffffff"
+            textColor={color}
+            target="_blank"
+          />
         </div>
-        <CompetitionCTA
-          text={ctaText}
-          href={ctaLink}
-          bgColor="#ffffff"
-          textColor={color}
-          target="_blank"
-        />
-      </div>
       </div>
     </section>
   )

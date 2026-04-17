@@ -249,9 +249,7 @@ async function collectAllFolderIds(
 
   // Collect child folder IDs in parallel
   const childResults = await Promise.all(
-    childFolders.map((folder: any) =>
-      collectAllFolderIds(payload, String(folder.id), folderSlug)
-    )
+    childFolders.map((folder: any) => collectAllFolderIds(payload, String(folder.id), folderSlug)),
   )
 
   for (const childIds of childResults) {
@@ -297,9 +295,9 @@ async function deleteFolderRecursive(
             payload.delete({
               collection: collectionSlug as CollectionSlug,
               id: doc.id,
-            })
-          )
-        ).then(() => {})
+            }),
+          ),
+        ).then(() => {}),
       )
     }
   }
@@ -320,8 +318,8 @@ async function deleteFolderRecursive(
         payload.delete({
           collection: folderSlug as CollectionSlug,
           id,
-        })
-      )
+        }),
+      ),
     )
   }
 }
@@ -404,10 +402,7 @@ function generateDuplicateTitle(baseTitle: string, existingTitles: string[]): st
   const cleanBase = match ? match[1].trim() : baseTitle
 
   const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-  const copyRegex = new RegExp(
-    `^${escapeRegex(cleanBase)}\\s*\\(copy(?:\\s+(\\d+))?\\)$`,
-    'i',
-  )
+  const copyRegex = new RegExp(`^${escapeRegex(cleanBase)}\\s*\\(copy(?:\\s+(\\d+))?\\)$`, 'i')
 
   let maxCopyNum = 0
   for (const title of existingTitles) {
@@ -474,9 +469,7 @@ export function createDuplicateHandler(options: TreeEndpointOptions): PayloadHan
       // Get existing titles in the same folder so we can compute (copy N)
       const { docs: siblings } = await req.payload.find({
         collection: collection as CollectionSlug,
-        where: parentId
-          ? { folder: { equals: parentId } }
-          : { folder: { exists: false } },
+        where: parentId ? { folder: { equals: parentId } } : { folder: { exists: false } },
         limit: 0,
         depth: 0,
       })
@@ -509,7 +502,12 @@ export function createDuplicateHandler(options: TreeEndpointOptions): PayloadHan
         req,
       })
 
-      return Response.json({ success: true, id: result.id, title: newTitle, pageSegment: newPageSegment })
+      return Response.json({
+        success: true,
+        id: result.id,
+        title: newTitle,
+        pageSegment: newPageSegment,
+      })
     } catch (error) {
       console.error('[payload-page-tree] Duplicate error:', error)
       return Response.json(
@@ -528,10 +526,17 @@ export function createStatusHandler(options: TreeEndpointOptions): PayloadHandle
 
   return async (req) => {
     try {
-      const body = (await req.json?.()) as { id: string; collection: string; status: 'draft' | 'published' }
+      const body = (await req.json?.()) as {
+        id: string
+        collection: string
+        status: 'draft' | 'published'
+      }
 
       if (!body?.id || !body?.collection || !body?.status) {
-        return Response.json({ error: 'Missing required fields: id, collection, status' }, { status: 400 })
+        return Response.json(
+          { error: 'Missing required fields: id, collection, status' },
+          { status: 400 },
+        )
       }
 
       await req.payload.update({
@@ -572,10 +577,7 @@ export function createRenameHandler(options: TreeEndpointOptions): PayloadHandle
       }
 
       if (!body?.type || !body?.id || !body?.name) {
-        return Response.json(
-          { error: 'Missing required fields: type, id, name' },
-          { status: 400 },
-        )
+        return Response.json({ error: 'Missing required fields: type, id, name' }, { status: 400 })
       }
 
       const { type, id, name, collection } = body
@@ -601,10 +603,7 @@ export function createRenameHandler(options: TreeEndpointOptions): PayloadHandle
           req,
         })
       } else {
-        return Response.json(
-          { error: 'Collection is required for page type' },
-          { status: 400 },
-        )
+        return Response.json({ error: 'Collection is required for page type' }, { status: 400 })
       }
 
       return Response.json({ success: true })
@@ -640,7 +639,11 @@ export function createRegenerateSlugsHandler(options: TreeEndpointOptions): Payl
 
       if (folderId) {
         // Get all folder IDs including nested children
-        const childFolderIds = await getAllChildFolderIdsForRegenerate(folderId, req.payload, folderSlug)
+        const childFolderIds = await getAllChildFolderIdsForRegenerate(
+          folderId,
+          req.payload,
+          folderSlug,
+        )
         const allFolderIds = [folderId, ...childFolderIds]
 
         // Update pages in all affected folders
@@ -881,10 +884,7 @@ export function createRestoreSlugHandler(options: TreeEndpointOptions): PayloadH
       // Check if the target slug is in the history
       const historyEntry = pageDoc.slugHistory?.find((h) => h.slug === targetSlug)
       if (!historyEntry) {
-        return Response.json(
-          { error: 'Target slug not found in history' },
-          { status: 400 },
-        )
+        return Response.json({ error: 'Target slug not found in history' }, { status: 400 })
       }
 
       // Extract the pageSegment from the target slug (last segment)
@@ -960,10 +960,7 @@ export function createEditUrlHandler(options: TreeEndpointOptions): PayloadHandl
       // collision lookups
       const sourceCollection = type === 'folder' ? folderSlug : collection
       if (!sourceCollection) {
-        return Response.json(
-          { error: 'Collection is required for page type' },
-          { status: 400 },
-        )
+        return Response.json({ error: 'Collection is required for page type' }, { status: 400 })
       }
       if (type === 'page' && collection && !collections.includes(collection)) {
         return Response.json(
@@ -1061,10 +1058,7 @@ export function createCheckSegmentHandler(options: TreeEndpointOptions): Payload
       const collection = url.searchParams.get('collection')
 
       if (!type || !segment) {
-        return Response.json(
-          { error: 'Missing required params: type, segment' },
-          { status: 400 },
-        )
+        return Response.json({ error: 'Missing required params: type, segment' }, { status: 400 })
       }
       if (type !== 'folder' && type !== 'page') {
         return Response.json({ error: 'type must be "page" or "folder"' }, { status: 400 })

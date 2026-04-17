@@ -9,17 +9,26 @@ import { useFormFields } from '@payloadcms/ui'
 export function OGPreviewField() {
   const slug = useFormFields(([fields]) => fields['slug']?.value as string | undefined)
 
-  if (!slug) return (
-    <div style={{ fontSize: 12, color: 'var(--theme-elevation-500)', marginBottom: 16 }}>
-      Save the page first to preview the OG image.
-    </div>
-  )
+  if (!slug)
+    return (
+      <div style={{ fontSize: 12, color: 'var(--theme-elevation-500)', marginBottom: 16 }}>
+        Save the page first to preview the OG image.
+      </div>
+    )
 
   const ogUrl = `/api/og?slug=${encodeURIComponent(slug)}`
 
   return (
     <div style={{ marginBottom: 16 }}>
-      <label style={{ display: 'block', fontSize: 14, fontWeight: 500, marginBottom: 8, color: 'var(--theme-elevation-600)' }}>
+      <label
+        style={{
+          display: 'block',
+          fontSize: 14,
+          fontWeight: 500,
+          marginBottom: 8,
+          color: 'var(--theme-elevation-600)',
+        }}
+      >
         Open Graph Preview
       </label>
       <img

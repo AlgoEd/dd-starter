@@ -8,7 +8,17 @@
 const FRAME_CLS =
   'border-[10px] border-white rounded-[14px] shadow-[0_1px_17px_rgba(0,0,0,0.17)] overflow-hidden'
 
-export function FramedImage({ src, alt, width, height }: { src: string; alt: string; width?: number; height?: number }) {
+export function FramedImage({
+  src,
+  alt,
+  width,
+  height,
+}: {
+  src: string
+  alt: string
+  width?: number
+  height?: number
+}) {
   return (
     <div className={`w-full ${FRAME_CLS}`}>
       <img

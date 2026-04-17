@@ -95,7 +95,7 @@ export function FolderSelectModal({
   }, [treeData, excludeIds, currentFolderIds])
 
   const toggleExpand = useCallback((id: string) => {
-    setExpandedIds(prev => {
+    setExpandedIds((prev) => {
       const next = new Set(prev)
       if (next.has(id)) {
         next.delete(id)
@@ -114,10 +114,10 @@ export function FolderSelectModal({
   const isValidSelection = useMemo(() => {
     if (selectedId === null) {
       // Moving to root - valid if not all items are already at root
-      return !currentFolderIds.every(id => id === null)
+      return !currentFolderIds.every((id) => id === null)
     }
     // Valid if selected folder is different from current folder for at least one item
-    return !currentFolderIds.every(id => id === selectedId)
+    return !currentFolderIds.every((id) => id === selectedId)
   }, [selectedId, currentFolderIds])
 
   // Render folder item recursively
@@ -209,7 +209,9 @@ export function FolderSelectModal({
             <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
           </svg>
 
-          <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span
+            style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+          >
             {folder.name}
           </span>
 
@@ -222,9 +224,7 @@ export function FolderSelectModal({
 
         {/* Children */}
         {folder.hasChildren && isExpanded && (
-          <div>
-            {folder.children.map(child => renderFolderItem(child))}
-          </div>
+          <div>{folder.children.map((child) => renderFolderItem(child))}</div>
         )}
       </div>
     )
@@ -352,7 +352,7 @@ export function FolderSelectModal({
           </button>
 
           {/* Folder tree */}
-          {folderTree.map(folder => renderFolderItem(folder))}
+          {folderTree.map((folder) => renderFolderItem(folder))}
 
           {folderTree.length === 0 && (
             <div
@@ -400,7 +400,9 @@ export function FolderSelectModal({
               padding: '8px 16px',
               border: 'none',
               borderRadius: '4px',
-              backgroundColor: isValidSelection ? 'var(--theme-success-500, #22c55e)' : 'var(--theme-elevation-200)',
+              backgroundColor: isValidSelection
+                ? 'var(--theme-success-500, #22c55e)'
+                : 'var(--theme-elevation-200)',
               color: isValidSelection ? 'white' : 'var(--theme-elevation-400)',
               fontSize: '14px',
               fontWeight: 500,

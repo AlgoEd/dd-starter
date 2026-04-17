@@ -14,7 +14,12 @@
 import { Render } from '@puckeditor/core/rsc'
 import type { Config as PuckConfig, Data as PuckData } from '@puckeditor/core'
 import { baseConfig } from '@delmaredigital/payload-puck/config'
-import { LayoutWrapper, getLayout, DEFAULT_LAYOUTS, type LayoutDefinition } from '@delmaredigital/payload-puck/layouts'
+import {
+  LayoutWrapper,
+  getLayout,
+  DEFAULT_LAYOUTS,
+  type LayoutDefinition,
+} from '@delmaredigital/payload-puck/layouts'
 
 export interface PageRendererProps {
   data: PuckData

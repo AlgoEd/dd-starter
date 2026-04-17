@@ -87,7 +87,6 @@ export function EditUrlModal({
     let cancelled = false
 
     setCascadeImpact({ state: 'loading' })
-
     ;(async () => {
       try {
         const result = (await apiCall(`/page-tree/folder-impact?folderId=${folderId}`)) as {
@@ -223,15 +222,12 @@ export function EditUrlModal({
 
   // Build the preview URL
   const slugifiedSegment = slugify(segment)
-  const previewUrl = folderPath
-    ? `/${folderPath}/${slugifiedSegment}`
-    : `/${slugifiedSegment}`
+  const previewUrl = folderPath ? `/${folderPath}/${slugifiedSegment}` : `/${slugifiedSegment}`
 
   const isFolder = node.type === 'folder'
   const requiresTypeToConfirm =
     isFolder && cascadeImpact.state === 'loaded' && cascadeImpact.count > 0
-  const typeToConfirmSatisfied =
-    !requiresTypeToConfirm || confirmInput === slugifiedSegment
+  const typeToConfirmSatisfied = !requiresTypeToConfirm || confirmInput === slugifiedSegment
   // If we're editing a folder but the cascade fetch is in flight or failed,
   // we MUST NOT allow saving — proceeding would let the user approve a
   // cascade of unknown size.
@@ -326,8 +322,8 @@ export function EditUrlModal({
               color: 'var(--theme-error-700, #b91c1c)',
             }}
           >
-            Failed to fetch cascade impact: {cascadeImpact.message}. Save is
-            disabled until this can be retrieved.
+            Failed to fetch cascade impact: {cascadeImpact.message}. Save is disabled until this can
+            be retrieved.
           </div>
         )}
 

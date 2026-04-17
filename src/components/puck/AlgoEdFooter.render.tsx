@@ -17,9 +17,7 @@ export const defaultProps: AlgoEdFooterProps = {
   bgSource: 'dark',
 }
 
-export function AlgoEdFooterRender({
-  bgSource,
-}: AlgoEdFooterProps) {
+export function AlgoEdFooterRender({ bgSource }: AlgoEdFooterProps) {
   const color = (bgSource ?? 'dark') === 'bright' ? BRAND_BRIGHT : BRAND_DARK
 
   return (
@@ -49,7 +47,7 @@ export function AlgoEdFooterRender({
             panel (pt-9 + content + pb-14 ≈ 192px) / 3 rows × aspect(127.825/93) / 2
           */}
           <div className="absolute inset-0 pointer-events-none flex flex-col">
-            {[0, 1, 2].map(row => (
+            {[0, 1, 2].map((row) => (
               <div
                 key={row}
                 className="flex-1"

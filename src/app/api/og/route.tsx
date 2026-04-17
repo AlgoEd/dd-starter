@@ -22,15 +22,15 @@ const SIZE = { width: 1200, height: 630 }
 // which isn't fetchable in server context.
 import { readFileSync } from 'fs'
 import { join, basename } from 'path'
-const baskervvilleItalic = readFileSync(join(process.cwd(), 'public', 'competition-assets', 'Baskervville-Italic.ttf'))
-const poppinsBold = readFileSync(join(process.cwd(), 'public', 'competition-assets', 'Poppins-Bold.ttf'))
+const baskervvilleItalic = readFileSync(
+  join(process.cwd(), 'public', 'competition-assets', 'Baskervville-Italic.ttf'),
+)
+const poppinsBold = readFileSync(
+  join(process.cwd(), 'public', 'competition-assets', 'Poppins-Bold.ttf'),
+)
 
 /** Resolve theme token to actual hex color. In Satori there's no CSS var context. */
-function resolveColor(
-  token: string,
-  primaryDark: string,
-  primaryBright: string,
-): string {
+function resolveColor(token: string, primaryDark: string, primaryBright: string): string {
   if (token === 'dark') return primaryDark
   if (token === 'bright') return primaryBright
   return '#ffffff'
@@ -50,7 +50,18 @@ export async function GET(req: Request) {
   const page = result.docs?.[0]
   if (!page) {
     return new ImageResponse(
-      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#222', color: '#fff', fontSize: 48 }}>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#222',
+          color: '#fff',
+          fontSize: 48,
+        }}
+      >
         Page not found
       </div>,
       SIZE,
@@ -74,9 +85,12 @@ export async function GET(req: Request) {
   const highlightText = resolveColor(highlightTextToken, primaryDark, primaryBright)
   const oppositeOverlay = overlayToken === 'dark' ? 'bright' : 'dark'
   const heroTextStyle = rootProps?.heroTextStyle || 'default'
-  const heroText = heroTextStyle === 'white' ? '#ffffff'
-    : heroTextStyle === 'primary' ? resolveColor(oppositeOverlay, primaryDark, primaryBright)
-    : highlightBg
+  const heroText =
+    heroTextStyle === 'white'
+      ? '#ffffff'
+      : heroTextStyle === 'primary'
+        ? resolveColor(oppositeOverlay, primaryDark, primaryBright)
+        : highlightBg
 
   // Page content — typed discriminated union via Data<Components, RootProps>.
   // `find` on type === 'CompetitionHero' narrows to CompetitionHeroProps automatically.
@@ -112,148 +126,201 @@ export async function GET(req: Request) {
       // optimizes losslessly (~33% smaller than raw R2 file). Polish won't
       // convert PNG→JPEG regardless of Accept order; only webp/avif is negotiated.
       const res = await fetch(resolved, { headers: { Accept: 'image/png,image/jpeg,image/*' } })
-      if (!res.ok) { console.warn(`[og] ${label}: fetch ${res.status} for ${resolved}`); return '' }
+      if (!res.ok) {
+        console.warn(`[og] ${label}: fetch ${res.status} for ${resolved}`)
+        return ''
+      }
       const contentType = res.headers.get('content-type') || 'image/png'
       const buf = await res.arrayBuffer()
       return `data:${contentType};base64,${Buffer.from(buf).toString('base64')}`
-    } catch (e) { console.error(`[og] ${label}:`, e); return '' }
+    } catch (e) {
+      console.error(`[og] ${label}:`, e)
+      return ''
+    }
   }
   const heroBgUrl = await fetchAsDataUri(hero?.backgroundImage?.url, 'heroBg')
   const illustrationUrl = await fetchAsDataUri(hero?.heroImage?.url, 'illustration')
   // Partner logo removed from OG — too small, clutters the layout
-  const overlayTopOpacity = Math.round((hero?.overlayTopOpacity ?? 80) * 2.55).toString(16).padStart(2, '0')
-  const overlayBottomOpacity = Math.round((hero?.overlayBottomOpacity ?? 100) * 2.55).toString(16).padStart(2, '0')
+  const overlayTopOpacity = Math.round((hero?.overlayTopOpacity ?? 80) * 2.55)
+    .toString(16)
+    .padStart(2, '0')
+  const overlayBottomOpacity = Math.round((hero?.overlayBottomOpacity ?? 100) * 2.55)
+    .toString(16)
+    .padStart(2, '0')
 
   // Laurel badge SVG — SVGO optimized, 19KB. Embedded as base64 data URI.
-  const badgeSvg = readFileSync(join(process.cwd(), 'public', 'competition-assets', 'og-proudly-hosted-badge.svg'))
+  const badgeSvg = readFileSync(
+    join(process.cwd(), 'public', 'competition-assets', 'og-proudly-hosted-badge.svg'),
+  )
   const badgeBase64 = `data:image/svg+xml;base64,${badgeSvg.toString('base64')}`
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          position: 'relative',
-          /* no fontFamily — Satori uses built-in Noto Sans. Baskervville only on audience label. */
-        }}
-      >
-        {/* Background: hero photo or solid color */}
-        {heroBgUrl ? (
-          <img
-            src={heroBgUrl}
-            width={1200}
-            height={630}
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-        ) : null}
-
-        {/* Brand overlay */}
-        <div
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        position: 'relative',
+        /* no fontFamily — Satori uses built-in Noto Sans. Baskervville only on audience label. */
+      }}
+    >
+      {/* Background: hero photo or solid color */}
+      {heroBgUrl ? (
+        <img
+          src={heroBgUrl}
+          width={1200}
+          height={630}
           style={{
             position: 'absolute',
             top: 0,
             left: 0,
             width: '100%',
             height: '100%',
-            background: heroBgUrl
-              ? `linear-gradient(${overlayColor}${overlayTopOpacity}, ${overlayColor}${overlayBottomOpacity})`
-              : overlayColor,
+            objectFit: 'cover',
           }}
         />
+      ) : null}
 
-        {/* Content layer — spacings derived from Figma OG card (250×145 → 1200×630) */}
+      {/* Brand overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: heroBgUrl
+            ? `linear-gradient(${overlayColor}${overlayTopOpacity}, ${overlayColor}${overlayBottomOpacity})`
+            : overlayColor,
+        }}
+      />
+
+      {/* Content layer — spacings derived from Figma OG card (250×145 → 1200×630) */}
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          padding: 52 /* tw-13, ratio-matched to Figma OG card */,
+        }}
+      >
+        {/* Illustration first in DOM — Satori has no z-index, later elements paint on top.
+             Text must come after so it covers the illustration (same as hero's z-10 vs z-0). */}
+        {illustrationUrl ? (
+          <img
+            src={illustrationUrl}
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 52 /* tw-13, matches content padding */,
+              width: '45%',
+              maxHeight: '50%',
+              objectFit: 'contain',
+            }}
+          />
+        ) : null}
+
+        {/* Left: text — paints on top of illustration */}
         <div
           style={{
-            position: 'relative',
             display: 'flex',
-            width: '100%',
-            height: '100%',
-            padding: 52, /* tw-13, ratio-matched to Figma OG card */
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            flex: 1,
           }}
         >
-          {/* Illustration first in DOM — Satori has no z-index, later elements paint on top.
-             Text must come after so it covers the illustration (same as hero's z-10 vs z-0). */}
-          {illustrationUrl ? (
-            <img
-              src={illustrationUrl}
-              style={{
-                position: 'absolute',
-                right: 0,
-                bottom: 52, /* tw-13, matches content padding */
-                width: '45%',
-                maxHeight: '50%',
-                objectFit: 'contain',
-              }}
-            />
-          ) : null}
-
-          {/* Left: text — paints on top of illustration */}
+          {/* Title — Poppins Bold, matches hero (CompetitionHero.render.tsx).
+               May individually tweak later for OG-specific sizing. */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'flex-start',
-              flex: 1,
+              gap: 16 /* tw-4, simulates Figma's mixed 1.3/1.55 line heights at uniform 1.2 */,
             }}
           >
-            {/* Title — Poppins Bold, matches hero (CompetitionHero.render.tsx).
-               May individually tweak later for OG-specific sizing. */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 /* tw-4, simulates Figma's mixed 1.3/1.55 line heights at uniform 1.2 */ }}>
-              <span style={{ fontFamily: 'Poppins', fontSize: 60, /* tw text-6xl */ fontWeight: 700, color: heroText, textTransform: 'uppercase' }}>
-                {titleLine1}
-              </span>
-              {titleLine2 && (
-                <span
-                  style={{
-                    display: 'flex',
-                    alignSelf: 'flex-start',
-                    fontFamily: 'Poppins',
-                    fontSize: 60, /* tw text-6xl */
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    /* lineHeight: default 1.2 — gap: 16 simulates Figma's 1.55 on highlight */
-                    color: highlightText,
-                    backgroundColor: highlightBg,
-                    padding: '6px 12px', /* scaled from hero py-[5px] px-2.5 at 60px */
-                    borderRadius: 12, /* tw rounded-xl */
-                  }}
-                >
-                  {titleLine2}
-                </span>
-              )}
-              <span style={{ fontFamily: 'Poppins', fontSize: 60, /* tw text-6xl */ fontWeight: 700, color: heroText, textTransform: 'uppercase' }}>
-                {titleLine3}
-              </span>
-            </div>
-
-            {/* Audience label — matches hero: Baskervville italic underline, heroText color. */}
-            {audienceLabel && (
-              <span style={{ fontFamily: 'Baskervville', fontSize: 30 /* tw text-3xl, 0.5× title */, color: heroText, fontStyle: 'italic', textDecoration: 'underline', marginTop: 64 /* tw-16, 1.167× title */ }}>
-                {audienceLabel}
+            <span
+              style={{
+                fontFamily: 'Poppins',
+                fontSize: 60,
+                /* tw text-6xl */ fontWeight: 700,
+                color: heroText,
+                textTransform: 'uppercase',
+              }}
+            >
+              {titleLine1}
+            </span>
+            {titleLine2 && (
+              <span
+                style={{
+                  display: 'flex',
+                  alignSelf: 'flex-start',
+                  fontFamily: 'Poppins',
+                  fontSize: 60 /* tw text-6xl */,
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  /* lineHeight: default 1.2 — gap: 16 simulates Figma's 1.55 on highlight */
+                  color: highlightText,
+                  backgroundColor: highlightBg,
+                  padding: '6px 12px' /* scaled from hero py-[5px] px-2.5 at 60px */,
+                  borderRadius: 12 /* tw rounded-xl */,
+                }}
+              >
+                {titleLine2}
               </span>
             )}
+            <span
+              style={{
+                fontFamily: 'Poppins',
+                fontSize: 60,
+                /* tw text-6xl */ fontWeight: 700,
+                color: heroText,
+                textTransform: 'uppercase',
+              }}
+            >
+              {titleLine3}
+            </span>
           </div>
-        </div>
 
-        {/* Bottom: laurel badge — left at content padding, right edge at 50% midline */}
-        <img
-          src={badgeBase64}
-          width={548} /* 600 midline - 52 padding */
-          style={{
-            position: 'absolute',
-            bottom: 20, /* tw-5 */
-            left: 52, /* tw-13, matches content padding */
-          }}
-        />
+          {/* Audience label — matches hero: Baskervville italic underline, heroText color. */}
+          {audienceLabel && (
+            <span
+              style={{
+                fontFamily: 'Baskervville',
+                fontSize: 30 /* tw text-3xl, 0.5× title */,
+                color: heroText,
+                fontStyle: 'italic',
+                textDecoration: 'underline',
+                marginTop: 64 /* tw-16, 1.167× title */,
+              }}
+            >
+              {audienceLabel}
+            </span>
+          )}
+        </div>
       </div>
-    ),
+
+      {/* Bottom: laurel badge — left at content padding, right edge at 50% midline */}
+      <img
+        src={badgeBase64}
+        width={548} /* 600 midline - 52 padding */
+        style={{
+          position: 'absolute',
+          bottom: 20 /* tw-5 */,
+          left: 52 /* tw-13, matches content padding */,
+        }}
+      />
+    </div>,
     {
       ...SIZE,
       fonts: [
         { name: 'Poppins', data: poppinsBold, weight: 700 as const, style: 'normal' as const },
-        { name: 'Baskervville', data: baskervvilleItalic, weight: 400 as const, style: 'italic' as const },
+        {
+          name: 'Baskervville',
+          data: baskervvilleItalic,
+          weight: 400 as const,
+          style: 'italic' as const,
+        },
       ],
     },
   )

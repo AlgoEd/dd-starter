@@ -13,7 +13,14 @@ interface TreeNodeProps extends NodeRendererProps<TreeNodeType> {
 // Indentation per level (should match Tree indent prop)
 const INDENT_PER_LEVEL = 24
 
-export function TreeNode({ node, style, dragHandle, adminRoute, onAction, puckEnabled = false }: TreeNodeProps) {
+export function TreeNode({
+  node,
+  style,
+  dragHandle,
+  adminRoute,
+  onAction,
+  puckEnabled = false,
+}: TreeNodeProps) {
   const { openMenu } = useContextMenu()
   const data = node.data
   const isFolder = data.type === 'folder'
@@ -80,7 +87,9 @@ export function TreeNode({ node, style, dragHandle, adminRoute, onAction, puckEn
           : isFolder
             ? 'var(--theme-elevation-50, rgba(0,0,0,0.02))'
             : 'transparent',
-        borderLeft: isFolder ? '3px solid var(--theme-elevation-200, #e5e5e5)' : '3px solid transparent',
+        borderLeft: isFolder
+          ? '3px solid var(--theme-elevation-200, #e5e5e5)'
+          : '3px solid transparent',
         transition: 'background-color 0.1s ease',
         outline: 'none',
       }}
@@ -307,8 +316,12 @@ export function TreeNode({ node, style, dragHandle, adminRoute, onAction, puckEn
                   justifyContent: 'center',
                   opacity: 0.4,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = '1' }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.4' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '1'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '0.4'
+                }}
                 title={puckEnabled ? 'Edit with Visual Editor' : 'Edit'}
               >
                 <svg
@@ -347,8 +360,12 @@ export function TreeNode({ node, style, dragHandle, adminRoute, onAction, puckEn
                   justifyContent: 'center',
                   opacity: 0.4,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = '1' }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.4' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '1'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '0.4'
+                }}
                 title="Copy slug"
               >
                 <svg
@@ -387,8 +404,12 @@ export function TreeNode({ node, style, dragHandle, adminRoute, onAction, puckEn
                   justifyContent: 'center',
                   opacity: 0.4,
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = '1' }}
-                onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.4' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '1'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '0.4'
+                }}
                 title="View on site"
               >
                 <svg
@@ -425,8 +446,12 @@ export function TreeNode({ node, style, dragHandle, adminRoute, onAction, puckEn
                 justifyContent: 'center',
                 opacity: 0.4,
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.4' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = '1'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = '0.4'
+              }}
               title="Delete"
             >
               <svg

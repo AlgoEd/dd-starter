@@ -38,7 +38,8 @@ export interface AwardsSectionLegacyProps {
 
 export const defaultProps: AwardsSectionLegacyProps = {
   heading: 'Recognition',
-  introText: 'All participants will be awarded a certificate of participation. Participants will also receive their scores.',
+  introText:
+    'All participants will be awarded a certificate of participation. Participants will also receive their scores.',
   groups: [
     {
       roundTitle: 'Preliminary Round',
@@ -65,8 +66,17 @@ export const defaultProps: AwardsSectionLegacyProps = {
     },
   ],
   specialAwards: [
-    { icon: null, title: 'Individual Awards', description: 'Top participants will receive individual honors, even if their teams may not win any awards.' },
-    { icon: null, title: 'Team Awards', description: 'Teams will be awarded based on the sum of their two highest individual scores.' },
+    {
+      icon: null,
+      title: 'Individual Awards',
+      description:
+        'Top participants will receive individual honors, even if their teams may not win any awards.',
+    },
+    {
+      icon: null,
+      title: 'Team Awards',
+      description: 'Teams will be awarded based on the sum of their two highest individual scores.',
+    },
   ],
   noteText: '',
   noteIcon: null,
@@ -91,29 +101,24 @@ function getGroupCardStyle(group: LegacyAwardGroup): React.CSSProperties {
 }
 
 export function AwardsSectionLegacyRender({
-  heading, introText, groups, specialAwards, noteText, noteIcon,
+  heading,
+  introText,
+  groups,
+  specialAwards,
+  noteText,
+  noteIcon,
 }: AwardsSectionLegacyProps) {
   return (
     <section style={{ paddingTop: '39px', paddingBottom: '39px' }}>
       <div className="max-w-6xl mx-auto px-5 lg:px-0">
-        <h2
-          className="font-bold"
-          style={{ fontSize: '30px', lineHeight: '1.3' }}
-        >
+        <h2 className="font-bold" style={{ fontSize: '30px', lineHeight: '1.3' }}>
           {heading}
         </h2>
         <div className="text-center">{introText}</div>
 
         {groups.map((group, gi) => (
-          <div
-            key={gi}
-            className="rounded-[20px] mt-[30px] p-5"
-            style={getGroupCardStyle(group)}
-          >
-            <div
-              className="text-center mb-[6px] font-bold"
-              style={{ fontSize: '20px' }}
-            >
+          <div key={gi} className="rounded-[20px] mt-[30px] p-5" style={getGroupCardStyle(group)}>
+            <div className="text-center mb-[6px] font-bold" style={{ fontSize: '20px' }}>
               {group.roundTitle}
             </div>
             <div className="text-center">{group.subtitle}</div>
@@ -126,34 +131,35 @@ export function AwardsSectionLegacyRender({
               {group.badges.map((badge, bi) => (
                 <div key={bi} className="flex flex-col justify-center items-center">
                   {badge.icon?.url && (
-                    <img src={badge.icon.url} alt={badge.icon.alt || ''} style={{ width: '122px' }} />
+                    <img
+                      src={badge.icon.url}
+                      alt={badge.icon.alt || ''}
+                      style={{ width: '122px' }}
+                    />
                   )}
-                  <div
-                    className="self-center mt-[10px]"
-                    style={{ fontSize: '16px' }}
-                  >
+                  <div className="self-center mt-[10px]" style={{ fontSize: '16px' }}>
                     {badge.label}
                   </div>
-                  {badge.sublabel && (
-                    <div className="text-center text-sm">{badge.sublabel}</div>
-                  )}
+                  {badge.sublabel && <div className="text-center text-sm">{badge.sublabel}</div>}
                 </div>
               ))}
             </div>
 
             {/* Special Awards + Note render inside the FIRST group card (source div-block-305, div-block-308) */}
             {gi === 0 && specialAwards.length > 0 && (
-              <div
-                className="grid grid-cols-1 lg:grid-cols-2"
-                style={{ gap: '16px' }}
-              >
+              <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: '16px' }}>
                 {specialAwards.map((award, ai) => (
                   <div
                     key={ai}
                     className="rounded-[20px] p-[15px]"
                     style={{
                       backgroundColor: '#fff5e5',
-                      backgroundImage: ai === 0 ? 'url(/competition-assets/award-individual-bg.svg)' : ai === 1 ? 'url(/competition-assets/award-team-bg.svg)' : undefined,
+                      backgroundImage:
+                        ai === 0
+                          ? 'url(/competition-assets/award-individual-bg.svg)'
+                          : ai === 1
+                            ? 'url(/competition-assets/award-team-bg.svg)'
+                            : undefined,
                       backgroundPosition: '100% 100%',
                       backgroundRepeat: 'no-repeat',
                       backgroundSize: 'auto',
@@ -168,10 +174,7 @@ export function AwardsSectionLegacyRender({
                       }}
                     >
                       {award.icon?.url && <img src={award.icon.url} alt="" />}
-                      <div
-                        className="font-semibold"
-                        style={{ color: '#f28a15', fontSize: '15px' }}
-                      >
+                      <div className="font-semibold" style={{ color: '#f28a15', fontSize: '15px' }}>
                         {award.title}
                       </div>
                     </div>
@@ -194,7 +197,9 @@ export function AwardsSectionLegacyRender({
                   >
                     Note
                   </div>
-                  <div className="mt-[6px]" style={{ fontSize: '14px' }}>{noteText}</div>
+                  <div className="mt-[6px]" style={{ fontSize: '14px' }}>
+                    {noteText}
+                  </div>
                 </div>
               </div>
             )}

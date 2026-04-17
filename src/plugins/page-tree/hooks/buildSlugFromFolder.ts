@@ -91,7 +91,11 @@ export function createBuildSlugHook(options: BuildSlugOptions): CollectionBefore
     }
     // Only auto-generate from title on CREATE, or if truly no segment exists anywhere
     // This prevents overwriting an intentional segment with slugify(title) during moves/updates
-    if (!pageSegment && data.title && (operation === 'create' || !originalDoc?.[pageSegmentFieldName])) {
+    if (
+      !pageSegment &&
+      data.title &&
+      (operation === 'create' || !originalDoc?.[pageSegmentFieldName])
+    ) {
       pageSegment = slugify(data.title)
       data[pageSegmentFieldName] = pageSegment
     }
@@ -116,7 +120,10 @@ export function createBuildSlugHook(options: BuildSlugOptions): CollectionBefore
           operation,
         })
       } catch (error) {
-        console.error('[payload-page-tree] buildSlug callback error, falling back to default:', error)
+        console.error(
+          '[payload-page-tree] buildSlug callback error, falling back to default:',
+          error,
+        )
         newSlug = defaultSlug
       }
       if (!newSlug) {

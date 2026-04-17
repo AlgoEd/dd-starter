@@ -34,7 +34,11 @@ export function registerTools(tools: AgentTool[]) {
     for (const tool of tools) {
       // Defensively unregister by name first — prevents "Tool already registered"
       // crash on HMR where module state resets but polyfill state persists
-      try { mc.unregisterTool(tool.name) } catch { /* not registered */ }
+      try {
+        mc.unregisterTool(tool.name)
+      } catch {
+        /* not registered */
+      }
       mc.registerTool({
         name: tool.name,
         description: tool.description,

@@ -21,15 +21,15 @@ export const defaultProps: ResponsiveImageSectionProps = {
 }
 
 export function ResponsiveImageSectionRender({
-  heading, desktopImage, mobileImage,
+  heading,
+  desktopImage,
+  mobileImage,
 }: ResponsiveImageSectionProps) {
   return (
     <section className="py-5 md:py-10 px-3 md:px-5">
       <div className="max-w-6xl mx-auto">
         {heading && (
-          <h2
-            className="font-bold text-center text-2xl md:text-3xl leading-tight mt-0 mb-5 md:mb-10"
-          >
+          <h2 className="font-bold text-center text-2xl md:text-3xl leading-tight mt-0 mb-5 md:mb-10">
             {heading}
           </h2>
         )}

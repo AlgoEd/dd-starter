@@ -63,8 +63,18 @@ export const Pages: CollectionConfig = {
       label: 'SEO',
       admin: { position: 'sidebar' },
       fields: [
-        { name: 'title', type: 'text', label: 'Meta Title', admin: { description: 'Override the page title for search engines' } },
-        { name: 'description', type: 'textarea', label: 'Meta Description', admin: { description: 'Description shown in search engine results' } },
+        {
+          name: 'title',
+          type: 'text',
+          label: 'Meta Title',
+          admin: { description: 'Override the page title for search engines' },
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          label: 'Meta Description',
+          admin: { description: 'Description shown in search engine results' },
+        },
         {
           name: 'ogPreview',
           type: 'ui',
@@ -72,9 +82,24 @@ export const Pages: CollectionConfig = {
             components: { Field: '@/components/OGPreview#OGPreviewField' },
           },
         },
-        { name: 'noindex', type: 'checkbox', label: 'No Index', admin: { description: 'Prevent search engines from indexing this page' } },
-        { name: 'nofollow', type: 'checkbox', label: 'No Follow', admin: { description: 'Prevent search engines from following links on this page' } },
-        { name: 'excludeFromSitemap', type: 'checkbox', label: 'Exclude from Sitemap', admin: { description: 'Exclude this page from the XML sitemap' } },
+        {
+          name: 'noindex',
+          type: 'checkbox',
+          label: 'No Index',
+          admin: { description: 'Prevent search engines from indexing this page' },
+        },
+        {
+          name: 'nofollow',
+          type: 'checkbox',
+          label: 'No Follow',
+          admin: { description: 'Prevent search engines from following links on this page' },
+        },
+        {
+          name: 'excludeFromSitemap',
+          type: 'checkbox',
+          label: 'Exclude from Sitemap',
+          admin: { description: 'Exclude this page from the XML sitemap' },
+        },
       ],
     },
   ],

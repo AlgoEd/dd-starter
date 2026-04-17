@@ -22,18 +22,36 @@ export interface SummaryGridProps {
 export const defaultProps: SummaryGridProps = {
   heading: 'Summary',
   cards: [
-    { iconName: 'License', title: 'Preliminary Round', description: 'Online test with multiple choice and fill-in the blank questions' },
-    { iconName: 'RewardedAds', title: 'Semi-Final Round', description: 'Present science solution through recorded video' },
-    { iconName: 'SportsScore', title: 'Final Round', description: 'Present science solution live on zoom' },
+    {
+      iconName: 'License',
+      title: 'Preliminary Round',
+      description: 'Online test with multiple choice and fill-in the blank questions',
+    },
+    {
+      iconName: 'RewardedAds',
+      title: 'Semi-Final Round',
+      description: 'Present science solution through recorded video',
+    },
+    {
+      iconName: 'SportsScore',
+      title: 'Final Round',
+      description: 'Present science solution live on zoom',
+    },
     { iconName: 'Groups', title: 'Team Size', description: '2-5 students from the same school' },
-    { iconName: 'EventList', title: 'Age categories', description: 'Middle School (Grades 6-8), High School (Grades 9-12)' },
-    { iconName: 'Public', title: 'World STEM League', description: 'Option to join World STEM League' },
+    {
+      iconName: 'EventList',
+      title: 'Age categories',
+      description: 'Middle School (Grades 6-8), High School (Grades 9-12)',
+    },
+    {
+      iconName: 'Public',
+      title: 'World STEM League',
+      description: 'Option to join World STEM League',
+    },
   ],
 }
 
-export function SummaryGridRender({
-  heading: headingRaw, cards,
-}: SummaryGridProps) {
+export function SummaryGridRender({ heading: headingRaw, cards }: SummaryGridProps) {
   const heading = headingRaw || defaultProps.heading
   return (
     <section className="py-5 md:py-10 px-3 md:px-5">
@@ -45,11 +63,15 @@ export function SummaryGridRender({
           {cards.map((card, i) => (
             <div key={i}>
               <div className="flex items-center gap-1.5 mb-2">
-                <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg" style={{ backgroundColor: SURFACE_GREY }}>
-                  {iconMap[card.iconName] && (() => {
-                    const Icon = iconMap[card.iconName]!
-                    return <Icon className="w-6 h-6" style={{ color: BRAND_DARK }} />
-                  })()}
+                <div
+                  className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-lg"
+                  style={{ backgroundColor: SURFACE_GREY }}
+                >
+                  {iconMap[card.iconName] &&
+                    (() => {
+                      const Icon = iconMap[card.iconName]!
+                      return <Icon className="w-6 h-6" style={{ color: BRAND_DARK }} />
+                    })()}
                 </div>
                 <span
                   className="font-bold text-lg leading-tight capitalize tracking-[0.02em]"
@@ -58,9 +80,7 @@ export function SummaryGridRender({
                   {card.title}
                 </span>
               </div>
-              <p className="text-base text-[#222] m-0">
-                {card.description}
-              </p>
+              <p className="text-base text-[#222] m-0">{card.description}</p>
             </div>
           ))}
         </div>

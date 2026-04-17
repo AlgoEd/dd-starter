@@ -6,13 +6,21 @@ import { createRichTextField } from './fields'
 import { CompetitionFormatV2Render, defaultProps } from './CompetitionFormatV2.render'
 import type { CompetitionFormatV2Props } from './CompetitionFormatV2.render'
 
-export type { CompetitionFormatV2Props, FormatRound, DetailCard } from './CompetitionFormatV2.render'
+export type {
+  CompetitionFormatV2Props,
+  FormatRound,
+  DetailCard,
+} from './CompetitionFormatV2.render'
 export { CompetitionFormatV2Render, defaultProps } from './CompetitionFormatV2.render'
 
 export const CompetitionFormatV2Config: ComponentConfig<CompetitionFormatV2Props> = {
   label: 'Competition Format V2',
   fields: {
-    heading: { type: 'text', label: 'Heading (empty = default)', placeholder: defaultProps.heading },
+    heading: {
+      type: 'text',
+      label: 'Heading (empty = default)',
+      placeholder: defaultProps.heading,
+    },
     rounds: {
       type: 'array',
       label: 'Rounds',
@@ -28,7 +36,9 @@ export const CompetitionFormatV2Config: ComponentConfig<CompetitionFormatV2Props
             body: createRichTextField({ label: 'Card Body' }),
           },
         },
-        formatDetails: createRichTextField({ label: 'Format Details (triggers "Format :" header)' }),
+        formatDetails: createRichTextField({
+          label: 'Format Details (triggers "Format :" header)',
+        }),
         formatCards: {
           type: 'array',
           label: 'Format Cards (also triggers "Format :" header)',

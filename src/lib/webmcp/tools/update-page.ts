@@ -53,7 +53,9 @@ export function createUpdatePageTool(accessors: PuckStateAccessors) {
           const id = incoming.props?.id
           if (!id) {
             return {
-              content: [{ type: 'text', text: 'Error: every component needs props.id in patch mode.' }],
+              content: [
+                { type: 'text', text: 'Error: every component needs props.id in patch mode.' },
+              ],
               isError: true,
             }
           }
@@ -62,7 +64,12 @@ export function createUpdatePageTool(accessors: PuckStateAccessors) {
           if (idx === -1) {
             const ids = content.map((c) => c.props?.id).filter(Boolean)
             return {
-              content: [{ type: 'text', text: `Error: no component with id "${id}". Available: ${ids.join(', ')}` }],
+              content: [
+                {
+                  type: 'text',
+                  text: `Error: no component with id "${id}". Available: ${ids.join(', ')}`,
+                },
+              ],
               isError: true,
             }
           }
@@ -77,7 +84,9 @@ export function createUpdatePageTool(accessors: PuckStateAccessors) {
         accessors.dispatch({ type: 'setData', data: { ...currentData, content } })
 
         return {
-          content: [{ type: 'text', text: `Patched ${merged.length}: ${merged.join(', ')}. Not saved.` }],
+          content: [
+            { type: 'text', text: `Patched ${merged.length}: ${merged.join(', ')}. Not saved.` },
+          ],
         }
       }
 
@@ -87,7 +96,12 @@ export function createUpdatePageTool(accessors: PuckStateAccessors) {
 
         const types = [...new Set(params.components.map((c) => c.type))]
         return {
-          content: [{ type: 'text', text: `Overwrote content: ${params.components.length} components. Types: ${types.join(', ')}. Not saved.` }],
+          content: [
+            {
+              type: 'text',
+              text: `Overwrote content: ${params.components.length} components. Types: ${types.join(', ')}. Not saved.`,
+            },
+          ],
         }
       }
 

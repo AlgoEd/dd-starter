@@ -13,8 +13,16 @@ export { JoinCTARender, defaultProps } from './JoinCTA.render'
 export const JoinCTAConfig: ComponentConfig<JoinCTAProps> = {
   label: 'Join CTA',
   fields: {
-    heading: { type: 'text', label: 'Heading (empty = default)', placeholder: defaultProps.heading },
-    body: { type: 'textarea', label: 'Body Text (empty = default)', placeholder: defaultProps.body },
+    heading: {
+      type: 'text',
+      label: 'Heading (empty = default)',
+      placeholder: defaultProps.heading,
+    },
+    body: {
+      type: 'textarea',
+      label: 'Body Text (empty = default)',
+      placeholder: defaultProps.body,
+    },
     photo: createMediaField({ label: 'Circular Photo (inside globe frame)' }),
     ctaText: { type: 'text', label: 'Primary CTA Text (empty to hide)' },
     ctaLink: { type: 'text', label: 'Primary CTA Link' },
@@ -22,7 +30,12 @@ export const JoinCTAConfig: ComponentConfig<JoinCTAProps> = {
     secondaryCtaLink: { type: 'text', label: 'Secondary CTA Link' },
     circleSource: createBrandPickerField({ label: 'Globe Circle Color' }),
     mapSource: createBrandPickerField({ label: 'Map Tint Color' }),
-    mapIntensity: createSliderField({ label: 'Map Tint Intensity (default 30%)', min: 0, max: 100, step: 5 }),
+    mapIntensity: createSliderField({
+      label: 'Map Tint Intensity (default 30%)',
+      min: 0,
+      max: 100,
+      step: 5,
+    }),
   },
   defaultProps,
   render: JoinCTARender,

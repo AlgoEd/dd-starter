@@ -42,7 +42,13 @@ function fieldToSchemaProperty(name: string, field: PuckField): JsonSchemaProper
       const enumValues: string[] = []
       for (const opt of field.options || []) {
         if (typeof opt === 'string') enumValues.push(opt)
-        else if (typeof opt === 'object' && opt !== null && 'value' in opt && typeof opt.value === 'string') enumValues.push(opt.value)
+        else if (
+          typeof opt === 'object' &&
+          opt !== null &&
+          'value' in opt &&
+          typeof opt.value === 'string'
+        )
+          enumValues.push(opt.value)
       }
       return { type: 'string', description: label, enum: enumValues }
     }

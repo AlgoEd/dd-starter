@@ -2,74 +2,35 @@
  * Server-safe competition component registry.
  * Imports from .render.tsx files which don't use client-only functions (createMediaField).
  */
-import {
-  CompetitionHeroRender,
-  defaultProps as heroDefaults,
-} from './CompetitionHero.render'
-import {
-  TwoColumnFeatureRender,
-  defaultProps as featureDefaults,
-} from './TwoColumnFeature.render'
-import {
-  BenefitsGridRender,
-  defaultProps as gridDefaults,
-} from './BenefitsGrid.render'
+import { CompetitionHeroRender, defaultProps as heroDefaults } from './CompetitionHero.render'
+import { TwoColumnFeatureRender, defaultProps as featureDefaults } from './TwoColumnFeature.render'
+import { BenefitsGridRender, defaultProps as gridDefaults } from './BenefitsGrid.render'
 import {
   EligibilityStripRender,
   defaultProps as eligibilityDefaults,
 } from './EligibilityStrip.render'
-import {
-  AboutPartnerRender,
-  defaultProps as aboutDefaults,
-} from './AboutPartner.render'
+import { AboutPartnerRender, defaultProps as aboutDefaults } from './AboutPartner.render'
 import {
   CompetitionStructureRender,
   defaultProps as structureDefaults,
 } from './CompetitionStructure.render'
-import {
-  DeadlineTableRender,
-  defaultProps as deadlineDefaults,
-} from './DeadlineTable.render'
-import {
-  CompetitionFormatRender,
-  defaultProps as formatDefaults,
-} from './CompetitionFormat.render'
-import {
-  AwardsSectionRender,
-  defaultProps as awardsDefaults,
-} from './AwardsSection.render'
+import { DeadlineTableRender, defaultProps as deadlineDefaults } from './DeadlineTable.render'
+import { CompetitionFormatRender, defaultProps as formatDefaults } from './CompetitionFormat.render'
+import { AwardsSectionRender, defaultProps as awardsDefaults } from './AwardsSection.render'
 import {
   AwardsSectionLegacyRender,
   defaultProps as awardsLegacyDefaults,
 } from './AwardsSectionLegacy.render'
-import {
-  JoinCTARender,
-  defaultProps as joinDefaults,
-} from './JoinCTA.render'
-import {
-  FeeWaiverRender,
-  defaultProps as feeWaiverDefaults,
-} from './FeeWaiver.render'
-import {
-  AlgoEdFooterRender,
-  defaultProps as algoEdFooterDefaults,
-} from './AlgoEdFooter.render'
+import { JoinCTARender, defaultProps as joinDefaults } from './JoinCTA.render'
+import { FeeWaiverRender, defaultProps as feeWaiverDefaults } from './FeeWaiver.render'
+import { AlgoEdFooterRender, defaultProps as algoEdFooterDefaults } from './AlgoEdFooter.render'
 import {
   CompetitionFooterRender,
   defaultProps as compFooterDefaults,
 } from './CompetitionFooter.render'
-import {
-  SummaryGridRender,
-  defaultProps as summaryDefaults,
-} from './SummaryGrid.render'
-import {
-  CategoryGridRender,
-  defaultProps as categoryDefaults,
-} from './CategoryGrid.render'
-import {
-  CompetitionNavRender,
-  defaultProps as navDefaults,
-} from './CompetitionNav.render'
+import { SummaryGridRender, defaultProps as summaryDefaults } from './SummaryGrid.render'
+import { CategoryGridRender, defaultProps as categoryDefaults } from './CategoryGrid.render'
+import { CompetitionNavRender, defaultProps as navDefaults } from './CompetitionNav.render'
 import {
   ResponsiveImageSectionRender,
   defaultProps as responsiveImageDefaults,
@@ -86,10 +47,7 @@ import {
   AboutPartnerV2Render,
   defaultProps as aboutPartnerV2Defaults,
 } from './AboutPartnerV2.render'
-import {
-  AboutLeagueRender,
-  defaultProps as aboutLeagueDefaults,
-} from './AboutLeague.render'
+import { AboutLeagueRender, defaultProps as aboutLeagueDefaults } from './AboutLeague.render'
 import {
   FosteringSectionRender,
   defaultProps as fosteringDefaults,
@@ -233,5 +191,5 @@ export const competitionComponentsServer = {
     fields: { body: { type: 'richtext' as const } },
     render: FosteringSectionRender,
   },
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- see comment above
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- see comment above
 } as any

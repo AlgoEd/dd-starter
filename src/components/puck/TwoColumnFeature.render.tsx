@@ -4,7 +4,16 @@
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
 import { FramedImage } from './FramedImage'
-import { CompetitionCTA, RichText, BRAND_DARK, CTA_BG, CTA_TEXT, CTA2_BG, CTA2_TEXT, CTA2_BORDER } from './shared'
+import {
+  CompetitionCTA,
+  RichText,
+  BRAND_DARK,
+  CTA_BG,
+  CTA_TEXT,
+  CTA2_BG,
+  CTA2_TEXT,
+  CTA2_BORDER,
+} from './shared'
 
 // Plain <img> instead of next/image — deliberate, do not switch back.
 //
@@ -50,22 +59,50 @@ export const defaultProps: TwoColumnFeatureProps = {
 }
 
 export function TwoColumnFeatureRender({
-  heading, body, ctaText, ctaLink, ctaVariant, secondaryCtaText, secondaryCtaLink,
-  featureImage, imageStyle, layout, bgColor, headingColor,
+  heading,
+  body,
+  ctaText,
+  ctaLink,
+  ctaVariant,
+  secondaryCtaText,
+  secondaryCtaLink,
+  featureImage,
+  imageStyle,
+  layout,
+  bgColor,
+  headingColor,
 }: TwoColumnFeatureProps) {
   const color = BRAND_DARK
   const isImageRight = layout === 'image-right'
 
   const textColumn = (
     <div className="flex flex-col justify-center items-start">
-      <h2 className="text-2xl md:text-3xl font-bold leading-tight mb-5 md:mb-6" style={{ color: headingColor === 'primary' ? color : '#222' }}>{heading}</h2>
+      <h2
+        className="text-2xl md:text-3xl font-bold leading-tight mb-5 md:mb-6"
+        style={{ color: headingColor === 'primary' ? color : '#222' }}
+      >
+        {heading}
+      </h2>
       <RichText className="text-base mb-5 md:mb-6 text-[#222] md:text-justify">{body}</RichText>
       <div className="flex flex-wrap gap-5 md:gap-6">
-        {ctaVariant === 'outline'
-          ? <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA2_BG} textColor={CTA2_TEXT} border={`1px solid ${CTA2_BORDER}`} />
-          : <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
-        }
-        <CompetitionCTA text={secondaryCtaText} href={secondaryCtaLink} bgColor={CTA2_BG} textColor={CTA2_TEXT} border={`1px solid ${CTA2_BORDER}`} />
+        {ctaVariant === 'outline' ? (
+          <CompetitionCTA
+            text={ctaText}
+            href={ctaLink}
+            bgColor={CTA2_BG}
+            textColor={CTA2_TEXT}
+            border={`1px solid ${CTA2_BORDER}`}
+          />
+        ) : (
+          <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
+        )}
+        <CompetitionCTA
+          text={secondaryCtaText}
+          href={secondaryCtaLink}
+          bgColor={CTA2_BG}
+          textColor={CTA2_TEXT}
+          border={`1px solid ${CTA2_BORDER}`}
+        />
       </div>
     </div>
   )
@@ -114,28 +151,44 @@ export function TwoColumnFeatureRender({
   // below cell width on stacked viewports, auto margins center it.
   const imageColumn = (
     <div className="w-full max-w-sm mx-auto">
-      {featureImage?.url && (
-        isCard ? (
-          <FramedImage src={featureImage.url} alt={featureImage.alt || ''} width={featureImage.width} height={featureImage.height} />
+      {featureImage?.url &&
+        (isCard ? (
+          <FramedImage
+            src={featureImage.url}
+            alt={featureImage.alt || ''}
+            width={featureImage.width}
+            height={featureImage.height}
+          />
         ) : (
           <img
             src={featureImage.url}
             alt={featureImage.alt || ''}
             style={{ maxWidth: '100%', height: 'auto' }}
           />
-        )
-      )}
+        ))}
     </div>
   )
 
   return (
     <section className="py-5 md:py-10" style={bgColor ? { backgroundColor: bgColor } : undefined}>
       <div className="px-3 md:px-5">
-      <div className="max-w-6xl mx-auto">
-        <div className={`grid grid-cols-1 gap-5 md:gap-10 md:items-center ${isImageRight ? 'md:grid-cols-[3fr_2fr]' : 'md:grid-cols-[2fr_3fr]'}`}>
-          {isImageRight ? <>{textColumn}{imageColumn}</> : <>{imageColumn}{textColumn}</>}
+        <div className="max-w-6xl mx-auto">
+          <div
+            className={`grid grid-cols-1 gap-5 md:gap-10 md:items-center ${isImageRight ? 'md:grid-cols-[3fr_2fr]' : 'md:grid-cols-[2fr_3fr]'}`}
+          >
+            {isImageRight ? (
+              <>
+                {textColumn}
+                {imageColumn}
+              </>
+            ) : (
+              <>
+                {imageColumn}
+                {textColumn}
+              </>
+            )}
+          </div>
         </div>
-      </div>
       </div>
     </section>
   )

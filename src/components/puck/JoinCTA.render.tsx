@@ -15,7 +15,16 @@
  * 0.75× scale from Figma 1728px → 940px container, snapped to Tailwind stock.
  */
 import type { MediaReference } from '@delmaredigital/payload-puck/fields'
-import { CompetitionCTA, BRAND_DARK, BRAND_BRIGHT, CTA_BG, CTA_TEXT, CTA2_BG, CTA2_TEXT, CTA2_BORDER } from './shared'
+import {
+  CompetitionCTA,
+  BRAND_DARK,
+  BRAND_BRIGHT,
+  CTA_BG,
+  CTA_TEXT,
+  CTA2_BG,
+  CTA2_TEXT,
+  CTA2_BORDER,
+} from './shared'
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -36,7 +45,7 @@ export interface JoinCTAProps {
 
 export const defaultProps: JoinCTAProps = {
   heading: 'Join the Challenge',
-  body: "This competition is more than a contest; it\u2019s a gateway to the world of STEM innovation.\n\nRegister now to begin your journey into STEM, where you\u2019ll apply creative problem-solving and technical skills to real-world challenges.",
+  body: 'This competition is more than a contest; it\u2019s a gateway to the world of STEM innovation.\n\nRegister now to begin your journey into STEM, where you\u2019ll apply creative problem-solving and technical skills to real-world challenges.',
   photo: null,
   ctaText: 'Register Now!',
   ctaLink: '/register',
@@ -131,14 +140,60 @@ export function JoinCTARender({
                 aspectRatio: '1 / 1',
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="413" height="413" fill="none" viewBox="0 0 413 413" className="block w-full h-auto pointer-events-none" style={{ color: circleColor }}>
-                <g filter="url(#gc-shadow)"><circle cx="206.503" cy="206.503" r="160.451" fill="#fff"/><circle cx="206.503" cy="206.503" r="159.732" stroke="#fff" strokeWidth="1.439"/></g>
-                <circle cx="206.5" cy="206.5" r="205.061" stroke="currentColor" strokeWidth="2.878"/>
-                <circle cx="206.502" cy="206.502" r="182.961" stroke="currentColor" strokeWidth="1.03"/>
-                <circle cx="86.337" cy="38.851" r="7.195" fill="currentColor"/>
-                <circle cx="389.974" cy="195.705" r="7.195" fill="currentColor"/>
-                <circle cx="162.612" cy="405.804" r="7.195" fill="currentColor"/>
-                <defs><filter id="gc-shadow" width="375.585" height="375.585" x="20.15" y="20.15" colorInterpolationFilters="sRGB" filterUnits="userSpaceOnUse"><feFlood floodOpacity="0" result="BackgroundImageFix"/><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/><feOffset dx="1.439" dy="1.439"/><feGaussianBlur stdDeviation="13.669"/><feComposite in2="hardAlpha" operator="out"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/><feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/><feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/></filter></defs>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="413"
+                height="413"
+                fill="none"
+                viewBox="0 0 413 413"
+                className="block w-full h-auto pointer-events-none"
+                style={{ color: circleColor }}
+              >
+                <g filter="url(#gc-shadow)">
+                  <circle cx="206.503" cy="206.503" r="160.451" fill="#fff" />
+                  <circle cx="206.503" cy="206.503" r="159.732" stroke="#fff" strokeWidth="1.439" />
+                </g>
+                <circle
+                  cx="206.5"
+                  cy="206.5"
+                  r="205.061"
+                  stroke="currentColor"
+                  strokeWidth="2.878"
+                />
+                <circle
+                  cx="206.502"
+                  cy="206.502"
+                  r="182.961"
+                  stroke="currentColor"
+                  strokeWidth="1.03"
+                />
+                <circle cx="86.337" cy="38.851" r="7.195" fill="currentColor" />
+                <circle cx="389.974" cy="195.705" r="7.195" fill="currentColor" />
+                <circle cx="162.612" cy="405.804" r="7.195" fill="currentColor" />
+                <defs>
+                  <filter
+                    id="gc-shadow"
+                    width="375.585"
+                    height="375.585"
+                    x="20.15"
+                    y="20.15"
+                    colorInterpolationFilters="sRGB"
+                    filterUnits="userSpaceOnUse"
+                  >
+                    <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      result="hardAlpha"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    />
+                    <feOffset dx="1.439" dy="1.439" />
+                    <feGaussianBlur stdDeviation="13.669" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0" />
+                    <feBlend in2="BackgroundImageFix" result="effect1_dropShadow" />
+                    <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+                  </filter>
+                </defs>
               </svg>
               {photo?.url && (
                 <img
@@ -159,16 +214,10 @@ export function JoinCTARender({
 
           {/* Text column */}
           <div className="flex flex-col justify-center items-start">
-            <h2
-              className="font-bold mt-0 mb-5 md:mb-6 text-2xl md:text-3xl leading-tight text-[#222]"
-            >
+            <h2 className="font-bold mt-0 mb-5 md:mb-6 text-2xl md:text-3xl leading-tight text-[#222]">
               {heading}
             </h2>
-            <p
-              className="whitespace-pre-line mb-5 md:mb-6 text-base text-[#222]"
-            >
-              {body}
-            </p>
+            <p className="whitespace-pre-line mb-5 md:mb-6 text-base text-[#222]">{body}</p>
             {(ctaText || secondaryCtaText) && (
               <div className="flex flex-wrap gap-5 md:gap-6">
                 {ctaText && (

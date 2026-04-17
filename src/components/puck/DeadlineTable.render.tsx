@@ -25,7 +25,12 @@ export interface DeadlineTableProps {
 export const defaultProps: DeadlineTableProps = {
   heading: 'Registration Deadlines and Participation Fees',
   tiers: [
-    { title: 'Priority Deadline', deadline: '{{Date}}', fee: 'US$ 35/student', variant: 'priority' },
+    {
+      title: 'Priority Deadline',
+      deadline: '{{Date}}',
+      fee: 'US$ 35/student',
+      variant: 'priority',
+    },
     { title: 'Regular Deadline', deadline: '{{Date}}', fee: 'US$ 45/student', variant: 'regular' },
     { title: 'Late Deadline', deadline: '{{Date}}', fee: 'US$ 55/student', variant: 'late' },
   ],
@@ -41,7 +46,11 @@ const TIER_WATERMARKS: Record<string, string> = {
 }
 
 export function DeadlineTableRender({
-  heading: headingRaw, tiers, featureImage, ctaText, ctaLink,
+  heading: headingRaw,
+  tiers,
+  featureImage,
+  ctaText,
+  ctaLink,
 }: DeadlineTableProps) {
   const heading = headingRaw || defaultProps.heading
   const color = BRAND_DARK
@@ -49,9 +58,7 @@ export function DeadlineTableRender({
   return (
     <section className="py-5 md:py-10 px-3 md:px-5">
       <div className="max-w-6xl mx-auto">
-        <h2
-          className="font-bold mb-5 md:mb-10 text-2xl md:text-3xl leading-tight text-[#222]"
-        >
+        <h2 className="font-bold mb-5 md:mb-10 text-2xl md:text-3xl leading-tight text-[#222]">
           {heading}
         </h2>
 
@@ -79,23 +86,37 @@ export function DeadlineTableRender({
                   style={{ transform: 'translate(12%, 4%)' }}
                 />
                 <div className="relative z-10 px-8 py-6">
-                  <div className="font-bold text-lg leading-tight" style={{ color }}>{tier.title}</div>
+                  <div className="font-bold text-lg leading-tight" style={{ color }}>
+                    {tier.title}
+                  </div>
                   <p className="text-base mt-3 mb-0 text-[#222]">
-                    <strong>Deadline: </strong>{tier.deadline}
+                    <strong>Deadline: </strong>
+                    {tier.deadline}
                   </p>
                   <p className="text-base mt-3 mb-0 text-[#222]">
-                    <strong>Fees: </strong>{tier.fee}
+                    <strong>Fees: </strong>
+                    {tier.fee}
                   </p>
                 </div>
               </div>
             ))}
 
-            <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} fullWidth />
+            <CompetitionCTA
+              text={ctaText}
+              href={ctaLink}
+              bgColor={CTA_BG}
+              textColor={CTA_TEXT}
+              fullWidth
+            />
           </div>
 
           {featureImage?.url && (
             <div className="flex items-center justify-center">
-              <img src={featureImage.url} alt={featureImage.alt || ''} className="max-w-sm md:max-w-full h-auto" />
+              <img
+                src={featureImage.url}
+                alt={featureImage.alt || ''}
+                className="max-w-sm md:max-w-full h-auto"
+              />
             </div>
           )}
         </div>

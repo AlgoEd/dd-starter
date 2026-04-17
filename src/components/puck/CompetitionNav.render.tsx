@@ -42,27 +42,37 @@ export const defaultProps: CompetitionNavProps = {
 }
 
 export function CompetitionNavRender({
-  partnerLogo, partnerLink, navLinks, ctaText, ctaLink,
-  secondaryCtaText, secondaryCtaLink,
+  partnerLogo,
+  partnerLink,
+  navLinks,
+  ctaText,
+  ctaLink,
+  secondaryCtaText,
+  secondaryCtaLink,
 }: CompetitionNavProps) {
   return (
     <nav
       className="w-full flex items-center relative"
       style={{ backgroundColor: '#fff', padding: '24px 5%' }}
     >
-      <div
-        className="flex items-center w-full mx-auto gap-4"
-        style={{ maxWidth: '1280px' }}
-      >
+      <div className="flex items-center w-full mx-auto gap-4" style={{ maxWidth: '1280px' }}>
         {/* Left: logos — preferred height, shrinkable on small screens */}
         <div className="flex items-center">
           {partnerLogo?.url && (
             <a href={partnerLink} target="_blank" rel="noopener noreferrer">
-              <img src={partnerLogo.url} alt={partnerLogo.alt || ''} className="h-[45px] max-w-[40vw] object-contain mr-4" />
+              <img
+                src={partnerLogo.url}
+                alt={partnerLogo.alt || ''}
+                className="h-[45px] max-w-[40vw] object-contain mr-4"
+              />
             </a>
           )}
           <a href="/" target="_blank" rel="noopener noreferrer">
-            <img src="/competition-assets/algoed-logo.png" alt="AlgoEd" className="h-[50px] max-w-[30vw] object-contain" />
+            <img
+              src="/competition-assets/algoed-logo.png"
+              alt="AlgoEd"
+              className="h-[50px] max-w-[30vw] object-contain"
+            />
           </a>
         </div>
 
@@ -108,11 +118,7 @@ export function CompetitionNavRender({
 
         {/* Mobile hamburger — shown below lg */}
         <div className="lg:hidden ml-auto">
-          <MobileNav
-            navLinks={navLinks ?? []}
-            ctaText={ctaText}
-            ctaLink={ctaLink}
-          />
+          <MobileNav navLinks={navLinks ?? []} ctaText={ctaText} ctaLink={ctaLink} />
         </div>
       </div>
     </nav>

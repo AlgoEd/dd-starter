@@ -12,7 +12,11 @@ export { AboutLeagueRender, defaultProps } from './AboutLeague.render'
 export const AboutLeagueConfig: ComponentConfig<AboutLeagueProps> = {
   label: 'About League',
   fields: {
-    heading: { type: 'text', label: 'Heading (empty = default)', placeholder: defaultProps.heading },
+    heading: {
+      type: 'text',
+      label: 'Heading (empty = default)',
+      placeholder: defaultProps.heading,
+    },
     body: { type: 'richtext', label: 'Body Text' },
     featureImage: createMediaField({ label: 'League Photo' }),
     ctaText: { type: 'text', label: 'CTA Text (empty to hide)' },

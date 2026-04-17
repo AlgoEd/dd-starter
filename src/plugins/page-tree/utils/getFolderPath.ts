@@ -34,12 +34,16 @@ export async function getFolderPath(
 
     // Get parent folder ID - handle both populated and unpopulated cases
     const parentFolderId =
-      typeof folder.folder === 'object' && folder.folder !== null
-        ? folder.folder.id
-        : folder.folder
+      typeof folder.folder === 'object' && folder.folder !== null ? folder.folder.id : folder.folder
 
     // Recursively get parent path
-    const parentPath = await getFolderPath(parentFolderId, payload, folderSlug, segmentFieldName, req)
+    const parentPath = await getFolderPath(
+      parentFolderId,
+      payload,
+      folderSlug,
+      segmentFieldName,
+      req,
+    )
 
     // Combine parent path with current segment
     return parentPath ? `${parentPath}/${segment}` : segment

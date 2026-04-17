@@ -17,11 +17,7 @@ interface MobileNavProps {
   ctaLink: string
 }
 
-export function MobileNav({
-  navLinks,
-  ctaText,
-  ctaLink,
-}: MobileNavProps) {
+export function MobileNav({ navLinks, ctaText, ctaLink }: MobileNavProps) {
   return (
     <Collapsible.Root>
       <Collapsible.Trigger
@@ -32,13 +28,17 @@ export function MobileNav({
         })}
         aria-label="Toggle navigation menu"
       >
-        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="18"
+          height="12"
+          viewBox="0 0 18 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path d="M0 0H18V2H0V0ZM0 5H18V7H0V5ZM0 10H18V12H0V10Z" fill="currentColor" />
         </svg>
       </Collapsible.Trigger>
-      <Collapsible.Panel
-        className="absolute left-0 right-0 top-full z-40 flex flex-col items-center overflow-hidden bg-white transition-all duration-300 ease-out h-[var(--collapsible-panel-height)] data-[ending-style]:h-0 data-[starting-style]:h-0"
-      >
+      <Collapsible.Panel className="absolute left-0 right-0 top-full z-40 flex flex-col items-center overflow-hidden bg-white transition-all duration-300 ease-out h-[var(--collapsible-panel-height)] data-[ending-style]:h-0 data-[starting-style]:h-0">
         <nav className="flex flex-col items-center w-full py-6 gap-1">
           {(navLinks ?? []).map((link, i) => (
             <a

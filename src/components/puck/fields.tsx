@@ -12,7 +12,12 @@ export function createColorField({ label }: { label: string }) {
   return {
     type: 'custom' as const,
     label,
-    render: ({ name, onChange, value, field }: {
+    render: ({
+      name,
+      onChange,
+      value,
+      field,
+    }: {
       name: string
       onChange: (val: string) => void
       value: string
@@ -32,7 +37,11 @@ export function createColorField({ label }: { label: string }) {
 }
 
 /** Pill toggle field for choosing between options. Generic — used for brand picker, CTA style, etc. */
-export function createPillField({ label, options, defaultValue }: {
+export function createPillField({
+  label,
+  options,
+  defaultValue,
+}: {
   label: string
   options: { label: string; value: string }[]
   defaultValue: string
@@ -40,7 +49,11 @@ export function createPillField({ label, options, defaultValue }: {
   return {
     type: 'custom' as const,
     label,
-    render: ({ onChange, value, field }: {
+    render: ({
+      onChange,
+      value,
+      field,
+    }: {
       name: string
       onChange: (val: string) => void
       value: string
@@ -69,7 +82,7 @@ export function createPillField({ label, options, defaultValue }: {
       return (
         <FieldLabel label={field.label || label}>
           <div style={{ display: 'flex', gap: 4 }}>
-            {options.map(opt => pill(opt.value, opt.label))}
+            {options.map((opt) => pill(opt.value, opt.label))}
           </div>
         </FieldLabel>
       )
@@ -90,13 +103,28 @@ export function createBrandPickerField({ label }: { label: string }) {
 }
 
 /** Slider field for numeric values (e.g. opacity). Shows value label + range input. */
-export function createSliderField({ label, min = 0, max = 100, step = 1, suffix = '%' }: {
-  label: string; min?: number; max?: number; step?: number; suffix?: string
+export function createSliderField({
+  label,
+  min = 0,
+  max = 100,
+  step = 1,
+  suffix = '%',
+}: {
+  label: string
+  min?: number
+  max?: number
+  step?: number
+  suffix?: string
 }) {
   return {
     type: 'custom' as const,
     label,
-    render: ({ name, onChange, value, field }: {
+    render: ({
+      name,
+      onChange,
+      value,
+      field,
+    }: {
       name: string
       onChange: (val: number) => void
       value: number
@@ -115,7 +143,8 @@ export function createSliderField({ label, min = 0, max = 100, step = 1, suffix 
             style={{ flex: 1, height: 40, cursor: 'pointer' }}
           />
           <span style={{ fontSize: 12, minWidth: 40, textAlign: 'right' }}>
-            {value ?? min}{suffix}
+            {value ?? min}
+            {suffix}
           </span>
         </div>
       </FieldLabel>
@@ -124,11 +153,22 @@ export function createSliderField({ label, min = 0, max = 100, step = 1, suffix 
 }
 
 /** Color picker with a clear button. Returns hex or empty string. For optional colors. */
-export function createOptionalColorField({ label, emptyText = 'No color set (transparent)' }: { label: string; emptyText?: string }) {
+export function createOptionalColorField({
+  label,
+  emptyText = 'No color set (transparent)',
+}: {
+  label: string
+  emptyText?: string
+}) {
   return {
     type: 'custom' as const,
     label,
-    render: ({ name, onChange, value, field }: {
+    render: ({
+      name,
+      onChange,
+      value,
+      field,
+    }: {
       name: string
       onChange: (val: string) => void
       value: string
@@ -169,7 +209,11 @@ export function createOptionalColorField({ label, emptyText = 'No color set (tra
 const colorSelector = () => ({ hasColor: false })
 
 /** Richtext field with text color support via Tiptap Color extension. */
-export function createRichTextField({ label }: { label: string }): RichtextField<typeof colorSelector> {
+export function createRichTextField({
+  label,
+}: {
+  label: string
+}): RichtextField<typeof colorSelector> {
   return {
     type: 'richtext',
     label,

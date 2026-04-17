@@ -7,7 +7,13 @@ import { createRichTextField } from './fields'
 import { AwardsSectionRender, defaultProps, badgeIconOptions } from './AwardsSection.render'
 import type { AwardsSectionProps } from './AwardsSection.render'
 
-export type { AwardsSectionProps, BadgeItem, Round, FinalRound, SpecialAward } from './AwardsSection.render'
+export type {
+  AwardsSectionProps,
+  BadgeItem,
+  Round,
+  FinalRound,
+  SpecialAward,
+} from './AwardsSection.render'
 export { AwardsSectionRender, defaultProps, badgeIconOptions } from './AwardsSection.render'
 
 const badgesArrayField = {
@@ -27,7 +33,11 @@ const badgesArrayField = {
 export const AwardsSectionConfig: ComponentConfig<AwardsSectionProps> = {
   label: 'Awards Section',
   fields: {
-    heading: { type: 'text', label: 'Heading (empty = default)', placeholder: defaultProps.heading },
+    heading: {
+      type: 'text',
+      label: 'Heading (empty = default)',
+      placeholder: defaultProps.heading,
+    },
     introText: createRichTextField({ label: 'Intro Text' }),
     preliminary: {
       type: 'object',
