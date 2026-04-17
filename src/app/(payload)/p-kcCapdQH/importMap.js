@@ -41,6 +41,7 @@ import { PuckEditorView as PuckEditorView_3b27b37268b8e78cccc06ea6de889aa6 } fro
 import { PageTreeView as PageTreeView_830ebb35fcdc499acd5853d3d45659f6 } from '@/plugins/page-tree/exports/rsc'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
   "@/components/OGPreview#OGPreviewField": OGPreviewField_0c4dcaf4cc31ab248117fe8e44163875,
   "@delmaredigital/payload-puck/admin/client#EditWithPuckButton": EditWithPuckButton_d72027e0f0541e23dd1e340e47e71267,

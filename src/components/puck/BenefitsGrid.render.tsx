@@ -2,7 +2,15 @@
  * BenefitsGrid — render function and types.
  * Server-safe: no client-only imports.
  */
-import { CompetitionCTA, BRAND_DARK, CTA_BG, CTA_TEXT } from './shared'
+import {
+  CompetitionCTA,
+  BRAND_DARK,
+  CTA_BG,
+  CTA_TEXT,
+  CTA2_BG,
+  CTA2_TEXT,
+  CTA2_BORDER,
+} from './shared'
 
 export const benefitIconMap: Record<string, { src: string; label: string }> = {
   'hs-profile': { src: '/competition-assets/benefit-hs-profile.svg', label: 'Build your profile' },
@@ -44,6 +52,8 @@ export interface BenefitsGridProps {
   benefits: BenefitItem[]
   ctaText: string
   ctaLink: string
+  secondaryCtaText: string
+  secondaryCtaLink: string
 }
 
 export const defaultProps: BenefitsGridProps = {
@@ -65,8 +75,10 @@ export const defaultProps: BenefitsGridProps = {
       description: 'Work alongside peers who are as driven and ambitious',
     },
   ],
-  ctaText: 'Competition Portal',
-  ctaLink: '/portal',
+  ctaText: 'REGISTER NOW!',
+  ctaLink: '#',
+  secondaryCtaText: 'JOIN THE LEAGUE',
+  secondaryCtaLink: '#',
 }
 
 export function BenefitsGridRender({
@@ -74,6 +86,8 @@ export function BenefitsGridRender({
   benefits,
   ctaText,
   ctaLink,
+  secondaryCtaText,
+  secondaryCtaLink,
 }: BenefitsGridProps) {
   const color = BRAND_DARK
 
@@ -102,7 +116,22 @@ export function BenefitsGridRender({
             </div>
           ))}
         </div>
-        <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
+        {(ctaText || secondaryCtaText) && (
+          <div className="flex flex-wrap justify-center gap-5 md:gap-6">
+            {ctaText && (
+              <CompetitionCTA text={ctaText} href={ctaLink} bgColor={CTA_BG} textColor={CTA_TEXT} />
+            )}
+            {secondaryCtaText && (
+              <CompetitionCTA
+                text={secondaryCtaText}
+                href={secondaryCtaLink}
+                bgColor={CTA2_BG}
+                textColor={CTA2_TEXT}
+                border={`1px solid ${CTA2_BORDER}`}
+              />
+            )}
+          </div>
+        )}
       </div>
     </section>
   )
