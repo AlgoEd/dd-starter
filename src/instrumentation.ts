@@ -13,10 +13,14 @@
 // http.server.request.duration metrics.
 //
 // Only applies to Node runtime; Edge runtime does not support NodeSDK.
+console.log(`[instrumentation] module body start, NEXT_RUNTIME=${process.env.NEXT_RUNTIME ?? 'unset'}`)
 if (process.env.NEXT_RUNTIME === 'nodejs') {
   await import('./instrumentation.node')
+  console.log('[instrumentation] node SDK import complete at top level')
 }
 
 // register() is required by Next.js but we have nothing to do here —
 // SDK boot already happened at module top level above.
-export function register() {}
+export function register() {
+  console.log('[instrumentation] register() called — (noop, SDK already booted)')
+}
