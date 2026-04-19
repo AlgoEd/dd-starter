@@ -1,26 +1,33 @@
-// Next.js instrumentation hook.
+// Next.js instrumentation hook — using @vercel/otel.
 //
-// The SDK is loaded at MODULE TOP LEVEL rather than inside register(),
-// on purpose — register() runs lazily on first request, which is AFTER
-// Next.js has already loaded core modules (http, undici, fs). Auto-
-// instrumentations require patching those before load, so booting them
-// from inside register() is too late and HTTP server metrics never emit.
+// Why @vercel/otel instead of manual NodeSDK + auto-instrumentations-node:
+// NodeSDK's http auto-instrumentation has to patch Node's `http` module
+// BEFORE Next.js loads it. register() runs too late; even top-level import
+// in instrumentation.ts is a race. Result: http.server.* metrics never
+// emit. See vercel/next.js#80262.
 //
-// Top-level import runs at instrumentation.ts load time, which happens
-// earlier in Next.js's boot sequence — before the server is constructed.
-// Pattern reported by stephenliang and confirmed by others in
-// https://github.com/vercel/next.js/issues/80262 as the fix for missing
-// http.server.request.duration metrics.
+// @vercel/otel sidesteps the race: it uses FetchInstrumentation (patches
+// the global fetch runtime lookup, not an importable module) and relies on
+// Next.js's own route-aware HTTP server spans from BaseServer.handleRequest.
+// No module-load ordering requirement.
 //
-// Only applies to Node runtime; Edge runtime does not support NodeSDK.
-console.log(`[instrumentation] module body start, NEXT_RUNTIME=${process.env.NEXT_RUNTIME ?? 'unset'}`)
-if (process.env.NEXT_RUNTIME === 'nodejs') {
-  await import('./instrumentation.node')
-  console.log('[instrumentation] node SDK import complete at top level')
-}
+// Pg instrumentation is added explicitly for DB span visibility —
+// @vercel/otel ships fetch only by default.
+import { OTLPHttpProtoTraceExporter, registerOTel } from '@vercel/otel'
+import { PgInstrumentation } from '@opentelemetry/instrumentation-pg'
 
-// register() is required by Next.js but we have nothing to do here —
-// SDK boot already happened at module top level above.
 export function register() {
-  console.log('[instrumentation] register() called — (noop, SDK already booted)')
+  // Emit NEW stable semconv attribute names (http.request.method,
+  // db.system.name, …) instead of the legacy ones. Our Collector's
+  // spanmetrics connector keys on the new names — without this, derived
+  // metric labels come out empty.
+  process.env.OTEL_SEMCONV_STABILITY_OPT_IN ??= 'database,http'
+
+  registerOTel({
+    serviceName: 'payload-cms',
+    instrumentations: [new PgInstrumentation()],
+    traceExporter: new OTLPHttpProtoTraceExporter({
+      url: 'http://collector.railway.internal:4318/v1/traces',
+    }),
+  })
 }
