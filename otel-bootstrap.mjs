@@ -41,6 +41,13 @@ process.env.OTEL_SEMCONV_STABILITY_OPT_IN ??= 'database,http';
 // (shared collector config across all algoed services).
 process.env.OTEL_NODE_RESOURCE_DETECTORS ??= 'all';
 
+// ══════════════ DIAGNOSTIC LOGGING (temporary) ══════════════
+// Added 2026-04-20 to diagnose why pages-cms produces no native HTTP
+// metrics after the --import migration. Remove once verified working.
+console.log('[OTEL-BOOT] 0 file-loaded pid=' + process.pid + ' cwd=' + process.cwd() + ' node=' + process.version);
+// ════════════════════════════════════════════════════════════
+
+import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-proto';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto';
@@ -54,6 +61,20 @@ import {
   ATTR_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions';
 import { ATTR_DEPLOYMENT_ENVIRONMENT_NAME } from '@opentelemetry/semantic-conventions/incubating';
+
+// ══════════════ DIAGNOSTIC LOGGING (temporary) ══════════════
+console.log('[OTEL-BOOT] 1 imports-done');
+// Enable OTel's internal diag logger. DEBUG is verbose but we're here
+// to debug — instrumentation-http/pg and MetricReader log patch
+// attempts, export attempts, and errors at this level.
+diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+console.log('[OTEL-BOOT] 2 diag-logger-set level=DEBUG');
+console.log('[OTEL-BOOT] RAILWAY_GIT_COMMIT_SHA=' + (process.env.RAILWAY_GIT_COMMIT_SHA || '<unset>'));
+console.log('[OTEL-BOOT] RAILWAY_ENVIRONMENT_NAME=' + (process.env.RAILWAY_ENVIRONMENT_NAME || '<unset>'));
+console.log('[OTEL-BOOT] NEXT_RUNTIME=' + (process.env.NEXT_RUNTIME || '<unset>'));
+// ════════════════════════════════════════════════════════════
+
+try {
 
 const sdk = new NodeSDK({
   // App-known resource attrs. Auto-detected attrs (host.arch,
@@ -110,4 +131,28 @@ const sdk = new NodeSDK({
   ],
 });
 
+// ══════════════ DIAGNOSTIC LOGGING (temporary) ══════════════
+console.log('[OTEL-BOOT] 3 NodeSDK-constructed');
 sdk.start();
+console.log('[OTEL-BOOT] 4 sdk.start-returned');
+
+setTimeout(() => {
+  console.log('[OTEL-BOOT] 5 alive-at-1s (event loop OK, NodeSDK still running)');
+}, 1000).unref();
+
+setTimeout(() => {
+  console.log('[OTEL-BOOT] 6 alive-at-65s (one metric-export cycle should have fired)');
+}, 65_000).unref();
+
+process.on('uncaughtException', (e) => {
+  console.log('[OTEL-BOOT] UNCAUGHT:', e.stack || e.message);
+});
+process.on('unhandledRejection', (e) => {
+  console.log('[OTEL-BOOT] UNHANDLED-REJECTION:', e && (e.stack || e.message || String(e)));
+});
+
+} catch (e) {
+  console.log('[OTEL-BOOT] FATAL in NodeSDK setup:', e && (e.stack || e.message));
+  throw e;
+}
+// ════════════════════════════════════════════════════════════
