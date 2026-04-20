@@ -8,12 +8,12 @@ const NEXT_PUBLIC_SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 const nextConfig: NextConfig = {
-  // Keep `pg` as a runtime ESM import instead of bundling into webpack output.
-  // Required alongside the module.register hook in otel-bootstrap.mjs for
-  // @opentelemetry/instrumentation-pg to patch pg — if pg is bundled,
-  // there's no runtime import for the ESM hook to intercept. Empirically
-  // verified: either fix alone is insufficient; both together emit
-  // db.client.operation.duration metrics.
+  // Required for @opentelemetry/instrumentation-pg to patch pg. Without this,
+  // webpack bundles pg into the server chunk → no runtime require('pg') →
+  // require-in-the-middle never fires → db.client.operation.duration metrics
+  // never emit. Also requires `pg` as a DIRECT dep in package.json (pnpm's
+  // isolated layout — transitive-only pg has no top-level /node_modules/pg
+  // symlink, so webpack can't externalize it and bundles it anyway).
   serverExternalPackages: ['pg'],
   images: {
     remotePatterns: [
