@@ -40,10 +40,10 @@ const h = (frac: number) => Math.round(frac * HEIGHT)
 
 // Hero illustration — width-only constraint at ~60% canvas. Height comes
 // from the asset's intrinsic aspect (Satori reads it from the PNG/SVG
-// source the same way a browser would). Top pinned at Figma's original.
-// Bottom edge floats per asset; host pill renders on top in any case.
+// source the same way a browser would). Anchored by *bottom* (not top) so
+// the illustration's bottom edge meets the ribbon's top edge regardless
+// of asset aspect; the top floats per-asset.
 const ILLUSTRATION = {
-  top: h(803 / 2560),
   width: w(835 / 1392),
 }
 const HOST_PILL = {
@@ -165,7 +165,7 @@ export async function GET(req: Request) {
           style={{
             position: 'absolute',
             left: ILLUSTRATION_LEFT,
-            top: ILLUSTRATION.top,
+            bottom: HEIGHT - RIBBON.top /* illustration bottom touches ribbon top */,
           }}
         />
       ) : null}
