@@ -133,7 +133,6 @@ const TAIL_TOP = RIBBON.top + TAIL_TOP_OFFSET
 const LEFT_TAIL_LEFT = RIBBON_LEFT - TAIL_OUTSET
 const RIGHT_TAIL_LEFT = RIBBON_LEFT + RIBBON.width - TAIL_INSET
 const HOST_PILL_LEFT = (WIDTH - HOST_PILL.width) / 2
-const ILLUSTRATION_LEFT = (WIDTH - ILLUSTRATION.width) / 2
 const LAUREL_LEFT = (WIDTH - LAUREL.width) / 2
 
 // Title block placement inside the ribbon. Padding-top derives from
@@ -145,7 +144,25 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const slug = searchParams.get('slug') ?? ''
 
-  console.log(`[competition-image] login-desktop: rendering slug=${slug}`)
+  // Optional photo-position knobs to compensate for asymmetry inside the
+  // heroImage composite (decorative icons below the school photo, or
+  // unequal panels left/right of it):
+  //   - `?bottom=0.84` — photo's bottom edge is at 84% of asset height.
+  //     Renderer shifts the asset down so that point lands at the ribbon
+  //     top; the portion below is covered by the ribbon body. Default 1.0
+  //     anchors the composite's full bottom.
+  //   - `?centerX=0.4` — photo's horizontal center is at 40% from the
+  //     asset's left. Renderer offsets the asset horizontally so that
+  //     point lands at the canvas center. Default 0.5 centers the asset
+  //     itself (no shift).
+  const clamp01 = (v: number, fallback: number) =>
+    Number.isFinite(v) ? Math.max(0, Math.min(1, v)) : fallback
+  const photoOffset = clamp01(Number(searchParams.get('bottom') ?? '1'), 1)
+  const photoCenterX = clamp01(Number(searchParams.get('centerX') ?? '0.5'), 0.5)
+
+  console.log(
+    `[competition-image] login-desktop: rendering slug=${slug} bottom=${photoOffset} centerX=${photoCenterX}`,
+  )
 
   const data = await loadCompetitionImageData(slug)
   if (!data) {
@@ -344,8 +361,15 @@ export async function GET(req: Request) {
     ? `<image x="0" y="0" width="${WIDTH}" height="${HEIGHT}" preserveAspectRatio="xMidYMid slice" href="${escapeAttribute(heroBgMeta.url)}"/>`
     : ''
   const overlayRect = `<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${heroBgMeta ? overlayFill : overlayColor}"/>`
+  // Anchor the illustration's photo region to the canvas center +
+  // ribbon top. Vertical: photo bottom (photoOffset × natural height)
+  // lands at ribbon top; portion below extends into the ribbon area and
+  // is covered by the ribbon body which paints later. Horizontal: photo
+  // center (photoCenterX × natural width) lands at canvas mid-x.
+  const illustrationY = RIBBON.top - Math.round(illustrationHeight * photoOffset)
+  const illustrationX = Math.round(WIDTH / 2 - photoCenterX * ILLUSTRATION.width)
   const illustrationImage = illustrationMeta
-    ? `<image x="${ILLUSTRATION_LEFT}" y="${RIBBON.top - illustrationHeight}" width="${ILLUSTRATION.width}" height="${illustrationHeight}" href="${escapeAttribute(illustrationMeta.url)}"/>`
+    ? `<image x="${illustrationX}" y="${illustrationY}" width="${ILLUSTRATION.width}" height="${illustrationHeight}" href="${escapeAttribute(illustrationMeta.url)}"/>`
     : ''
   // Host pill spliced at END (paints on top of the ribbon).
   const hostPill = partnerLogoMeta
