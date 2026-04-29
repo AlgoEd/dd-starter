@@ -196,7 +196,7 @@ export async function GET(req: Request) {
            uses 100%/100% which resolves against the styled box. */}
       {heroBgMeta ? (
         <svg
-          viewBox="0 0 1 1"
+          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
           style={{ position: 'absolute', top: 0, left: 0, width: WIDTH, height: HEIGHT }}
         >
           <image
@@ -227,7 +227,7 @@ export async function GET(req: Request) {
            per-asset aspect. */}
       {illustrationMeta ? (
         <svg
-          viewBox="0 0 1 1"
+          viewBox={`0 0 ${ILLUSTRATION.width} ${illustrationHeight}`}
           style={{
             position: 'absolute',
             left: ILLUSTRATION_LEFT,
@@ -340,7 +340,7 @@ export async function GET(req: Request) {
           }}
         >
           <svg
-            viewBox="0 0 1 1"
+            viewBox={`0 0 ${partnerLogoBoxW} ${partnerLogoBoxH}`}
             style={{ width: partnerLogoBoxW, height: partnerLogoBoxH }}
           >
             <image
