@@ -196,8 +196,8 @@ export async function GET(req: Request) {
         >
           <image
             href={heroBgMeta.url}
-            width={WIDTH}
-            height={HEIGHT}
+            width="100%"
+            height="100%"
             preserveAspectRatio="xMidYMid slice"
           />
         </svg>
@@ -232,11 +232,7 @@ export async function GET(req: Request) {
             height: illustrationHeight,
           }}
         >
-          <image
-            href={illustrationMeta.url}
-            width={ILLUSTRATION.width}
-            height={illustrationHeight}
-          />
+          <image href={illustrationMeta.url} width="100%" height="100%" />
         </svg>
       ) : null}
 
@@ -346,8 +342,8 @@ export async function GET(req: Request) {
           >
             <image
               href={partnerLogoMeta.url}
-              width={partnerLogoBoxW}
-              height={partnerLogoBoxH}
+              width="100%"
+              height="100%"
               preserveAspectRatio="xMidYMid meet"
             />
           </svg>
