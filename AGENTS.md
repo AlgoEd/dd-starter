@@ -1,4 +1,13 @@
-# Payload CMS Development Rules
+# AlgoEd Pages CMS — Agent Operating Manual
+
+AlgoEd's Top 50 Schools League competition pages, built on Payload CMS with Puck visual editing. Content editors compose pages in the Puck editor; agents co-edit pages alongside humans via WebMCP tools registered on the editor page. Deployed on Railway at `pages.algoed.co`.
+
+## Deployment & URLs
+
+- **Domain**: `pages.algoed.co`
+- **Admin**: `pages.algoed.co/p-kcCapdQH` (obscured path — see `payload.config.ts` for change checklist)
+- **Puck editor**: `pages.algoed.co/p-kcCapdQH/puck-editor/pages/:id`
+- **Page tree** (for folder renames): `pages.algoed.co/p-kcCapdQH/page-tree`
 
 ## ⚠️ GIT RULES ⚠️
 
@@ -8,8 +17,6 @@ Override: only when the user's message contains `xyz` AND says what to commit/pu
 
 - Each commit needs its own `xyz`. One keyword, one commit.
 - **Pre-commit review**: Before every commit, diff all staged changes and review for fluff, redundancy, bugs, missing pieces. Report findings and fix before committing.
-
-You are an expert Payload CMS developer. When working with Payload projects, follow these rules:
 
 ## ⚠️ PAGE EDITING — MANDATORY WORKFLOW ⚠️
 
@@ -32,6 +39,28 @@ For **local file uploads**: try shell `curl POST /api/media` first (with user-su
 
 **R2 re-uploads**: deleting and re-uploading with the same filename hits Cloudflare's edge cache. Ask user to purge the URL in Cloudflare dashboard.
 
+### If WebMCP tools aren't available
+
+Run `list_webmcp_tools` (via `webmcp-bridge`, unfiltered, `summary: false`) at the start of any page-editing session. If it returns empty:
+
+1. **Ask the user to confirm a Puck editor tab is open** at `pages.algoed.co/p-kcCapdQH/puck-editor/pages/:id` and reload it. Tools register on editor load.
+2. **Check the user's environment**: Chrome 144+ with remote debugging enabled at `chrome://inspect/#remote-debugging`.
+3. **If the MCP servers are not installed at all** (one-time setup — give the human these commands to run):
+
+   ```bash
+   claude mcp add chrome-devtools-live npx chrome-devtools-mcp@latest -- --autoConnect
+   claude mcp add webmcp-bridge npx @mcp-b/chrome-devtools-mcp@latest -- --autoConnect
+   ```
+
+   `chrome-devtools-live` provides browser automation (`evaluate_script`, `click`, etc.). `webmcp-bridge` discovers the page-registered WebMCP tools. Both need `--autoConnect` to attach to the user's running Chrome — without it, the bridge launches its own Chrome and tools won't be discoverable.
+
+### Workflow gotchas
+
+- **Never navigate the user's editor tab.** Use `new_page` for reference browsing.
+- **Stale SSR after deploy**: reload the Puck editor → re-publish.
+- **Page slug = hero title, kebab-cased.** "Junior" prefix for K-5 variants.
+- **Skip fields that use defaults.** Components fall back to `defaultProps` when props are missing — don't pass them when creating pages: AwardsSection (heading, introText, all badges, teamAward, individualAward), JoinCTA (heading, body).
+
 ### Creating a Competition Page (end-to-end)
 
 Each competition has two pages (HS/MS + Junior). For each page:
@@ -49,7 +78,44 @@ Each competition has two pages (HS/MS + Junior). For each page:
 
 The deliverable is a fully wired, published Puck page — not just uploaded images.
 
-Full docs: `.cursor/rules/webmcp-agent-tools.md`
+## Component Code Edits
+
+### File convention (`.render.tsx` vs `.tsx`)
+
+Each Puck component is split into two files:
+
+```
+src/components/puck/
+  ComponentName.render.tsx   — types, defaultProps, render function (server-safe)
+  ComponentName.tsx          — imports from .render, adds Puck field definitions (client-only)
+  shared.tsx                 — AccentBar, CompetitionCTA, safeHex
+  index.ts                   — client component registry
+  index.server.ts            — server component registry (uses `as any` for extendConfig boundary)
+```
+
+The split is required because `createMediaField` (used in `.tsx`) is client-only, while server rendering needs the types and render function from `.render.tsx`. **For most edits (text, styling, layout), edit `.render.tsx`.** Only edit `.tsx` when changing field definitions exposed to the editor.
+
+### Parity with Webflow source — STRICT
+
+- **Default: 100% parity with source.** Every font size, weight, line-height, color, spacing, padding, margin, grid gap must match the Webflow source CSS exactly. No drift, no "close enough."
+- **Verify against computed styles, not just CSS files.** Webflow applies styles at runtime (inline, shared stylesheets) that don't appear in page-specific CSS. Check computed styles on the live page via Chrome DevTools.
+- **Diverge only with strong reason.** If Tailwind conventions are objectively better AND visually identical, that's OK. Document why.
+
+### Styling: Tailwind + inline
+
+- **Tailwind classes for**: layout (grid, flex), responsive breakpoints, spacing (margin, padding, gap), font weight, static text color, display, alignment.
+- **Inline styles only for**: dynamic values from props (e.g. `primaryColor`, `highlightTextColor`), values that must match source exactly and aren't Tailwind presets.
+- **Never use**: a separate CSS file for component styles, or inline styles for things Tailwind handles.
+
+### Responsive
+
+- Tailwind responsive prefixes: `grid-cols-1 md:grid-cols-2`, `gap-2.5 md:gap-10`, `px-4 md:px-0`.
+- Desktop first; stack on mobile via `grid-cols-1` → `md:grid-cols-N`.
+- Container: `max-w-[940px] mx-auto px-4 md:px-0` — matches Webflow's 940px max-width with mobile padding.
+
+### Adding a new component type or modifying WebMCP plumbing
+
+See `.cursor/rules/puck-extension.md` — covers the Webflow → Puck flow, file registry wiring, and WebMCP architecture.
 
 ## Patched Dependencies
 
@@ -216,9 +282,13 @@ To fully realign, run a media migration per-file: download raw bytes from R2 S3 
 
 ## Additional Context Files
 
-For deeper exploration of specific topics, refer to the context files located in `.cursor/rules/`:
+Topic-specific docs in `.cursor/rules/`. Read the relevant file on demand — don't preload.
 
-### Available Context Files
+### Fork-specific
+
+- **`puck-extension.md`** — Read when adding a new Puck component type (Webflow → Puck flow, file registry wiring) or modifying the WebMCP plumbing (`src/lib/webmcp/`, `src/puck/webmcp-plugin.tsx`). Daily editing rules already live in this file (CLAUDE.md).
+
+### Upstream Payload reference
 
 1. **`payload-overview.md`** - High-level architecture and core concepts
 
