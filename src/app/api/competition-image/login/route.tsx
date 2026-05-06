@@ -47,6 +47,7 @@ import { hexDarken } from '@/components/puck/shared'
 import { COMPETITION_IMAGE_FONTS } from '@/lib/competition-image/fonts'
 import { LAUREL_BADGE } from '@/lib/competition-image/assets'
 import { loadCompetitionImageData } from '@/lib/competition-image/loader'
+import { computeIllustrationBox } from '@/lib/competition-image/login-layout'
 import {
   RibbonTail,
   SHADOW_DARKEN,
@@ -77,6 +78,10 @@ const TAIL_H_PCT = '64%'
 // envelope, which already provides the visible breathing room.
 const PILL_PADDING_X_EM = 0.12
 
+type IllustrationConfig =
+  | { type: 'fixed-width'; wOfCanvas: number }
+  | { type: 'vertical-fit'; topGapPx: number }
+
 /**
  * Per-variant config. Every value except canvas dimensions is a fraction
  * of the canvas (width or height as appropriate). To add a new variant,
@@ -86,7 +91,7 @@ interface LoginVariant {
   width: number
   height: number
   titleFontPx: number
-  illustration: { wOfCanvas: number }
+  illustration: IllustrationConfig
   hostPill: {
     wOfCanvas: number
     hOfCanvas: number
@@ -112,7 +117,7 @@ const DESKTOP: LoginVariant = {
   width: 1392,
   height: 2560,
   titleFontPx: 62,
-  illustration: { wOfCanvas: 835 / 1392 },
+  illustration: { type: 'fixed-width', wOfCanvas: 835 / 1392 },
   hostPill: {
     wOfCanvas: 340 / 1392,
     hOfCanvas: 106 / 2560,
@@ -140,7 +145,9 @@ const MOBILE: LoginVariant = {
   width: 812,
   height: 375,
   titleFontPx: 25,
-  illustration: { wOfCanvas: 330 / 812 },
+  // Mobile is shallow landscape: derive image size from top gap + ribbon
+  // anchor so the school card does not clip above the canvas.
+  illustration: { type: 'vertical-fit', topGapPx: 12 },
   hostPill: {
     wOfCanvas: 151 / 812,
     hOfCanvas: 40 / 375,
@@ -206,7 +213,6 @@ export async function GET(req: Request) {
 
   const titleFs = variant.titleFontPx
 
-  const ILLUSTRATION = { width: w(variant.illustration.wOfCanvas) }
   const HOST_PILL = {
     width: w(variant.hostPill.wOfCanvas),
     height: h(variant.hostPill.hOfCanvas),
@@ -261,9 +267,21 @@ export async function GET(req: Request) {
         ])
       : [heroBgMeta?.url ?? '', illustrationMeta?.url ?? '', partnerLogoMeta?.url ?? '']
 
-  const illustrationHeight = illustrationMeta
-    ? Math.round((ILLUSTRATION.width * illustrationMeta.height) / illustrationMeta.width)
-    : 0
+  const illustrationMode =
+    variant.illustration.type === 'fixed-width'
+      ? { type: 'fixed-width' as const, widthPx: w(variant.illustration.wOfCanvas) }
+      : variant.illustration
+  const illustrationBox = illustrationMeta
+    ? computeIllustrationBox({
+        canvasWidth: WIDTH,
+        ribbonTop: RIBBON.top,
+        assetWidth: illustrationMeta.width,
+        assetHeight: illustrationMeta.height,
+        bottomAnchor: photoOffset,
+        centerXAnchor: photoCenterX,
+        mode: illustrationMode,
+      })
+    : null
   const partnerLogoBoxW = HOST_PILL.width - 2 * HOST_PILL.padding
   const partnerLogoBoxH = HOST_PILL.height - 2 * HOST_PILL.padding
 
@@ -389,11 +407,7 @@ export async function GET(req: Request) {
         </div>
 
         {/* Laurel — sits below ribbon with `gap` margin. */}
-        <img
-          src={LAUREL_BADGE}
-          width={LAUREL.width}
-          style={{ marginTop: LAUREL.gap }}
-        />
+        <img src={LAUREL_BADGE} width={LAUREL.width} style={{ marginTop: LAUREL.gap }} />
       </div>
     </div>,
     {
@@ -427,19 +441,16 @@ export async function GET(req: Request) {
     ? `<image x="0" y="0" width="${WIDTH}" height="${HEIGHT}" preserveAspectRatio="xMidYMid slice" href="${escapeAttribute(heroBgHref)}"/>`
     : ''
   const overlayRect = `<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${heroBgMeta ? overlayFill : overlayColor}"/>`
-  // Anchor the illustration's photo region: vertical via photoOffset
-  // (asset's y=offset×h lands at ribbon top — so the photo's bottom edge
-  // meets ribbon top regardless of asset aspect; the top floats per-asset),
-  // horizontal via photoCenterX (asset's x=centerX×w lands at canvas mid).
-  const illustrationY = RIBBON.top - Math.round(illustrationHeight * photoOffset)
-  const illustrationX = Math.round(WIDTH / 2 - photoCenterX * ILLUSTRATION.width)
-  const illustrationImage = illustrationMeta
-    ? `<image x="${illustrationX}" y="${illustrationY}" width="${ILLUSTRATION.width}" height="${illustrationHeight}" href="${escapeAttribute(illustrationHref)}"/>`
+  // Anchor the illustration's visual photo/card region. Desktop keeps a
+  // fixed width; mobile derives size from top gap + ribbon anchor.
+  const illustrationImage = illustrationBox
+    ? `<image x="${illustrationBox.x}" y="${illustrationBox.y}" width="${illustrationBox.width}" height="${illustrationBox.height}" href="${escapeAttribute(illustrationHref)}"/>`
     : ''
-  const hostPill = partnerLogoMeta && partnerLogoHref
-    ? `<rect x="${HOST_PILL_LEFT}" y="${HOST_PILL_TOP}" width="${HOST_PILL.width}" height="${HOST_PILL.height}" rx="${HOST_PILL.height / 2}" fill="white"/>` +
-      `<image x="${HOST_PILL_LEFT + HOST_PILL.padding}" y="${HOST_PILL_TOP + HOST_PILL.padding}" width="${partnerLogoBoxW}" height="${partnerLogoBoxH}" preserveAspectRatio="xMidYMid meet" href="${escapeAttribute(partnerLogoHref)}"/>`
-    : ''
+  const hostPill =
+    partnerLogoMeta && partnerLogoHref
+      ? `<rect x="${HOST_PILL_LEFT}" y="${HOST_PILL_TOP}" width="${HOST_PILL.width}" height="${HOST_PILL.height}" rx="${HOST_PILL.height / 2}" fill="white"/>` +
+        `<image x="${HOST_PILL_LEFT + HOST_PILL.padding}" y="${HOST_PILL_TOP + HOST_PILL.padding}" width="${partnerLogoBoxW}" height="${partnerLogoBoxH}" preserveAspectRatio="xMidYMid meet" href="${escapeAttribute(partnerLogoHref)}"/>`
+      : ''
   const out = svg
     .replace(/^<svg [^>]*>/, (m) => `${m}${bgImage}${overlayRect}${illustrationImage}`)
     .replace(/<\/svg>$/, `${hostPill}</svg>`)
