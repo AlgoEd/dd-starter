@@ -1,6 +1,7 @@
 /**
  * Dynamic login-banner image generator (desktop + mobile variants).
  * Serves at /api/competition-image/login?slug=<slug>&variant=desktop|mobile.
+ * Add `&format=png` for a server-rasterized PNG preview/debug output.
  *
  * Consumed by the Angular student-app split-pane login screen:
  *  - desktop variant (1392×2560 portrait): the tall left-side panel
@@ -21,9 +22,9 @@
  *     block — same number governs spacing between adjacent flex
  *     items AND between wrapped visual lines inside an item.
  *   - Tails sit inside the ribbon as absolute children with
- *     `top: 50%, height: 64%, transform: translateY(-50%)`. They
- *     centre on and scale with the ribbon's resolved height, no
- *     two-pass measurement needed (Yoga supports % positioning).
+ *     `top: 50%, height: 64%`. Their top edge is anchored at ribbon
+ *     mid; the lower 14% peeks below the ribbon so the SVG fold-shadow
+ *     triangle aligns with the ribbon bottom corner.
  *   - Host pill placement uses `pill_top = ribbon_top - pill_h ×
  *     (1 - overlapRatio)` — the bottom `overlapRatio` portion of the
  *     pill overlaps the ribbon top. Computable since ribbon top is
@@ -31,17 +32,16 @@
  *   - Laurel sits in flex flow below the ribbon (`gap`-controlled),
  *     so it auto-positions when the ribbon grows.
  *
- * Output: SVG (text/xml). Satori handles flex layout + text. The
- * BACKGROUND PHOTO, brand overlay, hero ILLUSTRATION, and host-pill
- * image are spliced as raw <image href="cdn.url"> / <rect> after
- * Satori returns — keeps the response tiny (Satori has no flag to
- * preserve hrefs; see vercel/satori PR #472).
+ * Output: SVG by default. `format=png` inlines raster assets as data URIs
+ * and uses sharp to rasterize the final SVG; SVG stays the production path
+ * because it keeps CDN hrefs instead of base64-inlining heavy images.
  *
  * Tail dimensions: see `ribbon-tail.tsx` for the three SVG-tied ratios
  * (TAIL_W_OF_RIBBON, TAIL_H_OF_RIBBON, TAIL_OUTSET_OF_TAIL) and the
  * alignment guarantees they encode (triangle ↔ ribbon corners).
  */
 import satori from 'satori'
+import sharp from 'sharp'
 import { escapeAttribute } from 'entities'
 import { hexDarken } from '@/components/puck/shared'
 import { COMPETITION_IMAGE_FONTS } from '@/lib/competition-image/fonts'
@@ -65,7 +65,7 @@ const RIBBON_DARKEN = Math.sqrt(TAIL_DARKEN * SHADOW_DARKEN) /* ≈ 0.65 */
 const LINE_HEIGHT = 1.3
 
 // Tail height as fraction of ribbon height. Pair-locked with
-// `tail_top: 50%` placement (tail centred vertically on ribbon): this
+// `tail_top: 50%` placement (tail TOP anchored at ribbon mid): this
 // gives the SVG fold-triangle alignment with the ribbon corners. See
 // `ribbon-tail.tsx` for derivation. (Was a separate import constant
 // when ribbon height was fixed; now applied as a CSS percentage.)
@@ -169,6 +169,7 @@ export async function GET(req: Request) {
   const rawVariant = searchParams.get('variant')
   const variantKey: VariantKey = rawVariant === 'mobile' ? 'mobile' : 'desktop'
   const variant = VARIANTS[variantKey]
+  const outputFormat = searchParams.get('format') === 'png' ? 'png' : 'svg'
 
   // Optional photo-position knobs to compensate for asymmetry inside the
   // heroImage composite (decorative icons below the school photo, or
@@ -186,7 +187,7 @@ export async function GET(req: Request) {
   const photoCenterX = clamp01(Number(searchParams.get('centerX') ?? '0.5'), 0.5)
 
   console.log(
-    `[competition-image] login: variant=${variantKey} slug=${slug} bottom=${photoOffset} centerX=${photoCenterX}`,
+    `[competition-image] login: variant=${variantKey} format=${outputFormat} slug=${slug} bottom=${photoOffset} centerX=${photoCenterX}`,
   )
 
   const data = await loadCompetitionImageData(slug)
@@ -233,7 +234,7 @@ export async function GET(req: Request) {
     RIBBON.top - Math.round(HOST_PILL.height * (1 - variant.hostPill.overlapOfPill))
   const HOST_PILL_LEFT = Math.round((WIDTH - HOST_PILL.width) / 2)
 
-  const { hero, partnerLogo, colors, resolveImageMeta } = data
+  const { hero, partnerLogo, colors, resolveImageMeta, fetchAsDataUri } = data
   const { overlayColor, highlightBg, highlightText, heroText } = colors
   const tailBody = hexDarken(overlayColor, TAIL_DARKEN)
   const ribbonBody = hexDarken(overlayColor, RIBBON_DARKEN)
@@ -247,6 +248,18 @@ export async function GET(req: Request) {
     resolveImageMeta(hero?.heroImage?.url, 'xlarge'),
     resolveImageMeta(partnerLogo?.url, 'medium'),
   ])
+
+  // Server-side SVG rasterizers (sharp/resvg) do not fetch remote <image href>
+  // URLs. For `format=png`, inline those three heavy raster layers as data
+  // URIs; keep SVG default on CDN hrefs for small production responses.
+  const [heroBgHref, illustrationHref, partnerLogoHref] =
+    outputFormat === 'png'
+      ? await Promise.all([
+          fetchAsDataUri(hero?.backgroundImage?.url, 'heroBg', 'xlarge'),
+          fetchAsDataUri(hero?.heroImage?.url, 'illustration', 'xlarge'),
+          fetchAsDataUri(partnerLogo?.url, 'partnerLogo', 'medium'),
+        ])
+      : [heroBgMeta?.url ?? '', illustrationMeta?.url ?? '', partnerLogoMeta?.url ?? '']
 
   const illustrationHeight = illustrationMeta
     ? Math.round((ILLUSTRATION.width * illustrationMeta.height) / illustrationMeta.width)
@@ -411,7 +424,7 @@ export async function GET(req: Request) {
   // including tails, body, title, laurel). Host pill spliced at END so
   // it paints on top of the ribbon.
   const bgImage = heroBgMeta
-    ? `<image x="0" y="0" width="${WIDTH}" height="${HEIGHT}" preserveAspectRatio="xMidYMid slice" href="${escapeAttribute(heroBgMeta.url)}"/>`
+    ? `<image x="0" y="0" width="${WIDTH}" height="${HEIGHT}" preserveAspectRatio="xMidYMid slice" href="${escapeAttribute(heroBgHref)}"/>`
     : ''
   const overlayRect = `<rect x="0" y="0" width="${WIDTH}" height="${HEIGHT}" fill="${heroBgMeta ? overlayFill : overlayColor}"/>`
   // Anchor the illustration's photo region: vertical via photoOffset
@@ -421,15 +434,22 @@ export async function GET(req: Request) {
   const illustrationY = RIBBON.top - Math.round(illustrationHeight * photoOffset)
   const illustrationX = Math.round(WIDTH / 2 - photoCenterX * ILLUSTRATION.width)
   const illustrationImage = illustrationMeta
-    ? `<image x="${illustrationX}" y="${illustrationY}" width="${ILLUSTRATION.width}" height="${illustrationHeight}" href="${escapeAttribute(illustrationMeta.url)}"/>`
+    ? `<image x="${illustrationX}" y="${illustrationY}" width="${ILLUSTRATION.width}" height="${illustrationHeight}" href="${escapeAttribute(illustrationHref)}"/>`
     : ''
-  const hostPill = partnerLogoMeta
+  const hostPill = partnerLogoMeta && partnerLogoHref
     ? `<rect x="${HOST_PILL_LEFT}" y="${HOST_PILL_TOP}" width="${HOST_PILL.width}" height="${HOST_PILL.height}" rx="${HOST_PILL.height / 2}" fill="white"/>` +
-      `<image x="${HOST_PILL_LEFT + HOST_PILL.padding}" y="${HOST_PILL_TOP + HOST_PILL.padding}" width="${partnerLogoBoxW}" height="${partnerLogoBoxH}" preserveAspectRatio="xMidYMid meet" href="${escapeAttribute(partnerLogoMeta.url)}"/>`
+      `<image x="${HOST_PILL_LEFT + HOST_PILL.padding}" y="${HOST_PILL_TOP + HOST_PILL.padding}" width="${partnerLogoBoxW}" height="${partnerLogoBoxH}" preserveAspectRatio="xMidYMid meet" href="${escapeAttribute(partnerLogoHref)}"/>`
     : ''
   const out = svg
     .replace(/^<svg [^>]*>/, (m) => `${m}${bgImage}${overlayRect}${illustrationImage}`)
     .replace(/<\/svg>$/, `${hostPill}</svg>`)
+
+  if (outputFormat === 'png') {
+    const png = await sharp(Buffer.from(out)).png().toBuffer()
+    return new Response(new Uint8Array(png), {
+      headers: { 'Content-Type': 'image/png' },
+    })
+  }
 
   return new Response(out, {
     headers: { 'Content-Type': 'image/svg+xml' },
