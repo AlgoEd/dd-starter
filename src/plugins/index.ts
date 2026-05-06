@@ -7,7 +7,7 @@ import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
-import { pageTreePlugin } from '@delmaredigital/payload-page-tree'
+import { pageTreePlugin } from './page-tree'
 import { createPuckPlugin } from '@delmaredigital/payload-puck/plugin'
 import { puckLayoutOptions } from '@/lib/puck/layout-options'
 import {
