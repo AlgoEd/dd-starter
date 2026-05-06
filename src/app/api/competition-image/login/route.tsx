@@ -177,6 +177,8 @@ export async function GET(req: Request) {
   const variantKey: VariantKey = rawVariant === 'mobile' ? 'mobile' : 'desktop'
   const variant = VARIANTS[variantKey]
   const outputFormat = searchParams.get('format') === 'png' ? 'png' : 'svg'
+  const fit = searchParams.get('fit') === 'contain' ? 'contain' : 'cover'
+  const preserveAspectRatio = fit === 'contain' ? 'xMidYMid meet' : 'xMidYMid slice'
 
   // Optional photo-position knobs to compensate for asymmetry inside the
   // heroImage composite (decorative icons below the school photo, or
@@ -194,7 +196,7 @@ export async function GET(req: Request) {
   const photoCenterX = clamp01(Number(searchParams.get('centerX') ?? '0.5'), 0.5)
 
   console.log(
-    `[competition-image] login: variant=${variantKey} format=${outputFormat} slug=${slug} bottom=${photoOffset} centerX=${photoCenterX}`,
+    `[competition-image] login: variant=${variantKey} format=${outputFormat} fit=${fit} slug=${slug} bottom=${photoOffset} centerX=${photoCenterX}`,
   )
 
   const data = await loadCompetitionImageData(slug)
@@ -452,7 +454,9 @@ export async function GET(req: Request) {
         `<image x="${HOST_PILL_LEFT + HOST_PILL.padding}" y="${HOST_PILL_TOP + HOST_PILL.padding}" width="${partnerLogoBoxW}" height="${partnerLogoBoxH}" preserveAspectRatio="xMidYMid meet" href="${escapeAttribute(partnerLogoHref)}"/>`
       : ''
   const out = svg
-    .replace(/^<svg [^>]*>/, (m) => `${m}${bgImage}${overlayRect}${illustrationImage}`)
+    .replace(/^<svg ([^>]*)>/, (_m, attrs) => {
+      return `<svg ${attrs} preserveAspectRatio="${preserveAspectRatio}">${bgImage}${overlayRect}${illustrationImage}`
+    })
     .replace(/<\/svg>$/, `${hostPill}</svg>`)
 
   if (outputFormat === 'png') {
