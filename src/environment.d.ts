@@ -5,6 +5,8 @@ declare global {
       BETTER_AUTH_SECRET: string
       NEXT_PUBLIC_SERVER_URL: string
       POSTGRES_URL: string
+      AWS_EMAIL_ACCESS_KEY_ID?: string
+      AWS_EMAIL_SECRET_KEY?: string
     }
   }
 }

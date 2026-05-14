@@ -84,6 +84,7 @@ Required:
 Optional:
 - `BLOB_READ_WRITE_TOKEN` - Vercel Blob storage token
 - `PUCK_API_KEY` - For Puck AI page generation (from [puckeditor.com](https://puckeditor.com))
+- `AWS_EMAIL_ACCESS_KEY_ID` / `AWS_EMAIL_SECRET_KEY` - Enables Better Auth password reset emails through AWS SES
 
 ## Project Structure
 
